@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Next.js: debug",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm run dev",
+        "cwd": "${workspaceFolder}/audelweiss-front",
+      },
+      {
+        "name": "Strapi: dev",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm run dev",
+        "cwd": "${workspaceFolder}/audelweiss-api",
+      },
+    ]
+  }

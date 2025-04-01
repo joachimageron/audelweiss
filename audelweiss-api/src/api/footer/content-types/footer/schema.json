@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "footers",
+  "info": {
+    "singularName": "footer",
+    "pluralName": "footers",
+    "displayName": "Footer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nav": {
+      "displayName": "Nav",
+      "type": "component",
+      "repeatable": true,
+      "component": "nav.nav",
+      "max": 2,
+      "min": 1
+    }
+  }
+}

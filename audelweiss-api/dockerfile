@@ -21,4 +21,4 @@ USER node
 RUN pnpm run build
 EXPOSE 1337
 # Démarrer l'application en mode développement avec pnpm
-CMD ["pnpm", "run", "develop"]
+CMD ["pnpm", "run", "develop", "--debug"]

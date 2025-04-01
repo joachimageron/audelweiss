@@ -1,19 +1,24 @@
 FROM node:18-alpine3.18
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
-ARG NODE_ENV=development
+ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
+# Copier les fichiers de dépendances pour pnpm
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm add -g node-gyp
-RUN pnpm config set fetch-retry-maxtimeout 600000 -g && pnpm install
-ENV PATH /opt/node_modules/.bin:$PATH
+# Installer pnpm globalement
+RUN npm install -g pnpm
+# Installer les dépendances avec pnpm
+RUN pnpm install
+ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
 RUN chown -R node:node /opt/app
 USER node
-RUN ["pnpm", "run", "build"]
+# Construire l'application avec pnpm
+RUN pnpm run build
 EXPOSE 1337
+# Démarrer l'application en mode développement avec pnpm
 CMD ["pnpm", "run", "develop"]

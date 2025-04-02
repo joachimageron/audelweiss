@@ -6,8 +6,8 @@ import CustomLink from '@/components/Link';
 export default function BuildComponents() {
     return (
         <main>
-            <h2 className="text-[20px] text-font-dm-sans uppercase">Des créations uniques au crochet</h2>
-            <h2 className="text-[20px] font-aboreto uppercase">Éditions limitées ou sur-mesure</h2>
+            <h2 className="text-[20px] bg-background text-font-dm-sans uppercase">Des créations uniques au crochet</h2>
+            <h2 className="text-[20px] text-font-aboreto uppercase">Éditions limitées ou sur-mesure</h2>
 
             <CustomButton onClick={() => alert('Clicked!')}>Clique ici</CustomButton>
 

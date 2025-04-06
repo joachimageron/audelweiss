@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #FF4772;
+  --dark-primary: #d1214a;
+  --secondary: #7768AE; 
+  --dark-secondary: #483883; 
+  --background: #e7e6e6;
+  --text: #303028;
+
+  --filter-white: brightness(0) saturate(100%) invert(100%) sepia(99%) saturate(0%) hue-rotate(227deg) brightness(105%) contrast(100%);
+}
+ 
+@theme inline {
+  --color-primary: var(--primary);
+  --color-dark-primary: var(--dark-primary);
+  --color-secondary: var(--secondary);
+  --color-dark-secondary: var(--dark-secondary);
+  --color-background: var(--background);
+  --color-text: var(--text);
+  --font-dm-sans: var(--font-dm-sans);
+  --font-aboreto: var(--font-aboreto);
+}
+
+html {
+  font-size: .625em;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 1.6rem;
+  line-height: normal;
+  color: var(--text);
+  background-color: var(--FBFBFB);
+}
+
+.inner-wrap {
+  max-width: 154rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
+}
+
+.as--underline-hover {
+  display: inline;
+  background-image: linear-gradient(to right, var(--primary), var(--primary));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 .2rem;
+  transition: background-size .2s ease-out;
+}
+
+.as--underline-hover.text-secondary {
+  background-image: linear-gradient(to right, var(--secondary), var(--secondary));
+}
+
+.as--underline-hover:hover {
+  background-size: 100% .2rem; 
+}
+
+button.as--icon,
+a.as--icon {
+  position: relative;
+  transition: .3s ease;
+}
+
+button.as--icon:hover,
+a.as--icon:hover {
+  padding-left: 1rem;
+  padding-right: 4.5rem;
+}
+
+button.as--icon .a-icon,
+a.as--icon .a-icon {
+  position: absolute;
+  top: 50%;
+  right: 1.25rem;
+  translate: 0 -50%;
+  max-width: 2.2rem;
+  height: auto;
+  filter: var(--filter-white);
+  opacity: 0;
+  transition: opacity .2s ease-in;
+}
+
+
+button.as--icon:hover .a-icon,
+a.as--icon:hover .a-icon {
+  opacity: 1;
+}

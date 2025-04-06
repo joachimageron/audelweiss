@@ -1,21 +1,73 @@
 'use client';
 
-import CustomButton from '@/components/Button';
-import CustomLink from '@/components/Link';
+import CustomButton from '@/components/CustomButton';
+import CustomTitle from '@/components/CustomTitle';
+import CustomLink from '@/components/CustomLink';
 
 export default function BuildComponents() {
     return (
         <main>
-            <h2 className="text-[20px] bg-background text-font-dm-sans uppercase">Des créations uniques au crochet</h2>
-            <h2 className="text-[20px] text-font-aboreto uppercase">Éditions limitées ou sur-mesure</h2>
+            <div className="inner-wrap">
+                <CustomTitle level={1}>Titre h1 (font-size : 40px par défaut)</CustomTitle>
 
-            <CustomButton onClick={() => alert('Clicked!')}>Clique ici</CustomButton>
+                <br></br>
 
-            <CustomButton className="bg-blue-600 hover:bg-blue-500">Second Bouton</CustomButton>
+                <CustomTitle level={2}>Titre h2 (font-size : 40px par défaut)</CustomTitle>
 
-            <CustomLink href="/contact">Contactez-moi</CustomLink>
+                <br></br>
 
-            <CustomLink href="/blog" className="bg-blue-600 hover:bg-blue-500">Voir le blog</CustomLink>
+                <CustomTitle level={3}>Titre h3 (font-size : 40px par défaut)</CustomTitle>
+
+                <br></br>
+
+                <CustomTitle level={2} className='text-[3rem]'>Titre h2 avec font-size à 30px</CustomTitle>
+
+                <br></br>
+
+                <CustomTitle level={2} className='text-[2rem]'>Titre h2 avec font-size à 20px</CustomTitle>
+
+                <br></br>
+
+                {/* Attention : Dès qu'on précise quelquechose dans la props 'className', 
+                on est obligé d'indiquer aussi la classe pour la font-size (plus de font-size par défaut) */}
+                <CustomTitle level={2} className='text-primary text-[4rem]'>Titre h2 rose 40px</CustomTitle>
+
+                <br></br>
+
+                {/* Attention : Dès qu'on précise quelquechose dans la props 'className', 
+                on est obligé d'indiquer aussi la classe pour la font-size (plus de font-size par défaut) */}
+                <CustomTitle level={3} className='text-secondary text-[3rem]'>Titre h3 violet 30px</CustomTitle>
+
+                <br></br>
+
+                <CustomButton withIcon>Bouton rose avec flèche</CustomButton>
+
+                <br></br><br></br>
+
+                <CustomButton className='bg-secondary hover:bg-dark-secondary' onClick={() => alert('Tu as cliqué !')}>Bouton violet sans flèche, qui se déclanche au clic</CustomButton>
+
+                <br></br><br></br>
+
+                <CustomLink href="#_" className="text-primary as--underline-hover">Lien classique rose</CustomLink>
+
+                <br></br><br></br>
+
+                <CustomLink href="#_" className="text-secondary as--underline-hover">Lien classique violet</CustomLink>
+
+                <br></br><br></br>
+
+                <CustomLink href="#_" isButtonLink className='bg-primary hover:bg-dark-primary' withIcon>Lien sous forme de bouton rose avec flèche</CustomLink>
+
+                <br></br><br></br>
+
+                <CustomLink href="https://github.com" target="_blank" isButtonLink className='bg-secondary hover:bg-dark-secondary' withIcon>Lien externe sous forme de bouton violet avec flèche</CustomLink>
+
+                <br></br><br></br>
+
+                <CustomLink href="#_" isButtonLink className='bg-primary hover:bg-dark-primary'>Lien sous forme de bouton rose sans flèche</CustomLink>
+
+                <br></br><br></br>
+            </div>
         </main>
     );
 }

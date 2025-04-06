@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Aboreto } from "next/font/google";
-import "./globals.css";
+import "./assets/css/style.css";
 
 const dmSans = DM_Sans({
   subsets: ['latin'],

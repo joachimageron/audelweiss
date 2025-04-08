@@ -92,7 +92,7 @@ a.as--icon:hover .a-icon {
   opacity: 1;
 }
 
-.nav-link:hover img {
+.as--hover-filter-primary:hover {
   filter: var(--filter-primary);
 }
 

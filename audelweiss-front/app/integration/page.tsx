@@ -1,8 +1,8 @@
 'use client';
 
-import CustomButton from '@/components/CustomButton';
-import CustomTitle from '@/components/CustomTitle';
-import CustomLink from '@/components/CustomLink';
+import CustomTitle from "@/components/atoms/CustomTitle";
+import CustomButton from "@/components/atoms/CustomButton";
+import CustomLink from "@/components/atoms/CustomLink";
 
 export default function BuildComponents() {
     return (

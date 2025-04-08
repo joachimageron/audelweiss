@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Aboreto } from "next/font/google";
 import "./assets/css/style.css";
 
-import Header from '@/components/Header'
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -29,9 +29,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${dmSans.variable} ${aboreto.variable} antialiased`}>
       <body>
-        <Header />
-        {children}
-        <footer></footer>
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );

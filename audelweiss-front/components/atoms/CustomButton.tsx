@@ -9,11 +9,12 @@ type ButtonProps = {
     type?: 'button' | 'submit' | 'reset';
     className?: string;
     withIcon?: boolean;
+    tabIndex?: number;
 };
 
-export default function CustomButton({ children, onClick, type = 'button', className = '', withIcon = false }: ButtonProps) {
+export default function CustomButton({ children, onClick, type = 'button', className = '', withIcon = false, tabIndex }: ButtonProps) {
     return (
-        <button type={type} onClick={onClick} className={`inline-block px-[2rem] py-[1.2rem] text-center leading-none bg-primary hover:bg-dark-primary  text-white rounded-[4px] cursor-pointer transition duration-200 ${className} ${withIcon ? 'as--icon' : ''}`}>
+        <button type={type} onClick={onClick} className={`inline-block px-[2rem] py-[1.2rem] text-center leading-none bg-primary hover:bg-dark-primary text-white rounded-[4px] cursor-pointer transition duration-200 ${className} ${withIcon ? 'as--icon' : ''}`} tabIndex={tabIndex}>
             {children}
             {withIcon && <Image src={arrowIcon.src} alt="Icône de flèche vers la droite" width={16} height={16} className="a-icon" />}
         </button>

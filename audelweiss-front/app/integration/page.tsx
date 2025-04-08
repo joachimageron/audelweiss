@@ -48,6 +48,10 @@ export default function BuildComponents() {
 
                 <br></br><br></br>
 
+                <CustomButton withIcon isSpanTag>Bouton (qui est en réalité un span) rose avec flèche</CustomButton>
+
+                <br></br><br></br>
+
                 <CustomLink href="#_" className="text-primary as--underline-hover">Lien classique rose</CustomLink>
 
                 <br></br><br></br>

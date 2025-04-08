@@ -17,6 +17,7 @@ type HeaderProps = {
     className?: string;
 };
 
+// TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Menu de navigation"
 const navItems = [
     { label: "La marque", href: "/marque" },
     {
@@ -48,7 +49,7 @@ export default function Header({ className }: HeaderProps) {
         <header className={`lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] bg-white shadow-md ${className}`}>
             {/* Logo */}
             <CustomLink href="/" className='mr-auto' title="Retourner à la page d'accueil">
-                <Image src={logoImage.src} alt="Logo Audelweiss" width={210} height={60} priority className='max-w-[15rem]' />
+                <Image src={logoImage.src} alt="Logo Audelweiss" width={200} height={45} priority className='max-w-[20rem]' />
             </CustomLink>
 
             {/* Bouton burger (visible en mobile) */}
@@ -64,7 +65,7 @@ export default function Header({ className }: HeaderProps) {
                         return (
                             <li className="relative flex flex-col group" key={index}>
                                 <CustomLink href={href} className={`nav-link flex items-center lg:gap-[.7rem] gap-[1.2rem] py-[1rem] text-[1.4rem] font-semibold uppercase as--hover-filter-primary transition ${isActive ? 'text-dark-primary' : 'hover:text-primary'}`}>
-                                    {icon && (<Image src={icon.src} alt={`Icône ${label}`} width={iconSize} height={iconSize} priority />)}
+                                    {icon && (<Image src={icon.src} alt={`Icône ${label}`} width={iconSize} height={iconSize} priority className={`${isActive ? 'as--filter-dark-primary' : ''}`} />)}
                                     {/* 'hasIconOnly' = false --> On affiche toujours le texte */}
                                     {!hasIconOnly && <span>{label}</span>}
                                     {/* 'hasIconOnly' = true --> On affiche le texte uniquement sur mobile */}
@@ -100,7 +101,7 @@ export default function Header({ className }: HeaderProps) {
                 <button onClick={() => setIsSearchOpen(false)} aria-label="Fermer la recherche" className='cursor-pointer as--hover-filter-primary' tabIndex={isSearchOpen ? 0 : -1}>
                     <Image src={closeIcon.src} alt="Icône croix pour fermer la recherche interne" width={40} height={40} />
                 </button>
-                <form className='flex sm:items-stretch items-center sm:flex-row flex-col gap-y-[1.4rem] w-full'>
+                <form className='flex sm:items-stretch items-center sm:flex-row flex-col gap-y-[1.4rem] w-full max-w-[85rem]'>
                     <CustomInputField id="search" name="search" type="text" placeholder="Rechercher une création, une catégorie..." label="Rechercher un terme" className='h-full' hasLabelHidden autoFocus={isSearchOpen} tabIndex={isSearchOpen ? 0 : -1} />
                     <CustomButton type="submit" className="w-fit bg-primary hover:bg-dark-primary" tabIndex={isSearchOpen ? 0 : -1}>Rechercher</CustomButton>
                 </form>

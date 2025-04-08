@@ -43,7 +43,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     return (
         <>
             <Header className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${showHeader ? "translate-y-0" : "-translate-y-full"}`} />
-            <main className="lg:pt-0 pt-[6.3rem]">
+            <main className="lg:pt-0 pt-[7.4rem]">
                 {children}
             </main>
             <footer></footer>

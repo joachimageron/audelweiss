@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+
+/***********************
+** Base variables
+***********************/
 :root {
   --primary: #FF4772;
   --dark-primary: #d1214a;
@@ -10,6 +14,7 @@
 
   --filter-white: brightness(0) saturate(100%) invert(100%) sepia(99%) saturate(0%) hue-rotate(227deg) brightness(105%) contrast(100%);
   --filter-primary: brightness(0) saturate(100%) invert(39%) sepia(97%) saturate(1828%) hue-rotate(320deg) brightness(101%) contrast(102%);
+  --filter-dark-primary: brightness(0) saturate(100%) invert(22%) sepia(61%) saturate(3316%) hue-rotate(329deg) brightness(88%) contrast(97%);
 }
  
 @theme inline {
@@ -23,6 +28,9 @@
   --font-aboreto: var(--font-aboreto);
 }
 
+/***********************
+** Base components
+***********************/
 html {
   font-size: .625em;
   scroll-behavior: smooth;
@@ -44,6 +52,9 @@ body {
   padding-left: 2rem;
 }
 
+/***********************
+** Atoms links/buttons
+***********************/
 .as--underline-hover {
   display: inline;
   background-image: linear-gradient(to right, var(--primary), var(--primary));
@@ -62,19 +73,22 @@ body {
 }
 
 button.as--icon,
-a.as--icon {
+a.as--icon,
+span.as--icon {
   position: relative;
   transition: .3s ease;
 }
 
 button.as--icon:hover,
-a.as--icon:hover {
+a.as--icon:hover,
+span.as--icon:hover {
   padding-left: 1rem;
   padding-right: 4rem;
 }
 
 button.as--icon .a-icon,
-a.as--icon .a-icon {
+a.as--icon .a-icon,
+span.as--icon .a-icon {
   position: absolute;
   top: 50%;
   right: 1.25rem;
@@ -86,19 +100,64 @@ a.as--icon .a-icon {
   transition: opacity .2s ease-in;
 }
 
-
 button.as--icon:hover .a-icon,
-a.as--icon:hover .a-icon {
+a.as--icon:hover .a-icon,
+span.as--icon:hover .a-icon {
   opacity: 1;
 }
 
-.as--hover-filter-primary:hover {
+/***********************
+** Colored filters
+***********************/
+.as--filter-dark-primary {
+  filter: var(--filter-dark-primary);
+}
+
+.as--filter-text {
+  filter: var(--filter-text);
+}
+
+.as--hover-filter-primary:hover img {
   filter: var(--filter-primary);
 }
 
+/***********************
+** Simple slider's component
+***********************/
+.simple-slider .swiper-slide {
+  display: flex;
+}
+
+.simple-slider .simple-slide-subtitle:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 4rem;
+  height: .2rem;
+  background-color: var(--text);
+}
+
+.simple-slider .simple-slide-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(40deg, rgba(246, 185, 156, 0) 0%, rgba(246, 185, 156, 0.65) 0%, rgba(255, 97, 135, 0.58) 100%);
+  opacity: .3;
+}
+
+
+/***********************
+** Mobile's responsive
+***********************/
 @media (max-width: 1023px) {
   .max-h-mobile-menu {
     max-height: calc(100svh - 8rem);
     overflow-y: auto;
+  }
+
+  .simple-slider .simple-slide-image::after {
+    opacity: 1;
   }
 }

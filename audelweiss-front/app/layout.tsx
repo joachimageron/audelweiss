@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${dmSans.variable} ${aboreto.variable} antialiased`}>
-      <body>
+      <body className="overflow-x-hidden">
         <LayoutWrapper>
           {children}
         </LayoutWrapper>

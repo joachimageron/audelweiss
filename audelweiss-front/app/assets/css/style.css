@@ -49,7 +49,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
-  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 /***********************
@@ -122,13 +122,13 @@ span.as--icon:hover .a-icon {
 }
 
 /***********************
-** Simple slider's component
+** Single slider's component
 ***********************/
-.simple-slider .swiper-slide {
+.single-slider .swiper-slide {
   display: flex;
 }
 
-.simple-slider .simple-slide-subtitle:before {
+.single-slider .single-slide-subtitle:before {
   content: '';
   position: absolute;
   left: 0;
@@ -139,7 +139,7 @@ span.as--icon:hover .a-icon {
   background-color: var(--text);
 }
 
-.simple-slider .simple-slide-image::after {
+.single-slider .single-slide-image::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -157,7 +157,7 @@ span.as--icon:hover .a-icon {
     overflow-y: auto;
   }
 
-  .simple-slider .simple-slide-image::after {
+  .single-slider .single-slide-image::after {
     opacity: 1;
   }
 }

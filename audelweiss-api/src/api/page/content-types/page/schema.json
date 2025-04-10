@@ -25,9 +25,20 @@
         "blocks.cards-list",
         "blocks.quote",
         "blocks.image-and-text",
-        "blocks.hero"
+        "blocks.hero",
+        "blocks.featured-products",
+        "blocks.featured-articles"
       ],
       "required": false
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "home",
+        "about",
+        "shop"
+      ],
+      "required": true
     }
   }
 }

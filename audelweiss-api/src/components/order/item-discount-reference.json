@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_order_item_discount_references",
+  "info": {
+    "displayName": "Discount reference",
+    "icon": "link",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "discount": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::discount.discount"
+    }
+  }
+}

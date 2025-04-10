@@ -15,9 +15,22 @@
       "type": "string",
       "required": true
     },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article-category.article-category",
+      "mappedBy": "articles"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "content": {
-      "type": "richtext",
-      "required": true
+      "type": "blocks"
     }
   }
 }

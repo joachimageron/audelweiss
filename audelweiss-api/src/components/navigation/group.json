@@ -1,23 +1,21 @@
 {
-  "collectionName": "components_nav_header_navs",
+  "collectionName": "components_navigation_groups",
   "info": {
-    "displayName": "LinkList",
+    "displayName": "Group",
     "icon": "bulletList",
     "description": ""
   },
   "options": {},
   "attributes": {
-    "navTitle": {
+    "heading": {
       "type": "component",
       "repeatable": false,
-      "component": "link.link",
-      "required": true
+      "component": "navigation.link"
     },
-    "navItems": {
+    "entries": {
       "type": "component",
       "repeatable": true,
-      "required": false,
-      "component": "link.link"
+      "component": "navigation.link"
     }
   }
 }

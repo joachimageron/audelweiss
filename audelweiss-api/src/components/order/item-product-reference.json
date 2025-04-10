@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_order_item_product_references",
+  "info": {
+    "displayName": "Product reference",
+    "icon": "link",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    }
+  }
+}

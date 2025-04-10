@@ -24,11 +24,6 @@
     },
     "subHeading": {
       "type": "text"
-    },
-    "callToAction": {
-      "type": "component",
-      "repeatable": false,
-      "component": "link.link"
     }
   }
 }

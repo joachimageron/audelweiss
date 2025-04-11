@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_variant_options",
+  "info": {
+    "singularName": "product-variant-option",
+    "pluralName": "product-variant-options",
+    "displayName": "Product variant option"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "variant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product-variant.product-variant",
+      "inversedBy": "variant_options"
+    }
+  }
+}

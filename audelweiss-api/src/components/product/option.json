@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_product_options",
+  "info": {
+    "displayName": "Variant group",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "format": {
+      "type": "enumeration",
+      "enum": [
+        "radio",
+        "checkbox",
+        "text input"
+      ]
+    },
+    "options": {
+      "displayName": "option variant",
+      "type": "component",
+      "repeatable": true,
+      "component": "product.option-variant"
+    },
+    "description": {
+      "type": "text"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "required": {
+      "type": "boolean"
+    }
+  }
+}

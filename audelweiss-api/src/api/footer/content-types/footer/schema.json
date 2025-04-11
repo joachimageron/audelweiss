@@ -11,13 +11,10 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "nav": {
-      "displayName": "Nav",
+    "navigation": {
       "type": "component",
       "repeatable": true,
-      "component": "nav.nav",
-      "max": 2,
-      "min": 1
+      "component": "navigation.group"
     }
   }
 }

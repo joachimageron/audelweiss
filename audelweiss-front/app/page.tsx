@@ -1,103 +1,77 @@
-import Image from "next/image";
+import CustomTitle from '@/components/atoms/CustomTitle';
+import SingleSlider from '@/components/modules/SingleSlider';
+import MultipleColumns from '@/components/modules/MultiplesColumns';
+import illustration from '@/app/assets/images/illustration-exemple.svg';
+
+// TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Slider simple"
+const slides = [
+  {
+    id: 1,
+    subtitle: 'Basé dans les Hautes-Alpes & fait avec amour',
+    title: 'Des créations uniques au crochet',
+    content: 'Chaque pièce est soigneusement confectionnée à la main dans les Hautes-Alpes. Offrez-vous ou à vos proches un savoir-faire authentique, alliant douceur et originalité.',
+    image: 'https://picsum.photos/2000/500',
+    link: { label: 'Découvrir mes créations au crochet', href: '/boutique/crochet' },
+  },
+  {
+    id: 2,
+    subtitle: 'Savoir-faire local & matériaux naturels',
+    title: 'Des créations en bois gravé sur-mesure',
+    content: 'Chaque pièce en bois est gravée avec précision et passion. Apportez une touche naturelle et chaleureuse à votre intérieur.',
+    image: 'https://picsum.photos/2000/801',
+    link: { label: 'Découvrir mes créations en bois', href: '/boutique/bois' },
+  },
+  {
+    id: 3,
+    subtitle: 'Textiles personnalisés & impressions durables',
+    title: 'Du flocage sur tissu à votre image',
+    content: 'T-shirts, tote bags, sweats... Donnez vie à vos idées avec un flocage textile de qualité, réalisé avec soin dans mon atelier. Créations uniques, messages personnalisés et petits tirages à la demande.',
+    image: 'https://picsum.photos/1400/801',
+    link: { label: 'Découvrir mes flocages textiles', href: '/boutique/flocage' },
+  }
+];
+
+const qualitiesColumns = [
+  {
+    id: 1,
+    image: illustration,
+    title: 'Créations en crochet',
+    content: 'Des pièces uniques faites à la main dans les Hautes-Alpes, pour un style chaleureux et authentique. Chaque création est imaginée avec soin, réalisée avec passion, et pensée pour durer. Que ce soit pour un cadeau ou pour soi, ces pièces apportent une touche de douceur et d’originalité à votre quotidien, tout en soutenant un artisanat local et éthique.',
+    link: {
+      label: 'Découvrir ma collection au crochet',
+      href: '/boutique/crochet',
+    },
+  },
+  {
+    id: 2,
+    image: illustration,
+    title: 'Objets en bois gravé',
+    content: 'Personnalisez vos objets en bois avec une gravure fine, idéale pour des cadeaux uniques et naturels. Chaque pièce est travaillée dans un bois issu de sources durables, puis gravée avec soin dans mon atelier. Que ce soit pour marquer un événement, une date ou un prénom, le bois gravé ajoute une dimension émotionnelle à vos objets du quotidien.',
+    link: {
+      label: 'Découvrir mes pièces de bois gravé',
+      href: '/boutique/bois',
+    },
+  },
+  {
+    id: 3,
+    image: illustration,
+    title: 'Flocage sur textile',
+    content: 'T-shirts, sweats, tote bags… chaque pièce est imprimée à la demande dans mon atelier. Vous choisissez votre message, vos couleurs, et je m’occupe de tout. Le flocage permet un rendu net, durable et totalement personnalisable, parfait pour les petits événements, les cadeaux symboliques ou simplement pour porter fièrement ce qui vous ressemble.',
+    link: {
+      label: 'Découvrir mes flocages',
+      href: '/boutique/flocage',
+    },
+  },
+];
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <>
+      {/* TODO : Ce titre h1 avec les données issues de la page d'accueil */}
+      <CustomTitle level={1} className='sr-only'>Des créations artisanales et originales sur mesure</CustomTitle>
+      <SingleSlider slides={slides} />
+      <MultipleColumns columns={qualitiesColumns}></MultipleColumns>
+    </>
   );
 }

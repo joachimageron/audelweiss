@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_nav_navs",
+  "info": {
+    "displayName": "Nav",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "link": {
+      "type": "component",
+      "repeatable": true,
+      "component": "link.link",
+      "required": true
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

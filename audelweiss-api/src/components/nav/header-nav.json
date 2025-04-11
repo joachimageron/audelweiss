@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_nav_header_navs",
+  "info": {
+    "displayName": "LinkList",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "navTitle": {
+      "type": "component",
+      "repeatable": false,
+      "component": "link.link",
+      "required": true
+    },
+    "navItems": {
+      "type": "component",
+      "repeatable": true,
+      "required": false,
+      "component": "link.link"
+    }
+  }
+}

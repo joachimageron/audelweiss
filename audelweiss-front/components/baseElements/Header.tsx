@@ -14,6 +14,9 @@ import CustomButton from '../atoms/CustomButton';
 import CustomInputField from '@/components/atoms/CustomInputField';
 
 type HeaderProps = {
+    /**
+     * className ---> elements' additionnal classes
+     */
     className?: string;
 };
 

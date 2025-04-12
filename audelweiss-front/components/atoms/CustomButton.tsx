@@ -4,12 +4,39 @@ import Image from "next/image";
 import arrowIcon from '@/app/assets/images/icons/icon-arrow-right.svg';
 
 type ButtonProps = {
+    /**
+     * children ---> child content
+     */
     children: React.ReactNode;
+
+    /**
+     * onClick ---> function to call on click inside
+     */
     onClick?: () => void;
+
+    /**
+     * type ---> button's type, can be 'button', 'submit' or 'reset'
+     */
     type?: 'button' | 'submit' | 'reset';
+
+    /**
+     * className ---> elements' additionnal classes
+     */
     className?: string;
+
+    /**
+     * withIcon ---> if true : adding a left arrow icon which appears on hover
+     */
     withIcon?: boolean;
+
+    /**
+     * tabIndex ---> allows to managed to accessibility with tab navigation
+     */
     tabIndex?: number;
+
+    /**
+     * isSpanTag ---> if true: replace the <button> tag by a <span> tag
+     */
     isSpanTag?: boolean;
 };
 

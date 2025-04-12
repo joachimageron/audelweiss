@@ -16,7 +16,14 @@ type Column = {
 };
 
 type MultiplesColumnsProps = {
+    /**
+     * columns ---> array of columns which defines the contents
+     */
     columns: Column[];
+
+    /**
+     * className ---> elements' additionnal classes
+     */
     className?: string;
 };
 

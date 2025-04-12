@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Header from "@/components/baseElements/Header";
+import Footer from "@/components/baseElements/Footer";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
     const [showHeader, setShowHeader] = useState(true);
@@ -46,7 +47,9 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             <main className="lg:pt-0 pt-[7.4rem]">
                 {children}
             </main>
-            <footer></footer>
+            <footer>
+                <Footer />
+            </footer>
         </>
     );
 }

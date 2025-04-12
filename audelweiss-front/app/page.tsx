@@ -1,6 +1,7 @@
 import CustomTitle from '@/components/atoms/CustomTitle';
 import SingleSlider from '@/components/modules/SingleSlider';
 import MultipleColumns from '@/components/modules/MultiplesColumns';
+import HighlightingCreations from '@/components/modules/HighlightingCreations';
 import illustration from '@/app/assets/images/illustration-exemple.svg';
 
 // TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Slider simple"
@@ -31,6 +32,7 @@ const slides = [
   }
 ];
 
+// TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Colonnes multiples"
 const qualitiesColumns = [
   {
     id: 1,
@@ -64,6 +66,32 @@ const qualitiesColumns = [
   },
 ];
 
+// TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Créations mises en avant"
+const highlightingCreationsImages = [
+  {
+    imgSrc: 'https://picsum.photos/350/500',
+    imgAlt: 'Créations en crochet',
+    imgDescription: 'Créations en crochet',
+    linkHref: '/boutique/crochet',
+  },
+  {
+    imgSrc: 'https://picsum.photos/350/501',
+    imgAlt: 'Objets en bois gravé',
+    imgDescription: 'Objets en bois gravé',
+    linkHref: '/boutique/bois',
+  },
+  {
+    imgSrc: 'https://picsum.photos/350/502',
+    imgAlt: 'Textiles floqués',
+    linkHref: '/boutique/flocage',
+  },
+  {
+    imgSrc: 'https://picsum.photos/350/503',
+    imgAlt: 'Personnalisations',
+    imgDescription: 'Personnalisations',
+  },
+];
+
 
 export default function Home() {
   return (
@@ -72,6 +100,7 @@ export default function Home() {
       <CustomTitle level={1} className='sr-only'>Des créations artisanales et originales sur mesure</CustomTitle>
       <SingleSlider slides={slides} />
       <MultipleColumns columns={qualitiesColumns}></MultipleColumns>
+      <HighlightingCreations title="Créations sur-mesure" link={{ label: 'Découvrir toutes mes créations personnalisées', href: '/boutique' }} images={highlightingCreationsImages}>En plus des produits vendus dans la boutique, je suis ouverte à toute proposition de création personnalisée, afin de vous proposer des créations qui correspondent le plus à vos besoins.<br></br>N'hésitez pas à jeter un coup d'oeil à mon portfolio de réalisations, cela pourrait vous apporter de nouvelles inspirations ! ✨</HighlightingCreations>
     </>
   );
 }

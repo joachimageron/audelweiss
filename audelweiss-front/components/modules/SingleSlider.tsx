@@ -65,7 +65,7 @@ export default function SingleSlider({ slides, className = '' }: SingleSliderPro
           return (
             <SwiperSlide key={slide.id} className="relative flex justify-end items-center 2xl:px-[14rem] lg:px-[7rem] px-[4rem] lg:py-[5rem] py-[9rem] lg:min-h-[calc(100svh-11rem)]">
               <div className='single-slide-image absolute top-0 left-0 w-full h-full'>
-                <img src={slide.image} alt={slide.title} className="w-full h-full object-cover object-center" />
+                <Image src={slide.image} alt={slide.title} fill className="object-cover object-center" priority={index === 0} sizes="100vw" unoptimized />
               </div>
               <a href={slide.link.href} className="relative 2xl:pr-[10rem] lg:pr-[2rem] max-w-[68rem]" tabIndex={isActive ? 0 : -1} aria-hidden={!isActive}>
                 <p className="single-slide-subtitle relative mb-[2rem] pl-[5rem] text-[2rem] font-medium">{slide.subtitle}</p>

@@ -3,7 +3,7 @@
 import CustomLink from '../atoms/CustomLink';
 import CustomButton from '../atoms/CustomButton';
 import Image from 'next/image';
-import logoImage from '@/app/assets/images/logo/logo.svg';
+import logoImage from '@/app/assets/images/logo/logo-white.svg';
 
 type FooterProps = {
     className?: string;
@@ -11,77 +11,92 @@ type FooterProps = {
 
 const footerLinks = [
     {
-        title: 'Navigation',
+        title: 'Besoin d’aide ?',
         links: [
-            { label: 'Accueil', href: '/' },
-            { label: 'La marque', href: '/marque' },
-            { label: 'Boutique', href: '/boutique' },
-            { label: 'Blog', href: '/blog' },
+            { label: 'Points de vente physiques', href: '/points-vente' },
+            { label: 'Livraison', href: '/livraison' },
+            { label: 'Foire aux questions', href: '/faq' },
+            { label: 'Me contacter', href: '/contact' },
         ],
     },
     {
-        title: 'Informations',
+        title: 'Liens utiles',
         links: [
+            { label: 'CGV', href: '/cgv' },
             { label: 'Mentions légales', href: '/mentions-legales' },
             { label: 'Politique de confidentialité', href: '/politique-confidentialite' },
-            { label: 'CGV', href: '/cgv' },
-        ],
-    },
-    {
-        title: 'Contact',
-        links: [
-            { label: 'contact@audelweiss.fr', href: 'mailto:contact@audelweiss.fr' },
-            { label: 'Instagram', href: 'https://instagram.com/audelweiss' },
         ],
     },
 ];
 
 export default function Footer({ className = '' }: FooterProps) {
     return (
-        <footer className={`bg-dark text-white px-[2rem] py-[4rem] lg:px-[6rem] ${className}`}>
-            <div className="flex flex-col lg:flex-row gap-[4rem] justify-between">
-                {/* Logo + Newsletter */}
-                <div className="flex flex-col gap-[2rem] max-w-[30rem]">
-                    <CustomLink href="/" title="Retour à l'accueil">
-                        <Image src={logoImage.src} alt="Logo Audelweiss" width={180} height={40} />
-                    </CustomLink>
-                    <form className="flex flex-col gap-[1rem]">
-                        <label htmlFor="newsletter" className="text-sm">Inscrivez-vous à la newsletter</label>
-                        <input
-                            type="email"
-                            id="newsletter"
-                            placeholder="Votre adresse email"
-                            className="p-[1rem] rounded text-black"
-                        />
-                        <CustomButton type="submit" className="bg-white text-black hover:bg-primary">S'inscrire</CustomButton>
-                    </form>
-                </div>
-
-                {/* Liens */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[3rem]">
-                    {footerLinks.map((section, index) => (
-                        <div key={index}>
-                            <h4 className="text-lg font-semibold mb-[1rem]">{section.title}</h4>
+        <footer className={`h-[600px] bg-dark-background text-white px-[2rem] py-[4rem] lg:px-[6rem] ${className}`}>
+            <div className="mx-auto h-full flex flex-col justify-between">
+                {/* Colonnes alignées au milieu verticalement */}
+                <div className="w-[80%] flex flex-col lg:flex-row gap-[3rem] items-center mx-auto my-auto">
+                    
+                    {/* Première colonne avec les liens "Besoin d'aide ?" */}
+                    {footerLinks[0] && (
+                        <div className="flex flex-col justify-center h-full flex-1">
+                            <h4 className="text-lg font-semibold mb-[1rem]">{footerLinks[0].title}</h4>
                             <ul className="flex flex-col gap-[.7rem]">
-                                {section.links.map((link, i) => (
+                                {footerLinks[0].links.map((link, i) => (
                                     <li key={i}>
-                                        <CustomLink
-                                            href={link.href}
-                                            className="text-sm hover:text-primary transition"
-                                        >
+                                        <CustomLink href={link.href} className="text-primary transition">
                                             {link.label}
                                         </CustomLink>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                    ))}
-                </div>
-            </div>
+                    )}
 
-            <div className="mt-[4rem] text-center text-sm text-gray-400">
-                &copy; {new Date().getFullYear()} Audelweiss. Tous droits réservés.
+                    {/* Colonne centrale avec du contenu brut (plus large) */}
+                    <div className="flex flex-col justify-center h-full text-center flex-2">
+                        <div className="mb-4 flex justify-center">
+                            <Image
+                                src={logoImage}
+                                alt="Logo Audelweiss"
+                                width={170} 
+                                height={160}
+                                className="mx-auto lg:mx-0"
+                            />
+                        </div>
+                        <p className="text-2xl leading-relaxed">
+                            Chaque pièce est imaginée et réalisée à la main dans les Hautes-Alpes, avec passion et créativité.
+                            Un mélange d’authenticité, d’expérimentation et d’énergie positive pour apporter douceur et harmonie à votre quotidien.
+                        </p>
+                        <p className="mt-3 italic text-base">Retrouvez-moi sur Instagram pour suivre les actus 🧶✨</p>
+                    </div>
+
+                    {/* Deuxième colonne avec les liens "Liens utiles" */}
+                    {footerLinks[1] && (
+                        <div className="flex flex-col justify-center h-full text-right items-end flex-1">
+                            <h4 className="text-lg font-semibold mb-[1rem]">{footerLinks[1].title}</h4>
+                            <ul className="flex flex-col gap-[.7rem]">
+                                {footerLinks[1].links.map((link, i) => (
+                                    <li key={i}>
+                                        <CustomLink href={link.href} className="text-primary transition">
+                                            {link.label}
+                                        </CustomLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                </div>
+
+                {/* Trait séparateur centré */}
+                <hr className="my-[2rem] w-[80%] mx-auto border-gray-600" />
+
+                {/* Copyright */}
+                <div className="text-center text-xxl text-gray-400">
+                    2025 © AUDELWEISS Craft – Site réalisé par Audrey HOSSEPIAN
+                </div>
             </div>
         </footer>
     );
 }
+

@@ -16,13 +16,20 @@ type Column = {
 };
 
 type MultiplesColumnsProps = {
+    /**
+     * columns ---> array of columns which defines the contents
+     */
     columns: Column[];
+
+    /**
+     * className ---> elements' additionnal classes
+     */
     className?: string;
 };
 
 export default function MultipleColumns({ columns, className = '' }: MultiplesColumnsProps) {
     return (
-        <section className={`multiples-columns inner-wrap flex flex-col items-center gap-[5rem] py-[7rem]`}>
+        <section className={`multiples-columns inner-wrap flex flex-col items-center gap-[5rem] mt-[7rem] mb-[9rem]`}>
             <CustomTitle level={2} className='text-[3.2rem]'>Titre optionnel et dynamique</CustomTitle>
 
             <div className="flex justify-center items-start gap-[4.5rem] lg:gap-[3rem] xl:gap-[6rem] flex-wrap">

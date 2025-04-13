@@ -46,8 +46,8 @@ export default function HighlightingCreations({ images, title, children, link, c
     return (
         <section className={`highlighting-creations inner-wrap flex flex-row lg:items-center gap-y-[3rem] lg:flex-nowrap flex-wrap mt-[7rem] mb-[5rem] ${className}`}>
             {images.slice(0, 4).map((creationImage, index) => {
-                const orderMap = [2, 4, 1, 5];
-                const orderClass = `lg:order-${orderMap[index] || 0}`;
+                const staticOrderClasses = ['lg:order-2', 'lg:order-4', 'lg:order-1', 'lg:order-5'];
+                const orderClass = staticOrderClasses[index] || ''
                 return (
                     <div key={index} className={`flex flex-col w-[50%] sm:w-[25%] px-[.6rem] lg:px-0 ${orderClass} ${index === 0 ? 'lg:ml-[-2.5rem] lg:mt-[-4rem] lg:z-1' : ''} ${index === 1 ? 'lg:mr-[-2.5rem] lg:mt-[-4rem] lg:z-1' : ''}`}>
                         {creationImage.linkHref ? (

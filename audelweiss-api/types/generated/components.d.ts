@@ -1,14 +1,14 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type { Schema, Struct } from "@strapi/strapi";
 
 export interface BlocksCardsList extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_cards_lists';
+  collectionName: "components_blocks_cards_lists";
   info: {
-    description: '';
-    displayName: 'Cards list';
-    icon: 'apps';
+    description: "";
+    displayName: "Cards list";
+    icon: "apps";
   };
   attributes: {
-    card: Schema.Attribute.Component<'component.card', true> &
+    cards: Schema.Attribute.Component<"component.card", true> &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -17,75 +17,70 @@ export interface BlocksCardsList extends Struct.ComponentSchema {
         },
         number
       >;
+    heading: Schema.Attribute.String;
   };
 }
 
 export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_featured_articles';
+  collectionName: "components_blocks_featured_articles";
   info: {
-    description: '';
-    displayName: 'Featured articles';
-    icon: 'grid';
+    description: "";
+    displayName: "Featured articles";
+    icon: "grid";
   };
   attributes: {
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
+    articles: Schema.Attribute.Relation<"oneToMany", "api::article.article">;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_featured_products';
+  collectionName: "components_blocks_featured_products";
   info: {
-    description: '';
-    displayName: 'Featured products';
-    icon: 'plus';
+    description: "";
+    displayName: "Featured products";
+    icon: "plus";
   };
   attributes: {
-    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    products: Schema.Attribute.Relation<"oneToMany", "api::product.product">;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface BlocksHero extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_heroes';
+  collectionName: "components_blocks_heroes";
   info: {
-    description: '';
-    displayName: 'Hero';
-    icon: 'layout';
+    description: "";
+    displayName: "Hero";
+    icon: "layout";
   };
   attributes: {
-    background: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
+    background: Schema.Attribute.Media<"images" | "files" | "videos" | "audios", true> & Schema.Attribute.Required;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
     subHeading: Schema.Attribute.Text;
   };
 }
 
 export interface BlocksImageAndText extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_image_and_texts';
+  collectionName: "components_blocks_image_and_texts";
   info: {
-    description: '';
-    displayName: 'Image and text';
-    icon: 'landscape';
+    description: "";
+    displayName: "Image and text";
+    icon: "landscape";
   };
   attributes: {
-    image: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
-    imagePosition: Schema.Attribute.Enumeration<['left', 'right']> &
-      Schema.Attribute.DefaultTo<'left'>;
+    image: Schema.Attribute.Media<"images" | "files"> & Schema.Attribute.Required;
+    imagePosition: Schema.Attribute.Enumeration<["left", "right"]> & Schema.Attribute.DefaultTo<"left">;
     text: Schema.Attribute.Blocks & Schema.Attribute.Required;
   };
 }
 
 export interface BlocksQuote extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_quotes';
+  collectionName: "components_blocks_quotes";
   info: {
-    description: '';
-    displayName: 'Quote';
-    icon: 'quote';
+    description: "";
+    displayName: "Quote";
+    icon: "quote";
   };
   attributes: {
     text: Schema.Attribute.Blocks & Schema.Attribute.Required;
@@ -93,115 +88,118 @@ export interface BlocksQuote extends Struct.ComponentSchema {
 }
 
 export interface ComponentCard extends Struct.ComponentSchema {
-  collectionName: 'components_component_cards';
+  collectionName: "components_component_cards";
   info: {
-    description: '';
-    displayName: 'Card';
-    icon: 'apps';
+    description: "";
+    displayName: "Card";
+    icon: "apps";
   };
   attributes: {
-    content: Schema.Attribute.Text;
+    backgroundImage: Schema.Attribute.Media<"images">;
+    description: Schema.Attribute.Text;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.Component<"navigation.link", false>;
   };
 }
 
 export interface NavigationGroup extends Struct.ComponentSchema {
-  collectionName: 'components_navigation_groups';
+  collectionName: "components_navigation_groups";
   info: {
-    description: '';
-    displayName: 'Group';
-    icon: 'bulletList';
+    description: "";
+    displayName: "Group";
+    icon: "bulletList";
   };
   attributes: {
-    entries: Schema.Attribute.Component<'navigation.link', true>;
-    heading: Schema.Attribute.Component<'navigation.link', false>;
+    entries: Schema.Attribute.Component<"navigation.link", true>;
+    heading: Schema.Attribute.Component<"navigation.link", false>;
   };
 }
 
 export interface NavigationLink extends Struct.ComponentSchema {
-  collectionName: 'components_navigation_links';
+  collectionName: "components_navigation_links";
   info: {
-    displayName: 'Link';
-    icon: 'link';
+    description: "";
+    displayName: "Link";
+    icon: "link";
   };
   attributes: {
     label: Schema.Attribute.String & Schema.Attribute.Required;
-    URL: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface OrderItemDiscountReference extends Struct.ComponentSchema {
-  collectionName: 'components_order_item_discount_references';
+  collectionName: "components_order_item_discount_references";
   info: {
-    description: '';
-    displayName: 'Discount reference';
-    icon: 'link';
+    description: "";
+    displayName: "Discount reference";
+    icon: "link";
   };
   attributes: {
-    discount: Schema.Attribute.Relation<'oneToOne', 'api::discount.discount'>;
+    discount: Schema.Attribute.Relation<"oneToOne", "api::discount.discount">;
   };
 }
 
 export interface OrderItemProductReference extends Struct.ComponentSchema {
-  collectionName: 'components_order_item_product_references';
+  collectionName: "components_order_item_product_references";
   info: {
-    description: '';
-    displayName: 'Product reference';
-    icon: 'link';
+    description: "";
+    displayName: "Product reference";
+    icon: "link";
   };
   attributes: {
-    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
+    product: Schema.Attribute.Relation<"oneToOne", "api::product.product">;
   };
 }
 
 export interface ProductOption extends Struct.ComponentSchema {
-  collectionName: 'components_product_options';
+  collectionName: "components_product_options";
   info: {
-    description: '';
-    displayName: 'Variant group';
-    icon: 'bulletList';
+    description: "";
+    displayName: "Variant group";
+    icon: "bulletList";
   };
   attributes: {
     description: Schema.Attribute.Text;
-    format: Schema.Attribute.Enumeration<['radio', 'checkbox', 'text input']>;
+    format: Schema.Attribute.Enumeration<["radio", "checkbox", "text input"]>;
     label: Schema.Attribute.String & Schema.Attribute.Required;
-    options: Schema.Attribute.Component<'product.option-variant', true>;
-    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
+    options: Schema.Attribute.Component<"product.option-variant", true>;
+    product: Schema.Attribute.Relation<"oneToOne", "api::product.product">;
     required: Schema.Attribute.Boolean;
   };
 }
 
 export interface ProductOptionVariant extends Struct.ComponentSchema {
-  collectionName: 'components_product_option_variants';
+  collectionName: "components_product_option_variants";
   info: {
-    description: '';
-    displayName: 'Variant group option';
-    icon: 'paintBrush';
+    description: "";
+    displayName: "Variant group option";
+    icon: "paintBrush";
   };
   attributes: {
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<"images">;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     price: Schema.Attribute.Decimal;
     stock: Schema.Attribute.Integer & Schema.Attribute.Required;
   };
 }
 
-declare module '@strapi/strapi' {
+declare module "@strapi/strapi" {
   export module Public {
     export interface ComponentSchemas {
-      'blocks.cards-list': BlocksCardsList;
-      'blocks.featured-articles': BlocksFeaturedArticles;
-      'blocks.featured-products': BlocksFeaturedProducts;
-      'blocks.hero': BlocksHero;
-      'blocks.image-and-text': BlocksImageAndText;
-      'blocks.quote': BlocksQuote;
-      'component.card': ComponentCard;
-      'navigation.group': NavigationGroup;
-      'navigation.link': NavigationLink;
-      'order.item-discount-reference': OrderItemDiscountReference;
-      'order.item-product-reference': OrderItemProductReference;
-      'product.option': ProductOption;
-      'product.option-variant': ProductOptionVariant;
+      "blocks.cards-list": BlocksCardsList;
+      "blocks.featured-articles": BlocksFeaturedArticles;
+      "blocks.featured-products": BlocksFeaturedProducts;
+      "blocks.hero": BlocksHero;
+      "blocks.image-and-text": BlocksImageAndText;
+      "blocks.quote": BlocksQuote;
+      "component.card": ComponentCard;
+      "navigation.group": NavigationGroup;
+      "navigation.link": NavigationLink;
+      "order.item-discount-reference": OrderItemDiscountReference;
+      "order.item-product-reference": OrderItemProductReference;
+      "product.option": ProductOption;
+      "product.option-variant": ProductOptionVariant;
     }
   }
 }

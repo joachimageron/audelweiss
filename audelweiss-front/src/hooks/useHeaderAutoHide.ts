@@ -10,7 +10,7 @@ export const useHeaderAutoHide = () => {
   useEffect(() => {
     if (!["xs", "sm", "md"].includes(breakpoint)) return;
 
-    const handleScroll = () => {
+    const onScroll = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
@@ -22,9 +22,9 @@ export const useHeaderAutoHide = () => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [breakpoint, lastScrollY]);
 
   return showHeader;

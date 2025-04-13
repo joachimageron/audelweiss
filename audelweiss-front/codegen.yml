@@ -1,0 +1,10 @@
+schema:
+  - "http://localhost:1337/graphql"
+
+documents: "src/**/*.gql.ts"
+
+generates:
+  src/types/generated.d.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"

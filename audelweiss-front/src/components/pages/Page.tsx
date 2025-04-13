@@ -5,6 +5,7 @@ import { usePage } from "@/src/hooks/usePage";
 import PageBlocks from "../PageBlocks";
 import SingleSlider from "../modules/SingleSlider";
 import CustomTitle from "../atoms/CustomTitle";
+import { PageContentDynamicZone } from "@/src/types/generated";
 
 // TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Slider simple"
 const MOCK_SLIDES = [
@@ -54,7 +55,7 @@ const Page = () => {
       </CustomTitle>
       <SingleSlider slides={MOCK_SLIDES} />
 
-      {data?.content && <PageBlocks blocks={data.content} />}
+      {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}
     </>
   );
 };

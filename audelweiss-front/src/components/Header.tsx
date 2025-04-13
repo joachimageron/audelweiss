@@ -5,6 +5,7 @@ import Navigation from "@/src/components/baseElements/Navigation";
 import { useHeaderAutoHide } from "@/src/hooks/useHeaderAutoHide";
 import Image from "next/image";
 import { useHeader } from "@/src/hooks/useHeader";
+import { ComponentNavigationGroup } from "../types/generated";
 
 const Header = () => {
   const showHeader = useHeaderAutoHide();
@@ -30,7 +31,7 @@ const Header = () => {
           />
         )}
       </CustomLink>
-      {header?.navigation && <Navigation items={header.navigation} />}
+      {header?.navigation && <Navigation items={header.navigation as ComponentNavigationGroup[]} />}
     </header>
   );
 };

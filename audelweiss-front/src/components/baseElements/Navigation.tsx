@@ -7,13 +7,10 @@ import Button from "../atoms/Button";
 import CustomInputField from "@/src/components/atoms/CustomInputField";
 import { Burger, Close, Search, ShoppingCart, User } from "../icons";
 import useLockBodyScroll from "@/src/hooks/useBodyScrollLock";
-import { Link } from "@/src/hooks/useHeader";
+import { ComponentNavigationGroup } from "@/src/types/generated";
 
 type Props = {
-  items: {
-    heading: Link;
-    entries: Link[];
-  }[];
+  items: ComponentNavigationGroup[];
   className?: string;
 };
 
@@ -45,7 +42,7 @@ const MOCK_NAV_ITEMS = [
   },
 ];
 
-const Navigation = ({ className }: Props) => {
+const Navigation = ({ items, className }: Props) => {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);

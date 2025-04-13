@@ -1,29 +1,17 @@
-import request from "graphql-request";
 import { useQuery } from "@tanstack/react-query";
 import { headerQuery } from "../gql/header.gql";
-
-export type Link = {
-  label: string;
-  url: string;
-};
-
-export type Header = {
-  logo: {
-    url: string;
-  };
-  navigation: {
-    heading: Link;
-    entries: Link[];
-  }[];
-};
+import { HeaderQuery } from "../types/generated";
+import { useApi } from "./useApi";
 
 type Params = {
   queryKey: string[];
 };
 
 export const useHeader = ({ queryKey }: Params) => {
+  const api = useApi();
+
   const queryFn = async () => {
-    const response = await request<{ header: Header }>("http://localhost:1337/graphql", headerQuery);
+    const response = await api.request<HeaderQuery>(headerQuery);
 
     return response.header;
   };

@@ -1,17 +1,7 @@
-import request from "graphql-request";
 import { pagesQuery } from "../gql/page.gql";
 import { useQuery } from "@tanstack/react-query";
-
-export type Block = {
-  __typename: string;
-  id: string;
-};
-
-type Page = {
-  title: string;
-  slug: string;
-  content: Block[];
-};
+import { PagesQuery } from "../types/generated";
+import { useApi } from "./useApi";
 
 type Params = {
   filters: {
@@ -31,8 +21,10 @@ const mapFilters = (filters: Params["filters"]) => {
 };
 
 export const usePage = ({ filters, queryKey }: Params) => {
+  const api = useApi();
+
   const queryFn = async () => {
-    const response = await request<{ pages: Page[] }>("http://localhost:1337/graphql", pagesQuery, {
+    const response = await api.request<PagesQuery>(pagesQuery, {
       ...mapFilters(filters),
     });
 

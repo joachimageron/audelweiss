@@ -1,30 +1,13 @@
 "use client";
 
+import { ComponentBlocksCardsList } from "@/src/types/generated";
 import CustomLink from "../atoms/CustomLink";
 import CustomTitle from "../atoms/CustomTitle";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 
-type Card = {
-  id: number;
-  backgroundImage?: {
-    url: string;
-  };
-  heading: string;
-  description: string;
-  link: {
-    label: string;
-    url: string;
-  };
-};
-
-export type CardsList = {
-  heading?: string;
-  cards: Card[];
-};
-
 type Props = {
-  block: CardsList;
+  block: ComponentBlocksCardsList;
   className?: string;
 };
 
@@ -64,8 +47,8 @@ const CardsList = ({ block }: Props) => {
           const formattedNumber = String(index + 1).padStart(2, "0");
 
           return (
-            <article key={`card-${card.id}`} className={item({ topMargin: index === 1 })}>
-              {card.backgroundImage && (
+            <article key={`card-${card?.id}`} className={item({ topMargin: index === 1 })}>
+              {card?.backgroundImage && (
                 <Image
                   src={`http://localhost:1337${card.backgroundImage.url}`}
                   alt=""
@@ -76,12 +59,14 @@ const CardsList = ({ block }: Props) => {
               )}
               <span className={number()}>{formattedNumber}</span>
               <CustomTitle level={3} className={title()}>
-                {card.heading}
+                {card?.heading}
               </CustomTitle>
-              <p className={body()}>{card.description}</p>
-              <CustomLink href={card.link.url} className={link()}>
-                {card.link.label}
-              </CustomLink>
+              <p className={body()}>{card?.description}</p>
+              {card?.link?.url && (
+                <CustomLink href={card?.link?.url} className={link()}>
+                  {card?.link?.label}
+                </CustomLink>
+              )}
             </article>
           );
         })}

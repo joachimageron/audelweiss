@@ -4,12 +4,39 @@ import Link from "next/link";
 import { ArrowRight } from "../icons";
 
 type CustomLinkProps = {
+  /**
+   * href ---> link's target
+   */
   href: string;
+
+  /**
+   * children ---> child content
+   */
   children: React.ReactNode;
+
+  /**
+   * className ---> elements' additionnal classes
+   */
   className?: string;
+
+  /**
+   * title ---> potential link's title
+   */
   title?: string;
+
+  /**
+   * target ---> define the links' destination context
+   */
   target?: "_blank" | "_self";
+
+  /**
+   * withIcon ---> if true : adding a left arrow icon which appears on hover
+   */
   withIcon?: boolean;
+
+  /**
+   * isButtonLink ---> if true : adding a button style to the link
+   */
   isButtonLink?: boolean;
 };
 

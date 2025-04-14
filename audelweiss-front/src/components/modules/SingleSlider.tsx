@@ -22,7 +22,13 @@ type Slide = {
 };
 
 type SingleSliderProps = {
+  /**
+   * slides ---> array of slides which defines the contents
+   */
   slides: Slide[];
+  /**
+   * className ---> elements' additionnal classes
+   */
   className?: string;
 };
 

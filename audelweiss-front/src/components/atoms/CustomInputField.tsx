@@ -4,9 +4,21 @@ import { InputHTMLAttributes, forwardRef } from "react";
 import clsx from "clsx";
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * label ---> defines the field's label content
+   */
   label?: string;
+  /**
+   * error ---> defines the error's message
+   */
   error?: string;
+  /**
+   * className ---> elements' additionnal classes
+   */
   className?: string;
+  /**
+   * hasLabelHidden ---> if true: hide the label to make it accessible only to screen readers
+   */
   hasLabelHidden?: boolean;
 }
 

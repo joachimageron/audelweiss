@@ -129,6 +129,8 @@ export interface NavigationLink extends Struct.ComponentSchema {
     icon: 'link';
   };
   attributes: {
+    hasIconOnly: Schema.Attribute.Boolean;
+    icon: Schema.Attribute.Media<'images' | 'files'>;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
   };

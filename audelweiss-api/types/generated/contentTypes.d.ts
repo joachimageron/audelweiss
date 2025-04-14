@@ -519,7 +519,6 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
     navigation: Schema.Attribute.Component<'navigation.group', true> &
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    showCartLabel: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

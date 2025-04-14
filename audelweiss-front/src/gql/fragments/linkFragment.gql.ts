@@ -4,5 +4,9 @@ export const linkFragment = gql`
   fragment LinkFields on ComponentNavigationLink {
     label
     url
+    hasIconOnly
+    icon {
+      url
+    }
   }
 `;

@@ -14,9 +14,8 @@ const Header = () => {
 
   return (
     <header
-      className={`z-50 transition-transform duration-300 lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] bg-white shadow-md ${
-        showHeader ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`z-50 transition-transform duration-300 lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] bg-white shadow-md ${showHeader ? "translate-y-0" : "-translate-y-full"
+        }`}
     >
       {/* Logo */}
       <CustomLink href="/" className="mr-auto" title="Retourner à la page d'accueil">

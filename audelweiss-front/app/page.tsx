@@ -123,9 +123,9 @@ export default function Home() {
       >
         En plus des produits vendus dans la boutique, je suis ouverte à toute
         proposition de création personnalisée, afin de vous proposer des
-        créations qui correspondent le plus à vos besoins.<br></br>N'hésitez pas
-        à jeter un coup d'oeil à mon portfolio de réalisations, cela pourrait
-        vous apporter de nouvelles inspirations ! ✨
+        créations qui correspondent le plus à vos besoins.<br></br>
+        N&rsquo;hésitez pas à jeter un coup d&rsquo;oeil à mon portfolio de
+        réalisations, cela pourrait vous apporter de nouvelles inspirations ! ✨
       </HighlightingCreations>
     </>
   );

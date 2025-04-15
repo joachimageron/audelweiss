@@ -2,6 +2,9 @@
 
 import { ArrowRight } from "../icons";
 
+import { tv } from "tailwind-variants";
+import clsx from "clsx";
+
 type ButtonProps = {
   /**
    * children ---> child content
@@ -29,15 +32,26 @@ type ButtonProps = {
   tabIndex?: number;
 };
 
-const Button = ({ children, onClick, type = "button", className = "", withIcon = false, tabIndex }: ButtonProps) => {
-  const baseClass = `inline-block px-[2rem] py-[1.2rem] text-center leading-none bg-primary hover:bg-dark-primary text-white rounded-[4px] transition duration-200 ${className} ${
-    withIcon ? "as--icon" : ""
-  }`;
+const styles = tv({
+  slots: {
+    customButtonBase: "inline-block px-[2rem] py-[1.2rem] text-center leading-none bg-primary hover:bg-dark-primary text-white rounded-[4px] transition duration-200 cursor-pointer",
+    iconArrowRight: "w-1.5 h-1.5 a-icon",
+  },
+  variants: {
+    withIcon: {
+      true: {
+        customButtonBase: "as--icon",
+      }
+    },
+  },
+});
+const { customButtonBase, iconArrowRight } = styles();
 
+const Button = ({ children, onClick, type = "button", className = "", withIcon = false, tabIndex }: ButtonProps) => {
   return (
-    <button type={type} onClick={onClick} className={`${baseClass} cursor-pointer`} tabIndex={tabIndex}>
+    <button type={type} onClick={onClick} className={clsx(customButtonBase({ withIcon }), className)} tabIndex={tabIndex}>
       {children}
-      {withIcon && <ArrowRight className="w-1.5 h-1.5 a-icon" />}
+      {withIcon && <ArrowRight className={iconArrowRight()} />}
     </button>
   );
 };

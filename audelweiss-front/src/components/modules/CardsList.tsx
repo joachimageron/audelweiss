@@ -1,10 +1,14 @@
 "use client";
 
+import Image from "next/image";
+
 import { ComponentBlocksCardsList } from "@/src/types/generated";
+
 import CustomLink from "../atoms/CustomLink";
 import CustomTitle from "../atoms/CustomTitle";
-import Image from "next/image";
+
 import { tv } from "tailwind-variants";
+
 
 type Props = {
   block: ComponentBlocksCardsList;
@@ -13,57 +17,57 @@ type Props = {
 
 const styles = tv({
   slots: {
-    base: "multiples-columns inner-wrap flex flex-col items-center gap-[5rem]",
-    list: "flex justify-center items-start gap-[4.5rem] lg:gap-[3rem] xl:gap-[6rem] flex-wrap",
-    item: "relative lg:flex-1 w-full lg:max-w-[40%]",
-    image: "absolute right-0 lg:right-[-5rem] bottom-[-1rem] z-[-1] opacity-40",
-    number: "inline-block mb-[1.4rem] text-primary text-[3rem] font-bold font-aboreto opacity-70",
-    title: "mb-[1.5rem] text-[2.4rem]",
-    body: "mb-[1.5rem] leading-[1.9]",
-    link: "text-primary as--underline-hover",
+    sectionContainer: "multiples-columns inner-wrap flex flex-col items-center gap-[5rem]",
+    sectionTitle: "text-[3.2rem]",
+    cardsList: "flex justify-center items-start gap-[4.5rem] lg:gap-[3rem] xl:gap-[6rem] flex-wrap",
+    cardItem: "relative lg:flex-1 w-full lg:max-w-[40%]",
+    cardImage: "absolute right-0 lg:right-[-5rem] bottom-[-1rem] z-[-1] opacity-40",
+    cardNumber: "inline-block mb-[1.4rem] text-primary text-[3rem] font-bold font-aboreto opacity-70",
+    cardTitle: "mb-[1.5rem] text-[2.4rem]",
+    cardDescription: "mb-[1.5rem] leading-[1.9]",
+    cardLink: "text-primary as--underline-hover",
   },
   variants: {
     topMargin: {
       true: {
-        item: "lg:mt-[5rem]",
+        cardItem: "lg:mt-[5rem]",
       },
     },
   },
 });
-
-const { base, list, item, image, number, title, body, link } = styles();
+const { sectionContainer, sectionTitle, cardsList, cardItem, cardImage, cardNumber, cardTitle, cardDescription, cardLink } = styles();
 
 const CardsList = ({ block }: Props) => {
   return (
-    <section className={base()}>
+    <section className={sectionContainer()}>
       {block.heading && (
-        <CustomTitle level={2} className="text-[3.2rem]">
+        <CustomTitle level={2} className={sectionTitle()}>
           {block.heading}
         </CustomTitle>
       )}
 
-      <div className={list()}>
+      <div className={cardsList()}>
         {block.cards.map((card, index) => {
           const formattedNumber = String(index + 1).padStart(2, "0");
 
           return (
-            <article key={`card-${card?.id}`} className={item({ topMargin: index === 1 })}>
+            <article key={`card-${card?.id}`} className={cardItem({ topMargin: index === 1 })}>
               {card?.backgroundImage && (
                 <Image
                   src={`http://localhost:1337${card.backgroundImage.url}`}
                   alt=""
                   width={250}
                   height={250}
-                  className={image()}
+                  className={cardImage()}
                 />
               )}
-              <span className={number()}>{formattedNumber}</span>
-              <CustomTitle level={3} className={title()}>
+              <span className={cardNumber()}>{formattedNumber}</span>
+              <CustomTitle level={3} className={cardTitle()}>
                 {card?.heading}
               </CustomTitle>
-              <p className={body()}>{card?.description}</p>
+              <p className={cardDescription()}>{card?.description}</p>
               {card?.link?.url && (
-                <CustomLink href={card?.link?.url} className={link()}>
+                <CustomLink href={card?.link?.url} className={cardLink()}>
                   {card?.link?.label}
                 </CustomLink>
               )}

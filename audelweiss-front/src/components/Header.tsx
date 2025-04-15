@@ -1,11 +1,33 @@
 "use client";
 
+import { useHeaderAutoHide } from "@/src/hooks/useHeaderAutoHide";
+import { useHeader } from "@/src/hooks/useHeader";
+
 import CustomLink from "@/src/components/atoms/CustomLink";
 import Navigation from "@/src/components/baseElements/Navigation";
-import { useHeaderAutoHide } from "@/src/hooks/useHeaderAutoHide";
 import Image from "next/image";
-import { useHeader } from "@/src/hooks/useHeader";
-import { ComponentNavigationGroup } from "../types/generated";
+
+import { tv } from "tailwind-variants";
+
+
+const styles = tv({
+  slots: {
+    headerWrapper: "z-50 transition-transform duration-300 lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] bg-white shadow-md",
+    logoLink: "mr-auto",
+    logoImage: "max-w-[20rem]",
+  },
+  variants: {
+    visible: {
+      true: {
+        headerWrapper: "translate-y-0",
+      },
+      false: {
+        headerWrapper: "-translate-y-full"
+      }
+    }
+  }
+});
+const { headerWrapper, logoLink, logoImage } = styles();
 
 const Header = () => {
   const showHeader = useHeaderAutoHide();
@@ -13,12 +35,9 @@ const Header = () => {
   const { data: header } = useHeader({ queryKey: ["header"] });
 
   return (
-    <header
-      className={`z-50 transition-transform duration-300 lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] bg-white shadow-md ${showHeader ? "translate-y-0" : "-translate-y-full"
-        }`}
-    >
+    <header className={headerWrapper({ visible: showHeader })}>
       {/* Logo */}
-      <CustomLink href="/" className="mr-auto" title="Retourner à la page d'accueil">
+      < CustomLink href="/" className={logoLink()} title="Retourner à la page d'accueil" >
         {header?.logo && (
           <Image
             src={`http://localhost:1337${header.logo.url}`}
@@ -26,12 +45,12 @@ const Header = () => {
             width={200}
             height={45}
             priority
-            className="max-w-[20rem]"
+            className={logoImage()}
           />
         )}
-      </CustomLink>
-      {header?.navigation && <Navigation items={header.navigation as ComponentNavigationGroup[]} />}
-    </header>
+      </CustomLink >
+      {header?.navigation && <Navigation />}
+    </header >
   );
 };
 

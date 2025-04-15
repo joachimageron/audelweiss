@@ -70,7 +70,7 @@ export default function Footer({ className = '' }: FooterProps) {
 
                         <ul>
                             {footerLinks[2] && footerLinks[2].links.map((link, i) => {
-                                const { label, href, icon, iconSize = 17, hasIconOnly } = link;
+                                const { label, href, icon, iconSize, hasIconOnly } = link;
                                 return (
                                     <li key={i} className="flex justify-center mt-5">
                                         <a href={href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2">                                            {/* Conteneur pour l’icône avec bordure circulaire */}

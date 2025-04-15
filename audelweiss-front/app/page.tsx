@@ -1,6 +1,7 @@
 import CustomTitle from '@/components/atoms/CustomTitle';
 import SingleSlider from '@/components/modules/SingleSlider';
 import MultipleColumns from '@/components/modules/MultiplesColumns';
+import TextImageBlock from '@/components/modules/TextImage';
 import illustration from '@/app/assets/images/illustration-exemple.svg';
 
 // TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Slider simple"
@@ -72,6 +73,15 @@ export default function Home() {
       <CustomTitle level={1} className='sr-only'>Des créations artisanales et originales sur mesure</CustomTitle>
       <SingleSlider slides={slides} />
       <MultipleColumns columns={qualitiesColumns}></MultipleColumns>
+      <TextImageBlock
+        title="Découvre notre service"
+        content={<p>Ce module est réutilisable et flexible. Tu peux même ajouter du <strong>rich text</strong> ici.</p>}
+        image={{ src: "/images/example.jpg", alt: "Demo" }}
+        link={{ label: "En savoir plus", href: "/services" }}
+        imageLeft={false}
+        largeImage={true}
+      />
+
     </>
   );
 }

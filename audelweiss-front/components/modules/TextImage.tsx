@@ -5,7 +5,7 @@ import CustomTitle from "../atoms/CustomTitle";
 import CustomLink from "../atoms/CustomLink";
 import clsx from "clsx";
 
-type TextImageBlockProps = {
+type TextImageProps = {
   title: string;
   content: React.ReactNode;
   image: {
@@ -21,7 +21,7 @@ type TextImageBlockProps = {
   className?: string;
 };
 
-export default function TextImageBlock({
+export default function TextImage({
   title,
   content,
   image,
@@ -29,7 +29,7 @@ export default function TextImageBlock({
   imageLeft = false,
   largeImage = false,
   className = "",
-}: TextImageBlockProps) {
+}: TextImageProps) {
   return (
     <section className={clsx("text-image-block inner-wrap py-[5rem]", className)}>
       <div
@@ -39,9 +39,9 @@ export default function TextImageBlock({
         )}
       >
         {/* Text Column */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-full lg:w-2/3">
           <CustomTitle level={2} className="mb-[2rem] text-[2.8rem]">{title}</CustomTitle>
-          <div className="richtext mb-[2rem]">{content}</div>
+          <div className="richtext mb-[2rem] me-[5rem] leading-[3rem]">{content}</div>
           <CustomLink href={link.href} className="text-primary as--underline-hover">
             {link.label}
           </CustomLink>
@@ -50,8 +50,8 @@ export default function TextImageBlock({
         {/* Image Column */}
         <div
           className={clsx(
-            "w-full",
-            largeImage ? "lg:w-1/2" : "lg:w-[40%]",
+            "w-full ms-5",
+            largeImage ? "lg:w-[40%]" : "lg:w-1/3",
             "flex justify-center"
           )}
         >

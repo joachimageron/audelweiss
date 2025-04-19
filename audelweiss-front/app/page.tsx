@@ -1,8 +1,10 @@
 import CustomTitle from '@/components/atoms/CustomTitle';
 import SingleSlider from '@/components/modules/SingleSlider';
 import MultipleColumns from '@/components/modules/MultiplesColumns';
-import TextImageBlock from '@/components/modules/TextImage';
+import TextImage from "@/components/modules/TextImage";
 import illustration from '@/app/assets/images/illustration-exemple.svg';
+import { title } from 'process';
+
 
 // TODO : Dynamiser ces données avec celles issues de Strapi pour le composant "Slider simple"
 const slides = [
@@ -65,6 +67,24 @@ const qualitiesColumns = [
   },
 ];
 
+const textImage = [
+  {
+    id: 1,
+    title: "Mon parcours professionnel",
+    content: "Après des études en informatique et en création de sites internet, je me suis installé à Lyon pour développer mes compétences dans le digital. Le web, en constante évolution m'a permis d'explorer la création sous diverses formes, alliant technique et esthétique. Cette immersion dans la conception digitale a posé les bases de ma démarche artistique. Aujourd'hui freelance spécialisé en développement web et design UI/UX, je transmets également mon savoir en tant que formatrice. Cette avente créative s'est enrichi avec ma découverte du crochet, une nouvelle forme d'expression artistique qui me permet d'allier matières, couleur et énergie.",
+    image: {
+      src: '/images/audrey.jpg',
+      alt: 'Audrey',
+    },
+    link: {
+      label: 'Découvrir mon site freelance',
+      href: '/',
+    },
+    imageLeft: false,
+    largeImage: false,
+  },
+]
+
 
 export default function Home() {
   return (
@@ -73,13 +93,13 @@ export default function Home() {
       <CustomTitle level={1} className='sr-only'>Des créations artisanales et originales sur mesure</CustomTitle>
       <SingleSlider slides={slides} />
       <MultipleColumns columns={qualitiesColumns}></MultipleColumns>
-      <TextImageBlock
-        title="Découvre notre service"
-        content={<p>Ce module est réutilisable et flexible. Tu peux même ajouter du <strong>rich text</strong> ici.</p>}
-        image={{ src: "/images/example.jpg", alt: "Demo" }}
-        link={{ label: "En savoir plus", href: "/services" }}
-        imageLeft={false}
-        largeImage={true}
+      <TextImage
+        title={textImage[0].title}
+        content={textImage[0].content}
+        image={textImage[0].image}
+        link={textImage[0].link}
+        imageLeft={textImage[0].imageLeft}
+        largeImage={textImage[0].largeImage}
       />
 
     </>

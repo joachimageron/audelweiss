@@ -1,8 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "../icons";
+import { ArrowRight } from "@/src/components/icons";
 
+import { tv } from "tailwind-variants";
+import clsx from "clsx";
+
+/**
+ * Props for the CustomLink component
+ */
 type CustomLinkProps = {
   /**
    * href ---> link's target
@@ -40,6 +46,28 @@ type CustomLinkProps = {
   isButtonLink?: boolean;
 };
 
+const styles = tv({
+  slots: {
+    baseLink: "transition duration-200",
+    iconArrowRight: "w-1.5 h-1.5 a-icon",
+  },
+  variants: {
+    isButtonLink: {
+      true: {
+        baseLink:
+          "inline-block px-[2rem] py-[1.2rem] text-center leading-none bg-primary hover:bg-dark-primary text-white rounded-[4px]",
+      },
+    },
+    withIcon: {
+      true: {
+        baseLink: "as--icon",
+      },
+    },
+  },
+});
+
+const { baseLink, iconArrowRight } = styles();
+
 const CustomLink = ({
   href,
   children,
@@ -54,14 +82,10 @@ const CustomLink = ({
       href={href}
       target={target}
       title={title}
-      className={`${className} ${
-        isButtonLink
-          ? "inline-block px-[2rem] py-[1.2rem] text-center leading-none bg-primary hover:bg-dark-primary text-white rounded-[4px] transition duration-200"
-          : ""
-      } ${withIcon ? "as--icon" : ""}`}
+      className={clsx(baseLink({ isButtonLink, withIcon }), className)}
     >
       {children}
-      {withIcon && <ArrowRight className="w-1.5 h-1.5 a-icon" />}
+      {withIcon && <ArrowRight className={iconArrowRight()} />}
     </Link>
   );
 };

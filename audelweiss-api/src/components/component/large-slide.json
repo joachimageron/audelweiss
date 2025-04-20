@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_component_large_slides",
+  "info": {
+    "displayName": "Large slide",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "slideOvertitle": {
+      "type": "string"
+    },
+    "slideTitle": {
+      "type": "string",
+      "required": true
+    },
+    "slideContent": {
+      "type": "string"
+    },
+    "slideLink": {
+      "type": "component",
+      "repeatable": false,
+      "component": "navigation.link"
+    }
+  }
+}

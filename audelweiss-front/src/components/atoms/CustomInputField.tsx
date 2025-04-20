@@ -1,8 +1,12 @@
 "use client";
 
 import { InputHTMLAttributes, forwardRef } from "react";
+import { tv } from "tailwind-variants";
 import clsx from "clsx";
 
+/**
+ * Props for the InputField component
+ */
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
    * label ---> defines the field's label content
@@ -22,28 +26,54 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   hasLabelHidden?: boolean;
 }
 
+const styles = tv({
+  slots: {
+    wrapper: "flex flex-col gap-[.5rem] w-full",
+    label: "font-medium",
+    inputBase:
+      "border px-[1.6rem] py-[1.2rem] rounded-[.4rem] text-dark-primary transition outline-none placeholder:text-dark-primary focus:ring-1",
+    errorText: "text-red-500 text-sm",
+  },
+  variants: {
+    error: {
+      true: {
+        inputBase: "border-red-500 focus:ring-red-500",
+      },
+      false: {
+        inputBase: "border-primary focus:ring-primary",
+      },
+    },
+    hasLabelHidden: {
+      true: {
+        label: "sr-only",
+      },
+    },
+  },
+});
+
+const { wrapper, label, inputBase, errorText } = styles();
+
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ label, error, className, hasLabelHidden = false, ...props }, ref) => {
+  ({ label: labelText, error, className, hasLabelHidden = false, ...props }, ref) => {
     return (
-      <div className="flex flex-col gap-[.5rem] w-full">
-        {label && (
-          <label htmlFor={props.id} className={clsx("font-medium", hasLabelHidden && "sr-only")}>
-            {label}
+      <div className={wrapper()}>
+        {labelText && (
+          <label
+            htmlFor={props.id}
+            className={label({ hasLabelHidden })}
+          >
+            {labelText}
           </label>
         )}
         <input
           ref={ref}
-          className={clsx(
-            "border px-[1.6rem] py-[1.2rem] rounded-[.4rem] text-dark-primary transition outline-none placeholder:text-dark-primary focus:ring-1 focus:ring-primary",
-            error ? "border-red-500" : "border-primary",
-            className,
-          )}
+          className={clsx(inputBase({ error: !!error }), className)}
           {...props}
         />
-        {error && <span className="text-red-500 text-sm">{error}</span>}
+        {error && <span className={errorText()}>{error}</span>}
       </div>
     );
-  },
+  }
 );
 
 InputField.displayName = "InputField";

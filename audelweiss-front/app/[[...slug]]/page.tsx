@@ -9,6 +9,5 @@ export default async function App({
   console.log("slug", slug)
 
 
-
   return <Page />;
 }

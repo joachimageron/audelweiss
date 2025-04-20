@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { ComponentBlocksCardsList } from "@/src/types/generated";
 
-import CustomLink from "../atoms/CustomLink";
-import CustomTitle from "../atoms/CustomTitle";
+import CustomLink from "@/src/components/atoms/CustomLink";
+import CustomTitle from "@/src/components/atoms/CustomTitle";
 
 import { tv } from "tailwind-variants";
 

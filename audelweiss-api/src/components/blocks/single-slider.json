@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_blocks_single_sliders",
+  "info": {
+    "displayName": "Single slider"
+  },
+  "options": {},
+  "attributes": {
+    "listSlides": {
+      "type": "component",
+      "repeatable": true,
+      "component": "component.large-slide",
+      "min": 1,
+      "required": true
+    }
+  }
+}

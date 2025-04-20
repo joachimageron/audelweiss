@@ -7,10 +7,10 @@ import Image from "next/image";
 import { useHeader } from "@/src/hooks/useHeader";
 import useLockBodyScroll from "@/src/hooks/useBodyScrollLock";
 
-import CustomLink from "../atoms/CustomLink";
-import Button from "../atoms/Button";
-import CustomInputField from "../atoms/CustomInputField";
-import { Burger, Close, Search } from "../icons";
+import CustomLink from "@/src/components/atoms/CustomLink";
+import Button from "@/src/components/atoms/Button";
+import CustomInputField from "@/src/components/atoms/CustomInputField";
+import { Burger, Close, Search } from "@/src/components/icons";
 
 import { tv } from "tailwind-variants";
 

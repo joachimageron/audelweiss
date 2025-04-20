@@ -1,5 +1,6 @@
 import { gql } from "graphql-tag";
-import { cardsListFragment } from "./fragments/blocks/cardsListFragment.gql";
+import { cardsListFragment } from "@/src/gql/fragments/blocks/cardsListFragment.gql";
+import { singleSliderFragment } from "@/src/gql/fragments/blocks/singleSliderFragment.gql";
 
 export const pagesQuery = gql`
   query Pages($filters: PageFiltersInput) {
@@ -9,8 +10,10 @@ export const pagesQuery = gql`
       content {
         __typename
         ...CardsListFields
+        ...SingleSliderFields
       }
     }
   }
   ${cardsListFragment}
+  ${singleSliderFragment}
 `;

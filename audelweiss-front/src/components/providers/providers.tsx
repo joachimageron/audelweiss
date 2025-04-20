@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ReactQueryProvider from "./ReactQueryProvider";
+import ReactQueryProvider from "@/src/components/providers/ReactQueryProvider";
 
 interface ProvidersProps {
   children: React.ReactNode;

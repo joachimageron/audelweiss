@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { headerQuery } from "../gql/header.gql";
-import { HeaderQuery } from "../types/generated";
-import { useApi } from "./useApi";
+import { headerQuery } from "@/src/gql/header.gql";
+import { HeaderQuery } from "@/src/types/generated";
+import { useApi } from "@/src/hooks/useApi";
 
 type Params = {
   queryKey: string[];

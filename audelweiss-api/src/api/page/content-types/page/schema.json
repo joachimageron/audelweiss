@@ -27,7 +27,8 @@
         "blocks.image-and-text",
         "blocks.hero",
         "blocks.featured-products",
-        "blocks.featured-articles"
+        "blocks.featured-articles",
+        "blocks.single-slider"
       ],
       "required": false
     },

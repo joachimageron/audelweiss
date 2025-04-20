@@ -93,6 +93,23 @@ export interface BlocksQuote extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksSingleSlider extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_single_sliders';
+  info: {
+    displayName: 'Single slider';
+  };
+  attributes: {
+    listSlides: Schema.Attribute.Component<'component.large-slide', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+  };
+}
+
 export interface ComponentCard extends Struct.ComponentSchema {
   collectionName: 'components_component_cards';
   info: {
@@ -105,6 +122,24 @@ export interface ComponentCard extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
     link: Schema.Attribute.Component<'navigation.link', false>;
+  };
+}
+
+export interface ComponentLargeSlide extends Struct.ComponentSchema {
+  collectionName: 'components_component_large_slides';
+  info: {
+    description: '';
+    displayName: 'Large slide';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
+    slideContent: Schema.Attribute.String;
+    slideLink: Schema.Attribute.Component<'navigation.link', false>;
+    slideOvertitle: Schema.Attribute.String;
+    slideTitle: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -201,7 +236,9 @@ declare module '@strapi/strapi' {
       'blocks.hero': BlocksHero;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;
+      'blocks.single-slider': BlocksSingleSlider;
       'component.card': ComponentCard;
+      'component.large-slide': ComponentLargeSlide;
       'navigation.group': NavigationGroup;
       'navigation.link': NavigationLink;
       'order.item-discount-reference': OrderItemDiscountReference;

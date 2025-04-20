@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "../icons";
+import { ArrowRight } from "@/src/components/icons";
 
 import { tv } from "tailwind-variants";
 import clsx from "clsx";

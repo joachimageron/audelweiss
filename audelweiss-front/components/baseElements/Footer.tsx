@@ -1,8 +1,8 @@
 'use client';
-import CustomLink from '../atoms/CustomLink';
-import CustomButton from '../atoms/CustomButton';
-import Image from 'next/image';
-import logoImage from '@/app/assets/images/logo/logo-white.svg';
+import Image from "next/image";
+import CustomLink from "@/components/atoms/CustomLink";
+import CustomButton from "@/components/atoms/CustomButton";
+import logoImage from "@/app/assets/images/logo/logo-white.svg";
 import instaImage from '@/app/assets/images/icons/icon-instagram.svg';
 
 type FooterProps = {

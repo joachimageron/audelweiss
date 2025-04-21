@@ -3,6 +3,7 @@ import SingleSlider from '@/components/modules/SingleSlider';
 import MultipleColumns from '@/components/modules/MultiplesColumns';
 import TextImage from "@/components/modules/TextImage";
 import illustration from '@/app/assets/images/illustration-exemple.svg';
+import FeaturedProducts from "@/components/modules/FeaturedProducts";
 import { title } from 'process';
 
 
@@ -85,6 +86,48 @@ const textImage = [
   },
 ]
 
+const products = [
+  {
+    id: 1,
+    name: "Boucles d’oreilles artisanales",
+    price: "35€",
+    image: {
+      src: "/images/boucles.webp",
+      alt: "Boucles d’oreilles",
+    },
+    promo: true,
+  },
+  {
+    id: 2,
+    name: "Collier fait main",
+    price: "42€",
+    image: {
+      src: "/images/collier.webp",
+      alt: "Collier",
+    },
+    promo: false,
+  },
+  {
+    id: 3,
+    name: "Bracelet perlé",
+    price: "29€",
+    image: {
+      src: "/images/bracelet.webp",
+    },
+    promo: true,
+  },
+  {
+    id: 4,
+    name: "Bracelet perlé",
+    price: "29€",
+    image: {
+      src: "/images/bracelet.webp",
+    },
+    promo: true,
+  },
+];
+
+
 
 export default function Home() {
   return (
@@ -100,6 +143,10 @@ export default function Home() {
         link={textImage[0].link}
         imageLeft={textImage[0].imageLeft}
         largeImage={textImage[0].largeImage}
+      />
+        <FeaturedProducts
+        description={<h2>Des créations artisanales uniques<br></br>Fait main avec passion, pour toi et ceux que tu aimes</h2>}
+        products={products}
       />
 
     </>

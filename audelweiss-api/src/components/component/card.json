@@ -14,11 +14,6 @@
     "description": {
       "type": "text"
     },
-    "link": {
-      "type": "component",
-      "repeatable": false,
-      "component": "navigation.link"
-    },
     "backgroundImage": {
       "type": "media",
       "multiple": false,
@@ -26,6 +21,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "link": {
+      "type": "component",
+      "repeatable": false,
+      "component": "component.simple-link",
+      "required": false
     }
   }
 }

@@ -80,7 +80,7 @@ const SingleSlider = ({ block, className = "" }: Props) => {
                   <img src={process.env.NEXT_PUBLIC_GRAPHQL_API_URL + slide.backgroundImage?.url || ""} alt={slide.slideTitle || ""} className={slideImage()} />
                 </div>
                 <a
-                  href={slide.slideLink.href}
+                  href={slide.slideLink?.url}
                   className={slideContentWrapper()}
                   tabIndex={isActive ? 0 : -1}
                   aria-hidden={!isActive}
@@ -88,7 +88,7 @@ const SingleSlider = ({ block, className = "" }: Props) => {
                   <p className={slideSubtitle()}>{slide.slideOvertitle}</p>
                   <h2 className={slideTitle()}>{slide.slideTitle}</h2>
                   <p className={slideDescription()}>{slide.slideContent}</p>
-                  <Button withIcon>{slide.slideLink.label}</Button>
+                  <Button withIcon isSpanButton>{slide.slideLink?.label}</Button>
                 </a>
               </SwiperSlide>
 

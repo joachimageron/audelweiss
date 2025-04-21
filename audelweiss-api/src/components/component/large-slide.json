@@ -25,12 +25,12 @@
       "required": true
     },
     "slideContent": {
-      "type": "string"
+      "type": "text"
     },
     "slideLink": {
       "type": "component",
       "repeatable": false,
-      "component": "navigation.link"
+      "component": "component.simple-link"
     }
   }
 }

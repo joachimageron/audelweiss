@@ -613,6 +613,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.featured-products',
         'blocks.featured-articles',
         'blocks.single-slider',
+        'blocks.highlighting-creations',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

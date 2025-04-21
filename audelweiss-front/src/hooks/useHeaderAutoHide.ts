@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useBreakpoint } from "./useBreakpoint";
+import { useBreakpoint } from "@/src/hooks/useBreakpoint";
 
 export const useHeaderAutoHide = () => {
   const [showHeader, setShowHeader] = useState(true);

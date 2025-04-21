@@ -65,6 +65,31 @@ export interface BlocksHero extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksHighlightingCreations extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_highlighting_creations';
+  info: {
+    description: '';
+    displayName: 'Highlighting creations';
+    icon: 'star';
+  };
+  attributes: {
+    content: Schema.Attribute.Blocks;
+    creationsList: Schema.Attribute.Component<
+      'component.creation-presentation',
+      true
+    > &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 1;
+        },
+        number
+      >;
+    link: Schema.Attribute.Component<'component.simple-link', false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface BlocksImageAndText extends Struct.ComponentSchema {
   collectionName: 'components_blocks_image_and_texts';
   info: {
@@ -96,7 +121,9 @@ export interface BlocksQuote extends Struct.ComponentSchema {
 export interface BlocksSingleSlider extends Struct.ComponentSchema {
   collectionName: 'components_blocks_single_sliders';
   info: {
+    description: '';
     displayName: 'Single slider';
+    icon: 'landscape';
   };
   attributes: {
     listSlides: Schema.Attribute.Component<'component.large-slide', true> &
@@ -121,7 +148,21 @@ export interface ComponentCard extends Struct.ComponentSchema {
     backgroundImage: Schema.Attribute.Media<'images'>;
     description: Schema.Attribute.Text;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
-    link: Schema.Attribute.Component<'navigation.link', false>;
+    link: Schema.Attribute.Component<'component.simple-link', false>;
+  };
+}
+
+export interface ComponentCreationPresentation extends Struct.ComponentSchema {
+  collectionName: 'components_component_creation_presentations';
+  info: {
+    displayName: 'Creation presentation';
+    icon: 'magic';
+  };
+  attributes: {
+    creationImage: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    creationLegend: Schema.Attribute.String;
+    creationLink: Schema.Attribute.Component<'component.simple-link', false>;
   };
 }
 
@@ -136,10 +177,22 @@ export interface ComponentLargeSlide extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios'
     > &
       Schema.Attribute.Required;
-    slideContent: Schema.Attribute.String;
-    slideLink: Schema.Attribute.Component<'navigation.link', false>;
+    slideContent: Schema.Attribute.Text;
+    slideLink: Schema.Attribute.Component<'component.simple-link', false>;
     slideOvertitle: Schema.Attribute.String;
     slideTitle: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ComponentSimpleLink extends Struct.ComponentSchema {
+  collectionName: 'components_component_simple_links';
+  info: {
+    displayName: 'Simple Link';
+    icon: 'exit';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -234,11 +287,14 @@ declare module '@strapi/strapi' {
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-products': BlocksFeaturedProducts;
       'blocks.hero': BlocksHero;
+      'blocks.highlighting-creations': BlocksHighlightingCreations;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;
       'blocks.single-slider': BlocksSingleSlider;
       'component.card': ComponentCard;
+      'component.creation-presentation': ComponentCreationPresentation;
       'component.large-slide': ComponentLargeSlide;
+      'component.simple-link': ComponentSimpleLink;
       'navigation.group': NavigationGroup;
       'navigation.link': NavigationLink;
       'order.item-discount-reference': OrderItemDiscountReference;

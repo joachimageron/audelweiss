@@ -1,7 +1,7 @@
 import { gql } from "graphql-tag";
 
-export const linkFragment = gql`
-  fragment LinkFields on ComponentNavigationLink {
+export const navLinkFragment = gql`
+  fragment NavLinkFields on ComponentNavigationLink {
     label
     url
     hasIconOnly

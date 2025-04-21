@@ -27,6 +27,10 @@ type ButtonProps = {
    */
   withIcon?: boolean;
   /**
+   * isSpanButton ---> allows to use <span> tags instead of <button> tags
+   */
+  isSpanButton?: boolean;
+  /**
    * tabIndex ---> allows to managed to accessibility with tab navigation
    */
   tabIndex?: number;
@@ -47,9 +51,24 @@ const styles = tv({
 });
 const { customButtonBase, iconArrowRight } = styles();
 
-const Button = ({ children, onClick, type = "button", className = "", withIcon = false, tabIndex }: ButtonProps) => {
+const Button = ({ children, onClick, type = "button", className = "", withIcon = false, isSpanButton = false, tabIndex }: ButtonProps) => {
+  const commonProps = {
+    onClick,
+    className: clsx(customButtonBase({ withIcon }), className),
+    tabIndex,
+  };
+
+  if (isSpanButton) {
+    return (
+      <span {...commonProps}>
+        {children}
+        {withIcon && <ArrowRight className={iconArrowRight()} />}
+      </span>
+    );
+  }
+
   return (
-    <button type={type} onClick={onClick} className={clsx(customButtonBase({ withIcon }), className)} tabIndex={tabIndex}>
+    <button type={type} {...commonProps}>
       {children}
       {withIcon && <ArrowRight className={iconArrowRight()} />}
     </button>

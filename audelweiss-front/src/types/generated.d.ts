@@ -240,6 +240,22 @@ export type ComponentBlocksHeroBackground_ConnectionArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type ComponentBlocksHighlightingCreations = {
+  __typename?: 'ComponentBlocksHighlightingCreations';
+  content?: Maybe<Scalars['JSON']['output']>;
+  creationsList?: Maybe<Array<Maybe<ComponentComponentCreationPresentation>>>;
+  id: Scalars['ID']['output'];
+  link?: Maybe<ComponentComponentSimpleLink>;
+  title: Scalars['String']['output'];
+};
+
+
+export type ComponentBlocksHighlightingCreationsCreationsListArgs = {
+  filters?: InputMaybe<ComponentComponentCreationPresentationFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type ComponentBlocksImageAndText = {
   __typename?: 'ComponentBlocksImageAndText';
   id: Scalars['ID']['output'];
@@ -273,16 +289,32 @@ export type ComponentComponentCard = {
   description?: Maybe<Scalars['String']['output']>;
   heading: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  link?: Maybe<ComponentNavigationLink>;
+  link?: Maybe<ComponentComponentSimpleLink>;
 };
 
 export type ComponentComponentCardFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ComponentComponentCardFiltersInput>>>;
   description?: InputMaybe<StringFilterInput>;
   heading?: InputMaybe<StringFilterInput>;
-  link?: InputMaybe<ComponentNavigationLinkFiltersInput>;
+  link?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
   not?: InputMaybe<ComponentComponentCardFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ComponentComponentCardFiltersInput>>>;
+};
+
+export type ComponentComponentCreationPresentation = {
+  __typename?: 'ComponentComponentCreationPresentation';
+  creationImage: UploadFile;
+  creationLegend?: Maybe<Scalars['String']['output']>;
+  creationLink?: Maybe<ComponentComponentSimpleLink>;
+  id: Scalars['ID']['output'];
+};
+
+export type ComponentComponentCreationPresentationFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentComponentCreationPresentationFiltersInput>>>;
+  creationLegend?: InputMaybe<StringFilterInput>;
+  creationLink?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
+  not?: InputMaybe<ComponentComponentCreationPresentationFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentComponentCreationPresentationFiltersInput>>>;
 };
 
 export type ComponentComponentLargeSlide = {
@@ -290,7 +322,7 @@ export type ComponentComponentLargeSlide = {
   backgroundImage: UploadFile;
   id: Scalars['ID']['output'];
   slideContent?: Maybe<Scalars['String']['output']>;
-  slideLink?: Maybe<ComponentNavigationLink>;
+  slideLink?: Maybe<ComponentComponentSimpleLink>;
   slideOvertitle?: Maybe<Scalars['String']['output']>;
   slideTitle: Scalars['String']['output'];
 };
@@ -300,9 +332,24 @@ export type ComponentComponentLargeSlideFiltersInput = {
   not?: InputMaybe<ComponentComponentLargeSlideFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ComponentComponentLargeSlideFiltersInput>>>;
   slideContent?: InputMaybe<StringFilterInput>;
-  slideLink?: InputMaybe<ComponentNavigationLinkFiltersInput>;
+  slideLink?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
   slideOvertitle?: InputMaybe<StringFilterInput>;
   slideTitle?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentComponentSimpleLink = {
+  __typename?: 'ComponentComponentSimpleLink';
+  id: Scalars['ID']['output'];
+  label: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type ComponentComponentSimpleLinkFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentComponentSimpleLinkFiltersInput>>>;
+  label?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentComponentSimpleLinkFiltersInput>>>;
+  url?: InputMaybe<StringFilterInput>;
 };
 
 export type ComponentNavigationGroup = {
@@ -549,7 +596,7 @@ export type FooterInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentLargeSlide | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -1181,7 +1228,7 @@ export type Page = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type PageContentDynamicZone = ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleSlider | Error;
+export type PageContentDynamicZone = ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleSlider | Error;
 
 export type PageEntityResponseCollection = {
   __typename?: 'PageEntityResponseCollection';
@@ -2429,13 +2476,17 @@ export type UsersPermissionsUserRelationResponseCollection = {
   nodes: Array<UsersPermissionsUser>;
 };
 
-export type CardsListFieldsFragment = { __typename?: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
+export type CardsListFieldsFragment = { __typename?: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
 
-export type SingleSliderFieldsFragment = { __typename?: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null } | null> };
+export type HighlightingCreationsFieldsFragment = { __typename?: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null };
+
+export type SingleSliderFieldsFragment = { __typename?: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> };
 
 export type ImageFieldsFragment = { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string };
 
-export type LinkFieldsFragment = { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null };
+export type NavLinkFieldsFragment = { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null };
+
+export type SimpleLinkFieldsFragment = { __typename?: 'ComponentComponentSimpleLink', label: string, url: string };
 
 export type HeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2447,4 +2498,4 @@ export type PagesQueryVariables = Exact<{
 }>;
 
 
-export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles' } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHero' } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote' } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles' } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHero' } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote' } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };

@@ -28,7 +28,8 @@
         "blocks.hero",
         "blocks.featured-products",
         "blocks.featured-articles",
-        "blocks.single-slider"
+        "blocks.single-slider",
+        "blocks.highlighting-creations"
       ],
       "required": false
     },

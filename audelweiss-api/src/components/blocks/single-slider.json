@@ -1,7 +1,9 @@
 {
   "collectionName": "components_blocks_single_sliders",
   "info": {
-    "displayName": "Single slider"
+    "displayName": "Single slider",
+    "description": "",
+    "icon": "landscape"
   },
   "options": {},
   "attributes": {

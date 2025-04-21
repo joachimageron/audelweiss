@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_component_creation_presentations",
+  "info": {
+    "displayName": "Creation presentation",
+    "icon": "magic"
+  },
+  "options": {},
+  "attributes": {
+    "creationImage": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "creationLink": {
+      "type": "component",
+      "repeatable": false,
+      "component": "component.simple-link"
+    },
+    "creationLegend": {
+      "type": "string"
+    }
+  }
+}

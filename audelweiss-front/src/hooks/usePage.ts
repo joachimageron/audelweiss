@@ -1,7 +1,7 @@
-import { pagesQuery } from "../gql/page.gql";
+import { pagesQuery } from "@/src/gql/page.gql";
 import { useQuery } from "@tanstack/react-query";
-import { PagesQuery } from "../types/generated";
-import { useApi } from "./useApi";
+import { PagesQuery } from "@/src/types/generated";
+import { useApi } from "@/src/hooks/useApi";
 
 type Params = {
   filters: {

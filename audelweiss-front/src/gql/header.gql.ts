@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { linkFragment } from "./fragments/linkFragment.gql";
+import { navLinkFragment } from "@/src/gql/fragments/navLinkFragment.gql";
 
 export const headerQuery = gql`
   query Header {
@@ -9,14 +9,14 @@ export const headerQuery = gql`
       }
       navigation {
         entries {
-          ...LinkFields
+          ...NavLinkFields
         }
         heading {
-          ...LinkFields
+          ...NavLinkFields
         }
         id
       }
     }
   }
-  ${linkFragment}
+  ${navLinkFragment}
 `;

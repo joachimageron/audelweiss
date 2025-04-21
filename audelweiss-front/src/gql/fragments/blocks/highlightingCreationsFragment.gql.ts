@@ -2,20 +2,25 @@ import { gql } from "graphql-tag";
 import { simpleLinkFragment } from "@/src/gql/fragments/simpleLinkFragment.gql";
 import { imageFragment } from "@/src/gql/fragments/imageFragment.gql";
 
-export const singleSliderFragment = gql`
-  fragment SingleSliderFields on ComponentBlocksSingleSlider {
+export const highlightingCreationsFragment = gql` 
+  fragment HighlightingCreationsFields on ComponentBlocksHighlightingCreations {
     id
-    listSlides {
-      backgroundImage {
+    title
+    content
+    link {
+      id
+      label
+      url
+    }
+    creationsList {
+      id
+      creationImage {
         ...ImageFields
       }
-      id
-      slideContent
-      slideLink {
+      creationLink {
         ...SimpleLinkFields
       }
-      slideOvertitle
-      slideTitle
+      creationLegend
     }
   }
   ${simpleLinkFragment}

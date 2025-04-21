@@ -1,6 +1,6 @@
 import { gql } from "graphql-tag";
-import { linkFragment } from "../linkFragment.gql";
-import { imageFragment } from "../imageFragment.gql";
+import { simpleLinkFragment } from "@/src/gql/fragments/simpleLinkFragment.gql";
+import { imageFragment } from "@/src/gql/fragments/imageFragment.gql";
 
 export const cardsListFragment = gql`
   fragment CardsListFields on ComponentBlocksCardsList {
@@ -11,13 +11,13 @@ export const cardsListFragment = gql`
       heading
       description
       link {
-        ...LinkFields
+        ...SimpleLinkFields
       }
       backgroundImage {
         ...ImageFields
       }
     }
   }
-  ${linkFragment}
+  ${simpleLinkFragment}
   ${imageFragment}
 `;

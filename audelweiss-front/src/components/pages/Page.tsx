@@ -6,8 +6,12 @@ import PageBlocks from "@/src/components/PageBlocks";
 import CustomTitle from "@/src/components//atoms/CustomTitle";
 import { PageContentDynamicZone } from "@/src/types/generated";
 
-const Page = () => {
-  const { data } = usePage({ filters: { slug: "home" }, queryKey: ["home"] });
+type Props = {
+  params: string[];
+};
+
+const Page = ({ params }: Props) => {
+  const { data } = usePage({ filters: { slug: params ? params[0] : "home" }, queryKey: ["page"] });
 
   return (
     <>

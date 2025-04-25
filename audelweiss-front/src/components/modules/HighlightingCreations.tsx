@@ -61,7 +61,7 @@ const HighlightingCreations = ({ block, className = "" }: Props) => {
                             >
                                 <Image
                                     src={imgSrc}
-                                    alt={creation.creationImage?.alternativeText || ""}
+                                    alt={creation.creationImage?.alternativeText || "Image de création personnalisée"}
                                     className={creationLinkImage()}
                                     width={250}
                                     height={400}
@@ -72,7 +72,7 @@ const HighlightingCreations = ({ block, className = "" }: Props) => {
                             <div className={creationLink()}>
                                 <Image
                                     src={imgSrc}
-                                    alt={creation.creationImage?.alternativeText || ""}
+                                    alt={creation.creationImage?.alternativeText || "Image de création personnalisée"}
                                     className={creationImage()}
                                     width={250}
                                     height={400}

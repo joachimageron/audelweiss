@@ -42,8 +42,8 @@ export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
     icon: 'plus';
   };
   attributes: {
+    heading: Schema.Attribute.Blocks;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -114,7 +114,19 @@ export interface BlocksQuote extends Struct.ComponentSchema {
     icon: 'quote';
   };
   attributes: {
-    text: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface BlocksSingleRichtext extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_single_richtexts';
+  info: {
+    description: '';
+    displayName: 'Single richtext';
+    icon: 'feather';
+  };
+  attributes: {
+    richtextContent: Schema.Attribute.Blocks & Schema.Attribute.Required;
   };
 }
 
@@ -134,6 +146,17 @@ export interface BlocksSingleSlider extends Struct.ComponentSchema {
         },
         number
       >;
+  };
+}
+
+export interface BlocksTest extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_tests';
+  info: {
+    displayName: 'test';
+    icon: 'briefcase';
+  };
+  attributes: {
+    rdsfc: Schema.Attribute.RichText;
   };
 }
 
@@ -290,7 +313,9 @@ declare module '@strapi/strapi' {
       'blocks.highlighting-creations': BlocksHighlightingCreations;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;
+      'blocks.single-richtext': BlocksSingleRichtext;
       'blocks.single-slider': BlocksSingleSlider;
+      'blocks.test': BlocksTest;
       'component.card': ComponentCard;
       'component.creation-presentation': ComponentCreationPresentation;
       'component.large-slide': ComponentLargeSlide;

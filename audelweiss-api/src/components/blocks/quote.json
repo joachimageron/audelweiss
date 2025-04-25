@@ -8,7 +8,7 @@
   "options": {},
   "attributes": {
     "text": {
-      "type": "blocks",
+      "type": "text",
       "required": true
     }
   }

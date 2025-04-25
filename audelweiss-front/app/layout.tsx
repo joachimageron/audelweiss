@@ -3,8 +3,9 @@ import { DM_Sans, Aboreto, Allura } from "next/font/google";
 
 import "@/src/styles/global.css";
 
-import Providers from "../src/components/providers/providers";
+import Providers from "@/src/components/providers/providers";
 import Header from "@/src/components/Header";
+import Footer from "@/src/components/baseElements/Footer";
 import ScrollToTopButton from "@/src/components/baseElements/ToTopButton";
 
 const dmSans = DM_Sans({
@@ -42,7 +43,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main className="lg:pt-0 pt-[7.4rem]">{children}</main>
-          <footer></footer>
+          <Footer />
           <ScrollToTopButton />
         </Providers>
       </body>

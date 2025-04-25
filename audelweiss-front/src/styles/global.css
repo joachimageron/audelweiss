@@ -10,6 +10,7 @@
   --secondary: #7768ae;
   --dark-secondary: #483883;
   --background: #fafafa;
+  --dark-background: #303028;
   --text: #303028;
   
   --filter-white: brightness(0) saturate(100%) invert(100%) sepia(99%) saturate(0%) hue-rotate(227deg) brightness(105%)
@@ -31,6 +32,7 @@
   --color-secondary: var(--secondary);
   --color-dark-secondary: var(--dark-secondary);
   --color-background: var(--background);
+  --color-dark-background: var(--dark-background);
   --color-text: var(--text);
 
   --spacing: 1rem;
@@ -40,6 +42,7 @@
 ** Base components
 ***********************/
 html {
+  font-size: 0.625em;
   font-size: 0.625em;
   scroll-behavior: smooth;
 }
@@ -70,13 +73,20 @@ body {
   background-position: 0 100%;
   background-size: 0 0.2rem;
   transition: background-size 0.2s ease-out;
+  background-size: 0 0.2rem;
+  transition: background-size 0.2s ease-out;
 }
 
 .as--underline-hover.text-secondary {
-  background-image: linear-gradient(to right, var(--secondary), var(--secondary));
+  background-image: linear-gradient(
+    to right,
+    var(--secondary),
+    var(--secondary)
+  );
 }
 
 .as--underline-hover:hover {
+  background-size: 100% 0.2rem;
   background-size: 100% 0.2rem;
 }
 
@@ -84,6 +94,7 @@ button.as--icon,
 a.as--icon,
 span.as--icon {
   position: relative;
+  transition: 0.3s ease;
   transition: 0.3s ease;
 }
 
@@ -105,6 +116,7 @@ span.as--icon .a-icon {
   height: auto;
   filter: var(--filter-white);
   opacity: 0;
+  transition: opacity 0.2s ease-in;
   transition: opacity 0.2s ease-in;
 }
 
@@ -138,19 +150,29 @@ span.as--icon:hover .a-icon {
 
 .single-slider .single-slide-subtitle:before {
   content: "";
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
   translate: 0 -50%;
   width: 4rem;
   height: 0.2rem;
+  height: 0.2rem;
   background-color: var(--text);
 }
 
 .single-slider .single-slide-image::after {
   content: "";
+  content: "";
   position: absolute;
   inset: 0;
+  background-image: linear-gradient(
+    40deg,
+    rgba(246, 185, 156, 0) 0%,
+    rgba(246, 185, 156, 0.65) 0%,
+    rgba(255, 97, 135, 0.58) 100%
+  );
+  opacity: 0.3;
   background-image: linear-gradient(
     40deg,
     rgba(246, 185, 156, 0) 0%,

@@ -6,13 +6,26 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:types": "graphql-codegen"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.7",
+    "@graphcms/rich-text-react-renderer": "^0.6.2",
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.0",
+    "@graphql-codegen/typescript-react-query": "^6.1.0",
     "@tanstack/react-query": "^5.71.1",
+    "clsx": "^2.1.1",
+    "graphql": "^16.10.0",
+    "graphql-request": "^7.1.2",
+    "graphql-tag": "^2.12.6",
     "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "swiper": "^11.2.6",
+    "tailwind-variants": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

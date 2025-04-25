@@ -11,8 +11,22 @@
       "type": "string",
       "required": true
     },
-    "content": {
+    "description": {
       "type": "text"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "link": {
+      "type": "component",
+      "repeatable": false,
+      "component": "component.simple-link",
+      "required": false
     }
   }
 }

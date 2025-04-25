@@ -11,12 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "headerNav": {
-      "type": "component",
-      "repeatable": true,
-      "component": "nav.header-nav",
-      "required": true
-    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -26,10 +20,11 @@
         "files"
       ]
     },
-    "showCartLabel": {
-      "type": "boolean",
-      "default": false,
-      "required": false
+    "navigation": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.group",
+      "required": true
     }
   }
 }

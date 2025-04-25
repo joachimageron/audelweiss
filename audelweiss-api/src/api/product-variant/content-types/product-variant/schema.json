@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_variants",
+  "info": {
+    "singularName": "product-variant",
+    "pluralName": "product-variants",
+    "displayName": "Product variant",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "format": {
+      "type": "enumeration",
+      "enum": [
+        "radio",
+        "checkbox",
+        "input"
+      ],
+      "required": true
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "variants"
+    },
+    "variant_options": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-variant-option.product-variant-option",
+      "mappedBy": "variant"
+    },
+    "stock": {
+      "type": "integer",
+      "required": true
+    },
+    "required": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "sku": {
+      "type": "string"
+    }
+  }
+}

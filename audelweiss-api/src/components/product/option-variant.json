@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_product_option_variants",
+  "info": {
+    "displayName": "Variant group option",
+    "icon": "paintBrush",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "stock": {
+      "type": "integer",
+      "required": true
+    }
+  }
+}

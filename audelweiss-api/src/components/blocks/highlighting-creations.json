@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_blocks_highlighting_creations",
+  "info": {
+    "displayName": "Highlighting creations",
+    "icon": "star",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": false,
+      "component": "component.simple-link"
+    },
+    "creationsList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "component.creation-presentation",
+      "required": false,
+      "max": 4,
+      "min": 1
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_component_simple_links",
+  "info": {
+    "displayName": "Simple Link",
+    "icon": "exit"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

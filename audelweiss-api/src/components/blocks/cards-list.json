@@ -1,13 +1,13 @@
 {
   "collectionName": "components_blocks_cards_lists",
   "info": {
-    "displayName": "CardsList",
+    "displayName": "Cards list",
     "icon": "apps",
     "description": ""
   },
   "options": {},
   "attributes": {
-    "card": {
+    "cards": {
       "displayName": "Card",
       "type": "component",
       "repeatable": true,
@@ -15,6 +15,9 @@
       "max": 3,
       "min": 1,
       "required": true
+    },
+    "heading": {
+      "type": "string"
     }
   }
 }

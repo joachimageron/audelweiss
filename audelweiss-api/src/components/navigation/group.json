@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_navigation_groups",
+  "info": {
+    "displayName": "Group",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "navigation.link"
+    },
+    "entries": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.link"
+    }
+  }
+}

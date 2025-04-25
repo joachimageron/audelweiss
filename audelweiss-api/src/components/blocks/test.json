@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_blocks_tests",
+  "info": {
+    "displayName": "test",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "rdsfc": {
+      "type": "richtext"
+    }
+  }
+}

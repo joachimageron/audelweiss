@@ -31,7 +31,7 @@ export const usePage = ({ filters, queryKey }: Params) => {
     if (!response.pages[0]) {
       throw new Error("Page not found");
     }
-
+    console.log(response.pages[0]);
     return response.pages[0];
   };
 

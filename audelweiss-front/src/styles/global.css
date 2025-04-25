@@ -6,11 +6,12 @@
 :root {
   --primary: #ff4772;
   --dark-primary: #d1214a;
+  --light-primary: #f3b7c5;
   --secondary: #7768ae;
   --dark-secondary: #483883;
   --background: #fafafa;
   --text: #303028;
-
+  
   --filter-white: brightness(0) saturate(100%) invert(100%) sepia(99%) saturate(0%) hue-rotate(227deg) brightness(105%)
     contrast(100%);
   --filter-primary: brightness(0) saturate(100%) invert(39%) sepia(97%) saturate(1828%) hue-rotate(320deg)
@@ -22,9 +23,11 @@
 @theme inline {
   --font-dm-sans: var(--font-dm-sans);
   --font-aboreto: var(--font-aboreto);
+  --font-allura: var(--font-allura);
 
   --color-primary: var(--primary);
   --color-dark-primary: var(--dark-primary);
+  --color-light-primary: var(--light-primary);
   --color-secondary: var(--secondary);
   --color-dark-secondary: var(--dark-secondary);
   --color-background: var(--background);

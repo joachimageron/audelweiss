@@ -92,8 +92,12 @@ const products = [
     name: "Boucles d’oreilles artisanales",
     price: "35€",
     image: {
-      src: "/images/boucles.webp",
+      src: "/images/boucle.webp",
       alt: "Boucles d’oreilles",
+    },
+    link: {
+      label: '',
+      href: '/',
     },
     promo: true,
   },
@@ -102,8 +106,12 @@ const products = [
     name: "Collier fait main",
     price: "42€",
     image: {
-      src: "/images/collier.webp",
+      src: "/images/collier.jpeg",
       alt: "Collier",
+    },
+    link: {
+      label: '',
+      href: '/',
     },
     promo: false,
   },
@@ -114,14 +122,22 @@ const products = [
     image: {
       src: "/images/bracelet.webp",
     },
+    link: {
+      label: '',
+      href: '/',
+    },
     promo: true,
   },
   {
     id: 4,
-    name: "Bracelet perlé",
+    name: "Bague perlé",
     price: "29€",
     image: {
-      src: "/images/bracelet.webp",
+      src: "/images/bague.webp",
+    },
+    link: {
+      label: '',
+      href: '/',
     },
     promo: true,
   },
@@ -144,9 +160,10 @@ export default function Home() {
         imageLeft={textImage[0].imageLeft}
         largeImage={textImage[0].largeImage}
       />
-        <FeaturedProducts
-        description={<h2>Des créations artisanales uniques<br></br>Fait main avec passion, pour toi et ceux que tu aimes</h2>}
+      <FeaturedProducts
+        description={<h2>Des créations <b>artisanales</b> uniques ✨<br></br>Fait main avec <b>passion</b>, pour toi et ceux que tu aimes</h2>}
         products={products}
+        linkHref="/boutique"
       />
 
     </>

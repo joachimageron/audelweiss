@@ -11,17 +11,17 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "title": {
+    "articleTitle": {
       "type": "string",
       "required": true
     },
-    "categories": {
+    "articleCategories": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::article-category.article-category",
-      "mappedBy": "articles"
+      "inversedBy": "articles"
     },
-    "thumbnail": {
+    "articleThumbnail": {
       "type": "media",
       "multiple": false,
       "required": true,
@@ -29,8 +29,14 @@
         "images"
       ]
     },
-    "content": {
-      "type": "blocks"
+    "articleDescription": {
+      "type": "text"
+    },
+    "articleContent": {
+      "type": "component",
+      "repeatable": false,
+      "component": "blocks.single-richtext",
+      "required": true
     }
   }
 }

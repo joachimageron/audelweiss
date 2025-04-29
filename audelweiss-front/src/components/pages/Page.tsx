@@ -7,6 +7,7 @@ import CustomTitle from "@/src/components//atoms/CustomTitle";
 import { PageContentDynamicZone } from "@/src/types/generated";
 import TextImage from "../modules/TextImage";
 import FeaturedProducts from "../modules/FeaturedProducts";
+import FeaturedArticles from "../modules/FeaturedArticles";
 
 type Props = {
   params: string[];
@@ -87,6 +88,40 @@ const products = [
   },
 ];
 
+// const MOCK_FEATURED_ARTICLES = {
+//   title: "Découvre le blog ❣️",
+//   articles: [
+//     {
+//       id: "1",
+//       title: "Addi King Size vs Sentro 48 : quelle machine choisir pour tes projets créatifs ?",
+//       slug: "addi-king-vs-sentro",
+//       thumbnailUrl: "https://picsum.photos/400/500",
+//       category: "Matériel",
+//       publishedAt: "2025-04-04",
+//     },
+//     {
+//       id: "2",
+//       title: "Quelle laine choisir ? (Guide Complet 2025)",
+//       slug: "choisir-laine-guide-2025",
+//       thumbnailUrl: "https://picsum.photos/400/501",
+//       category: "Infos",
+//       publishedAt: "2025-03-12",
+//     },
+//     {
+//       id: "3",
+//       title: "Bonnet en laine VS bonnet en acrylique : lequel choisir ?",
+//       slug: "bonnet-laine-vs-acrylique",
+//       thumbnailUrl: "https://picsum.photos/400/502",
+//       category: "Infos",
+//       publishedAt: "2025-03-10",
+//     }
+//   ],
+//   link: {
+//     label: "Voir tous les articles",
+//     url: "/articles",
+//   },
+// };
+
 const Page = ({ params }: Props) => {
   const { data } = usePage({ filters: { slug: params ? params[0] : "home" }, queryKey: ["page"] });
 
@@ -106,7 +141,9 @@ const Page = ({ params }: Props) => {
         link={textImage[0].link}
         imageLeft={textImage[0].imageLeft}
         largeImage={textImage[0].largeImage}
-      />      <FeaturedProducts
+      />
+
+      <FeaturedProducts
         description={<h2>Des créations <b>artisanales</b> uniques ✨<br></br>Fait main avec <b>passion</b>, pour toi et ceux que tu aimes</h2>}
         products={products}
         linkHref="/boutique"

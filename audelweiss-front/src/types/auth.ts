@@ -9,6 +9,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  jwt: string; // Add JWT to the user object
 }
 
 export interface AuthResponse {

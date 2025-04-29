@@ -88,8 +88,10 @@ const products = [
 ];
 
 const Page = ({ params }: Props) => {
+  
   const { data } = usePage({ filters: { slug: params ? params[0] : "home" }, queryKey: ["page"] });
 
+  console.log("Page data", data);
   return (
     <>
       {/* TODO : Ce titre h1 avec les données issues de la page d'accueil */}

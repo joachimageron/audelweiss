@@ -4,17 +4,14 @@ import { imageFragment } from "@/src/gql/fragments/imageFragment.gql";
 export const articleFragment = gql`
   fragment ArticleFields on Article {
     documentId
-    articleTitle
-    articleCategories {
+    title
+    categories {
       name
     }
-    articleThumbnail {
+    thumbnail {
       ...ImageFields
     }
-    articleDescription
-    articleContent {
-      richtextContent
-    }
+    content
     publishedAt
   }
   ${imageFragment}

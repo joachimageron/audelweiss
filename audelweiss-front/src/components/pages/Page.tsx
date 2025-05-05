@@ -17,14 +17,15 @@ const textImage = [
   {
     id: 1,
     title: "Mon parcours professionnel",
-    content: "Après des études en informatique et en création de sites internet, je me suis installé à Lyon pour développer mes compétences dans le digital. Le web, en constante évolution m'a permis d'explorer la création sous diverses formes, alliant technique et esthétique. Cette immersion dans la conception digitale a posé les bases de ma démarche artistique. Aujourd'hui freelance spécialisé en développement web et design UI/UX, je transmets également mon savoir en tant que formatrice. Cette avente créative s'est enrichi avec ma découverte du crochet, une nouvelle forme d'expression artistique qui me permet d'allier matières, couleur et énergie.",
+    content:
+      "Après des études en informatique et en création de sites internet, je me suis installé à Lyon pour développer mes compétences dans le digital. Le web, en constante évolution m'a permis d'explorer la création sous diverses formes, alliant technique et esthétique. Cette immersion dans la conception digitale a posé les bases de ma démarche artistique. Aujourd'hui freelance spécialisé en développement web et design UI/UX, je transmets également mon savoir en tant que formatrice. Cette avente créative s'est enrichi avec ma découverte du crochet, une nouvelle forme d'expression artistique qui me permet d'allier matières, couleur et énergie.",
     image: {
-      src: '/images/audrey.jpg',
-      alt: 'Audrey',
+      src: "/images/audrey.jpg",
+      alt: "Audrey",
     },
     link: {
-      label: 'Découvrir mon site freelance',
-      href: '/',
+      label: "Découvrir mon site freelance",
+      href: "/",
     },
     imageLeft: false,
     largeImage: false,
@@ -41,8 +42,8 @@ const products = [
       alt: "Boucles d’oreilles",
     },
     link: {
-      label: '',
-      href: '/',
+      label: "",
+      href: "/",
     },
     promo: true,
   },
@@ -55,8 +56,8 @@ const products = [
       alt: "Collier",
     },
     link: {
-      label: '',
-      href: '/',
+      label: "",
+      href: "/",
     },
     promo: false,
   },
@@ -68,8 +69,8 @@ const products = [
       src: "/images/bracelet.webp",
     },
     link: {
-      label: '',
-      href: '/',
+      label: "",
+      href: "/",
     },
     promo: true,
   },
@@ -81,17 +82,15 @@ const products = [
       src: "/images/bague.webp",
     },
     link: {
-      label: '',
-      href: '/',
+      label: "",
+      href: "/",
     },
     promo: true,
   },
 ];
 
 const Page = ({ params }: Props) => {
-  const pageUrlSlug = Array.isArray(params) && params[0] ? params[0] : "home";
-
-  const { data, isLoading, isError } = usePage({ slug: pageUrlSlug });
+  const { data, isLoading, isError } = usePage({ filters: { slug: params ? params[0] : "home" }, queryKey: ["page"] });
 
   if (isLoading) {
     return <p className="inner-wrap">Chargement...</p>;
@@ -106,16 +105,16 @@ const Page = ({ params }: Props) => {
       {/* TODO : Ce titre h1 avec les données issues de la page d'accueil */}
       <CustomTitle level={1} className="sr-only">
         Des créations artisanales et originales sur mesure
-      </CustomTitle >
+      </CustomTitle>
 
-      {
-        data.slug !== "home" && (
-          <Hero
-            title={data.title}
-            imageUrl={data.illustrationImage?.url ? process.env.NEXT_PUBLIC_GRAPHQL_API_URL + data.illustrationImage.url : ""}
-          />
-        )
-      }
+      {data.slug !== "home" && (
+        <Hero
+          title={data.title}
+          imageUrl={
+            data.illustrationImage?.url ? process.env.NEXT_PUBLIC_GRAPHQL_API_URL + data.illustrationImage.url : ""
+          }
+        />
+      )}
 
       {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}
 
@@ -129,7 +128,12 @@ const Page = ({ params }: Props) => {
       />
 
       <FeaturedProducts
-        description={<h2>Des créations <b>artisanales</b> uniques ✨<br></br>Fait main avec <b>passion</b>, pour toi et ceux que tu aimes</h2>}
+        description={
+          <h2>
+            Des créations <b>artisanales</b> uniques ✨<br></br>Fait main avec <b>passion</b>, pour toi et ceux que tu
+            aimes
+          </h2>
+        }
         products={products}
         linkHref="/boutique"
       />

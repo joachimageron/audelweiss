@@ -1,5 +1,9 @@
 import Page from "@/src/components/pages/Page";
 
-export default function App({ params }: { params: { slug?: string[] } }) {
-  return <Page params={params.slug ?? []} />;
-}
+const App = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
+  const { slug } = await params;
+
+  return <Page params={slug} />;
+};
+
+export default App;

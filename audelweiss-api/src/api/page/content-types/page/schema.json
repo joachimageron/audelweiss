@@ -25,7 +25,6 @@
         "blocks.cards-list",
         "blocks.quote",
         "blocks.image-and-text",
-        "blocks.hero",
         "blocks.featured-products",
         "blocks.featured-articles",
         "blocks.single-slider",
@@ -38,10 +37,19 @@
       "type": "enumeration",
       "enum": [
         "home",
-        "about",
-        "shop"
+        "edito",
+        "shop",
+        "account"
       ],
       "required": true
+    },
+    "illustrationImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

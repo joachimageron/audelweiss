@@ -615,7 +615,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.cards-list',
         'blocks.quote',
         'blocks.image-and-text',
-        'blocks.hero',
         'blocks.featured-products',
         'blocks.featured-articles',
         'blocks.single-slider',
@@ -626,13 +625,15 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    illustrationImage: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    type: Schema.Attribute.Enumeration<['home', 'about', 'shop']> &
+    type: Schema.Attribute.Enumeration<['home', 'edito', 'shop', 'account']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

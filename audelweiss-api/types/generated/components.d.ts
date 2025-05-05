@@ -48,24 +48,6 @@ export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
   };
 }
 
-export interface BlocksHero extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_heroes';
-  info: {
-    description: '';
-    displayName: 'Hero';
-    icon: 'layout';
-  };
-  attributes: {
-    background: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
-    subHeading: Schema.Attribute.Text;
-  };
-}
-
 export interface BlocksHighlightingCreations extends Struct.ComponentSchema {
   collectionName: 'components_blocks_highlighting_creations';
   info: {
@@ -299,7 +281,6 @@ declare module '@strapi/strapi' {
       'blocks.cards-list': BlocksCardsList;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-products': BlocksFeaturedProducts;
-      'blocks.hero': BlocksHero;
       'blocks.highlighting-creations': BlocksHighlightingCreations;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;

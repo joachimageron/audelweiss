@@ -7,7 +7,7 @@ import CustomTitle from "@/src/components//atoms/CustomTitle";
 import { PageContentDynamicZone } from "@/src/types/generated";
 import TextImage from "../modules/TextImage";
 import FeaturedProducts from "../modules/FeaturedProducts";
-import FeaturedArticles from "../modules/FeaturedArticles";
+import Hero from "../modules/Hero";
 
 type Props = {
   params: string[];
@@ -88,49 +88,34 @@ const products = [
   },
 ];
 
-// const MOCK_FEATURED_ARTICLES = {
-//   title: "Découvre le blog ❣️",
-//   articles: [
-//     {
-//       id: "1",
-//       title: "Addi King Size vs Sentro 48 : quelle machine choisir pour tes projets créatifs ?",
-//       slug: "addi-king-vs-sentro",
-//       thumbnailUrl: "https://picsum.photos/400/500",
-//       category: "Matériel",
-//       publishedAt: "2025-04-04",
-//     },
-//     {
-//       id: "2",
-//       title: "Quelle laine choisir ? (Guide Complet 2025)",
-//       slug: "choisir-laine-guide-2025",
-//       thumbnailUrl: "https://picsum.photos/400/501",
-//       category: "Infos",
-//       publishedAt: "2025-03-12",
-//     },
-//     {
-//       id: "3",
-//       title: "Bonnet en laine VS bonnet en acrylique : lequel choisir ?",
-//       slug: "bonnet-laine-vs-acrylique",
-//       thumbnailUrl: "https://picsum.photos/400/502",
-//       category: "Infos",
-//       publishedAt: "2025-03-10",
-//     }
-//   ],
-//   link: {
-//     label: "Voir tous les articles",
-//     url: "/articles",
-//   },
-// };
-
 const Page = ({ params }: Props) => {
-  const { data } = usePage({ filters: { slug: params ? params[0] : "home" }, queryKey: ["page"] });
+  const pageUrlSlug = Array.isArray(params) && params[0] ? params[0] : "home";
+
+  const { data, isLoading, isError } = usePage({ slug: pageUrlSlug });
+
+  if (isLoading) {
+    return <p className="inner-wrap">Chargement...</p>;
+  }
+
+  if (isError || !data) {
+    return <p className="inner-wrap">Une erreur est survenue ou la page est introuvable.</p>;
+  }
 
   return (
     <>
       {/* TODO : Ce titre h1 avec les données issues de la page d'accueil */}
       <CustomTitle level={1} className="sr-only">
         Des créations artisanales et originales sur mesure
-      </CustomTitle>
+      </CustomTitle >
+
+      {
+        data.slug !== "home" && (
+          <Hero
+            title={data.title}
+            imageUrl={data.illustrationImage?.url ? process.env.NEXT_PUBLIC_GRAPHQL_API_URL + data.illustrationImage.url : ""}
+          />
+        )
+      }
 
       {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}
 

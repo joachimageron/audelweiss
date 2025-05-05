@@ -1,42 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import { PagesQuery } from "@/src/types/generated";
 import { useApi } from "@/src/hooks/useApi";
 import { pagesQuery } from "@/src/gql/page.gql";
 
-type Params = {
-  filters: {
-    slug: string;
-  };
-  queryKey: string[];
-};
-
-const mapFilters = (filters: Params["filters"]) => {
-  if (!filters) return {};
-
-  return {
-    filters: {
-      slug: { eq: filters.slug },
-    },
-  };
-};
-
-export const usePage = ({ filters, queryKey }: Params) => {
+export const usePage = ({ slug }: { slug: string }) => {
   const api = useApi();
 
-  const queryFn = async () => {
-    const response = await api.request<PagesQuery>(pagesQuery, {
-      ...mapFilters(filters),
-    });
-
-    if (!response.pages[0]) {
-      throw new Error("Page not found");
-    }
-
-    return response.pages[0];
-  };
-
   return useQuery({
-    queryKey,
-    queryFn,
+    queryKey: ["page", slug],
+    queryFn: async () => {
+
+      const response = await api.request(pagesQuery, {
+        filters: { slug: { eq: slug } },
+      });
+
+      console.log(response);
+
+      const page = response.pages?.[0];
+      if (!page) throw new Error("Page not found");
+
+      return {
+        ...page,
+      };
+    },
   });
 };

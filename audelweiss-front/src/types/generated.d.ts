@@ -221,29 +221,6 @@ export type ComponentBlocksFeaturedProductsProducts_ConnectionArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type ComponentBlocksHero = {
-  __typename?: 'ComponentBlocksHero';
-  background: Array<Maybe<UploadFile>>;
-  background_connection: UploadFileRelationResponseCollection;
-  heading: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  subHeading?: Maybe<Scalars['String']['output']>;
-};
-
-
-export type ComponentBlocksHeroBackgroundArgs = {
-  filters?: InputMaybe<UploadFileFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type ComponentBlocksHeroBackground_ConnectionArgs = {
-  filters?: InputMaybe<UploadFileFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
 export type ComponentBlocksHighlightingCreations = {
   __typename?: 'ComponentBlocksHighlightingCreations';
   content?: Maybe<Scalars['JSON']['output']>;
@@ -549,7 +526,8 @@ export enum Enum_Componentproductoption_Format {
 }
 
 export enum Enum_Page_Type {
-  About = 'about',
+  Account = 'account',
+  Edito = 'edito',
   Home = 'home',
   Shop = 'shop'
 }
@@ -618,7 +596,7 @@ export type FooterInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -1243,6 +1221,7 @@ export type Page = {
   content?: Maybe<Array<Maybe<PageContentDynamicZone>>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
+  illustrationImage: UploadFile;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug: Scalars['String']['output'];
   title: Scalars['String']['output'];
@@ -1250,7 +1229,7 @@ export type Page = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type PageContentDynamicZone = ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | Error;
+export type PageContentDynamicZone = ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | Error;
 
 export type PageEntityResponseCollection = {
   __typename?: 'PageEntityResponseCollection';
@@ -1273,6 +1252,7 @@ export type PageFiltersInput = {
 
 export type PageInput = {
   content?: InputMaybe<Array<Scalars['PageContentDynamicZoneInput']['input']>>;
+  illustrationImage?: InputMaybe<Scalars['ID']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -2528,4 +2508,4 @@ export type PagesQueryVariables = Exact<{
 }>;
 
 
-export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHero' } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title: string, slug: string, type: Enum_Page_Type, illustrationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };

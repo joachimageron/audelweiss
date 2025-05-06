@@ -1,47 +1,82 @@
 "use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
 import { useUser } from "@/src/hooks/useUser";
-// import { useRouter } from "next/navigation";
+import { LoginCredentials } from "@/src/types/auth";
+
+import InputField from "@/src/components/atoms/CustomInputField";
+import Button from "@/src/components/atoms/Button";
+import CustomLink from "@/src/components/atoms/CustomLink";
+import CustomTitle from "@/src/components/atoms/CustomTitle";
+
+import { tv } from "tailwind-variants";
+
+const styles = tv({
+  slots: {
+    formWrapper: "flex flex-col gap-[3rem] mx-auto px-[3rem] py-[6rem] max-w-[60rem]",
+    formTitle: "text-3xl font-bold text-center",
+    formErrorMessage: "text-red-500 text-center",
+    formBottomlinks: "text-center",
+    bottomLink: "ml-[.5rem] text-primary as--underline-hover"
+  },
+});
+
+const { formWrapper, formTitle, formErrorMessage, formBottomlinks, bottomLink } = styles();
 
 export default function LoginPage() {
-  // const router = useRouter();
-  const { login, error, logout } = useUser();
+  const { login, error } = useUser();
+  const router = useRouter();
+  const [localError, setLocalError] = useState<string | null>(null);
 
-  // if (user && !loading) {
-  //     router.push("/home");
-  // }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginCredentials>();
 
-  const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const identifier = formData.get("identifier") as string;
-    const password = formData.get("password") as string;
-
-    await login({ identifier, password });
-    if (error) {
-      console.error("Login error:", error);
+  const onSubmit = async (data: LoginCredentials) => {
+    setLocalError(null);
+    try {
+      await login(data);
+      router.push("/");
+    } catch (err: any) {
+      setLocalError(err.message);
     }
   };
 
   return (
-    <form className="flex flex-col items-center justify-center h-screen bg-gray-100" onSubmit={handleLogin}>
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <input name="identifier" type="text" placeholder="Username" className="mb-2 p-2 border border-gray-300 rounded" />
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        className="mb-4 p-2 border border-gray-300 rounded"
+    <form onSubmit={handleSubmit(onSubmit)} className={formWrapper()}>
+      <CustomTitle level={1} className={formTitle()}>Connexion à votre compte</CustomTitle>
+      <p>Connectez-vous pour passer commande et accéder à votre historique.</p>
+
+      <InputField
+        label="Nom d'utilisateur ou email"
+        type="text"
+        {...register("identifier", { required: "Identifiant requis" })}
+        error={errors.identifier?.message}
       />
-      <button className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
-      <button className="mt-2 bg-gray-300 text-black px-4 py-2 rounded" onClick={logout}>
-        Logout
-      </button>
-      <p className="mt-4 ">
-        Don't have an account?{" "}
-        <a href="/register" className="text-blue-500">
-          Register
-        </a>
+
+      <InputField
+        label="Mot de passe"
+        type="password"
+        {...register("password", { required: "Mot de passe requis" })}
+        error={errors.password?.message}
+      />
+
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Connexion en cours..." : "Se connecter"}
+      </Button>
+
+      {localError && <p className={formErrorMessage()}>{localError}</p>}
+
+      <p className={formBottomlinks()}>
+        Pas encore de compte ?
+        <CustomLink href="/auth/register" className={bottomLink()}>
+          Créer un compte
+        </CustomLink>
       </p>
     </form>
   );

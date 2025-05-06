@@ -24,13 +24,9 @@ export const usePage = ({ filters, queryKey }: Params) => {
   const api = useApi();
 
   const queryFn = async () => {
-    console.log("Query function called with filters", filters);
     const response = await api.request<PagesQuery>(pagesQuery, {
       ...mapFilters(filters),
     });
-    
-
-    console.log("Response from usePage", response);
 
     if (!response.pages[0]) {
       throw new Error("Page not found");

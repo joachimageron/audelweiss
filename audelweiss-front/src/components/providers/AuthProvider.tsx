@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
-  console.log("AuthProvider user", user);
   // Check if user is already logged in (from localStorage)
   useEffect(() => {
     const loadUserFromLocalStorage = () => {
@@ -63,8 +62,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const data: AuthResponse = await response.json();
 
-      if (!response.ok) {
-        throw new Error("Registration failed");
+      if (!data || !data.user || !data.jwt) {
+        console.error("Invalid registration response:", data);
+        throw new Error("L'inscription a échoué");
       }
 
       // Merge jwt into the user object
@@ -83,9 +83,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       queryClient.setQueryData(["user"], userWithToken);
       setError(null);
     },
-    onError: (error: Error) => {
-      setError(error.message || "An error occurred during registration");
-      console.error("Registration error:", error);
+    onError: async (error: any) => {
+      let errorMessage = "Une erreur est survenue lors de l'inscription.";
+
+      if (error instanceof Response) {
+        try {
+          const data = await error.json();
+          const message = data?.error?.message;
+
+          if (message === "Email or Username are already taken") {
+            errorMessage = "Cette adresse e-mail ou ce nom d'utilisateur est déjà utilisé.";
+          } else if (typeof message === "string") {
+            errorMessage = message;
+          }
+        } catch (err) {
+          console.error("Erreur lors du parsing JSON :", err);
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      setError(errorMessage);
+      console.error("Registration error:", errorMessage);
     },
     onSettled: () => {
       setLoading(false);
@@ -106,7 +125,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const data: AuthResponse = await response.json();
 
       if (!response.ok) {
-        throw new Error("Invalid credentials");
+        throw new Error("Les identificants saisis sont incorrects");
       }
 
       // Merge jwt into the user object
@@ -146,10 +165,38 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   /**
    * Login an existing user
    */
-  const login = async (credentials: LoginCredentials): Promise<void> => {
+  const login = (credentials: LoginCredentials): Promise<void> => {
     setLoading(true);
     setError(null);
-    loginMutation.mutate(credentials);
+
+    return new Promise((resolve, reject) => {
+      loginMutation.mutate(credentials, {
+        onSuccess: (userWithToken) => {
+          localStorage.setItem("user", JSON.stringify(userWithToken));
+          localStorage.setItem("jwt", userWithToken.jwt);
+
+          setUser(userWithToken);
+          queryClient.setQueryData(["user"], userWithToken);
+          setError(null);
+          resolve();
+        },
+        onError: (error: any) => {
+          let errorMessage = "Une erreur est survenue lors de la connexion.";
+
+          if (error instanceof Error && error.message === "Invalid credentials") {
+            errorMessage = "Les identifiants saisis sont incorrects.";
+          } else if (error instanceof Error) {
+            errorMessage = error.message;
+          }
+
+          setError(errorMessage);
+          reject(new Error(errorMessage));
+        },
+        onSettled: () => {
+          setLoading(false);
+        },
+      });
+    });
   };
 
   /**

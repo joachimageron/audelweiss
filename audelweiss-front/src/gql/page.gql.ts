@@ -14,6 +14,9 @@ export const pagesQuery = gql`
       title
       slug
       type
+      illustrationImage {
+        ...ImageFields
+      }
       content {
         __typename
         ...CardsListFields

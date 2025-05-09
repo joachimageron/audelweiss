@@ -12,8 +12,8 @@ type Props = {
 
 const styles = tv({
     slots: {
-        heroWrapper: "relative w-full min-h-[30rem] flex items-center justify-center overflow-hidden",
-        backgroundImageWrapper: "absolute inset-0 z-0 before:content-[''] before:absolute before:inset-0 before:z-10 before:bg-dark-primary before:opacity-30",
+        heroWrapper: "relative w-full min-h-[25rem] lg:min-h-[35rem] flex items-center justify-center overflow-hidden",
+        backgroundImageWrapper: "absolute inset-0 z-0 before:content-[''] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-20",
         backgroundImage: "absolute inset-0 w-full h-full object-cover object-center z-[-1]",
         heroTitle: "relative px-[4rem] z-10 text-white text-center text-[3.6rem] md:text-[4.8rem]",
     },

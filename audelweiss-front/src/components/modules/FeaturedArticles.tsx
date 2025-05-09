@@ -23,7 +23,7 @@ type Props = {
 const styles = tv({
     slots: {
         sectionWrapper: "featured-articles inner-wrap flex flex-col items-center my-[5rem]",
-        sectionTitle: "mb-[4rem] text-[3.2rem]",
+        sectionTitle: "mb-[4rem] text-[3.2rem] text-center",
         swiperSlider: "swiper-custom-dots w-full mb-[5rem]",
         articleLink: "group flex flex-col justify-between p-[1.5rem] min-h-[30rem]",
         articleImageWrapper: "absolute inset-0 rounded-[1rem] overflow-hidden after:content-[''] after:absolute after:inset-0 after:bg-dark-primary after:opacity-[0.35]",
@@ -44,7 +44,7 @@ export default function FeaturedArticles({ block, className = "" }: Props) {
             title: article.articleTitle,
             slug: article.documentId,
             thumbnailUrl: article.articleThumbnail?.url
-                ? process.env.NEXT_PUBLIC_GRAPHQL_API_URL + article.articleThumbnail.url
+                ? process.env.NEXT_PUBLIC_API_URL + article.articleThumbnail.url
                 : "",
             category: article.articleCategories?.[0]?.name || "",
             publishedAt: article.publishedAt

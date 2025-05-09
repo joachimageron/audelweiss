@@ -102,17 +102,14 @@ const Page = ({ params }: Props) => {
 
   return (
     <>
-      {/* TODO : Ce titre h1 avec les données issues de la page d'accueil */}
-      <CustomTitle level={1} className="sr-only">
-        Des créations artisanales et originales sur mesure
-      </CustomTitle>
+      {data.slug === "home" && (
+        <CustomTitle level={1} className="sr-only">{data.title}</CustomTitle>
+      )}
 
       {data.slug !== "home" && (
         <Hero
           title={data.title}
-          imageUrl={
-            data.illustrationImage?.url ? process.env.NEXT_PUBLIC_GRAPHQL_API_URL + data.illustrationImage.url : ""
-          }
+          imageUrl={process.env.NEXT_PUBLIC_API_URL + data.illustrationImage.url}
         />
       )}
 

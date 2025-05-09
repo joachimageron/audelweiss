@@ -44,7 +44,7 @@ const HighlightingCreations = ({ block, className = "" }: Props) => {
                 const orderClass = staticOrderClasses[index] || "";
 
                 const imgSrc = creation.creationImage?.url
-                    ? process.env.NEXT_PUBLIC_GRAPHQL_API_URL + creation.creationImage.url
+                    ? process.env.NEXT_PUBLIC_API_URL + creation.creationImage.url
                     : "";
 
                 return (

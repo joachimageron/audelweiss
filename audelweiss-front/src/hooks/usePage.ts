@@ -1,7 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { PagesQuery } from "@/src/types/generated";
-import { useApi } from "@/src/hooks/useApi";
 import { pagesQuery } from "../gql/page.gql";
+import { useQuery } from "@tanstack/react-query";
+import { useApi } from "./useApi";
+
+export type Block = {
+  __typename: string;
+  id: string;
+};
+
+type Page = {
+  title: string;
+  slug: string;
+  content: Block[];
+};
 
 type Params = {
   filters: {
@@ -11,7 +21,7 @@ type Params = {
 };
 
 const mapFilters = (filters: Params["filters"]) => {
-  if (!filters) return {};
+  if (!filters) return undefined;
 
   return {
     filters: {
@@ -24,13 +34,9 @@ export const usePage = ({ filters, queryKey }: Params) => {
   const api = useApi();
 
   const queryFn = async () => {
-    const response = await api.request<PagesQuery>(pagesQuery, {
+    const response = await api.request<{ pages: Page[] }>(pagesQuery, {
       ...mapFilters(filters),
     });
-
-    if (!response.pages[0]) {
-      throw new Error("Page not found");
-    }
 
     return response.pages[0];
   };

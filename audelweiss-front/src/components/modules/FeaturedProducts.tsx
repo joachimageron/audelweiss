@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import CustomLink from '@/src/components/atoms/CustomLink';
-import clsx from 'clsx';
 
 type Product = {
   id: number;

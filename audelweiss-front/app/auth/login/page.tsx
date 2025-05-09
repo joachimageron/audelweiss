@@ -41,7 +41,7 @@ export default function LoginPage() {
     setLocalError(null);
     try {
       await login(data);
-      router.push("/");
+      router.push("/compte");
     } catch (err: any) {
       setLocalError(err.message);
     }

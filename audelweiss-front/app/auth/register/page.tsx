@@ -56,15 +56,14 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterCredentials & { confirmPassword: string }) => {
     if (data.password !== data.confirmPassword) return;
 
-    await registerUser({
-      username: data.username,
-      email: data.email,
-      password: data.password,
-    });
-
-    if (!error) {
+    try {
+      await registerUser({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
       setShowConfirmation(true);
-    }
+    } catch (err) { }
   };
 
   return (

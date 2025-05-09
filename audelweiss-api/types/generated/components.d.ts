@@ -30,6 +30,7 @@ export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   };
   attributes: {
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
+    link: Schema.Attribute.Component<'component.simple-link', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -44,24 +45,6 @@ export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
   attributes: {
     heading: Schema.Attribute.Blocks;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
-  };
-}
-
-export interface BlocksHero extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_heroes';
-  info: {
-    description: '';
-    displayName: 'Hero';
-    icon: 'layout';
-  };
-  attributes: {
-    background: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
-    subHeading: Schema.Attribute.Text;
   };
 }
 
@@ -146,17 +129,6 @@ export interface BlocksSingleSlider extends Struct.ComponentSchema {
         },
         number
       >;
-  };
-}
-
-export interface BlocksTest extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_tests';
-  info: {
-    displayName: 'test';
-    icon: 'briefcase';
-  };
-  attributes: {
-    rdsfc: Schema.Attribute.RichText;
   };
 }
 
@@ -309,13 +281,11 @@ declare module '@strapi/strapi' {
       'blocks.cards-list': BlocksCardsList;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-products': BlocksFeaturedProducts;
-      'blocks.hero': BlocksHero;
       'blocks.highlighting-creations': BlocksHighlightingCreations;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;
       'blocks.single-richtext': BlocksSingleRichtext;
       'blocks.single-slider': BlocksSingleSlider;
-      'blocks.test': BlocksTest;
       'component.card': ComponentCard;
       'component.creation-presentation': ComponentCreationPresentation;
       'component.large-slide': ComponentLargeSlide;

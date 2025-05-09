@@ -10,6 +10,14 @@ export interface User {
   updatedAt: string;
   publishedAt: string;
   jwt: string; // Add JWT to the user object
+  firstName: string | null;
+  lastName: string | null;
+  address: string | null;
+  addressDetail: string | null;
+  city: string | null;
+  postalCode: string | null;
+  country: string | null;
+  phone: string | null;
 }
 
 export interface AuthResponse {

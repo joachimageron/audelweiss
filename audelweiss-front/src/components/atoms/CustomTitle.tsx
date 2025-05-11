@@ -25,7 +25,7 @@ type TitleProps = {
 };
 
 const styles = tv({
-  base: "font-aboreto font-bold",
+  base: "font-aboreto font-bold leading-[1.1]",
 });
 
 export default function CustomTitle({

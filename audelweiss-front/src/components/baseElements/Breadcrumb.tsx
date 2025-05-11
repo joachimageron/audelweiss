@@ -28,18 +28,21 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
     return (
         <div className={breadcrumbWrapper()} aria-label="Breadcrumb">
             <ul className={breadcrumbList()}>
-                {items.map((item, index) => (
-                    <li key={index} className={breadcrumbListItem()}>
-                        {item.href ? (
-                            <Link href={item.href} className={breadcrumbListItemLink()}>
-                                {item.label}
-                            </Link>
-                        ) : (
-                            <p>{item.label}</p>
-                        )}
-                        {index < items.length - 1 && <span className={breadcrumbSeparator()}>></span>}
-                    </li>
-                ))}
+                {items.map((item, index) => {
+                    const isLast = index === items.length - 1;
+                    return (
+                        <li key={index} className={breadcrumbListItem()}>
+                            {!isLast && item.href ? (
+                                <Link href={item.href} className={breadcrumbListItemLink()}>
+                                    {item.label}
+                                </Link>
+                            ) : (
+                                <p>{item.label}</p>
+                            )}
+                            {!isLast && <span className={breadcrumbSeparator()}>></span>}
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );

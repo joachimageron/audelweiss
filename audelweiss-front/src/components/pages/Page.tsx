@@ -8,6 +8,8 @@ import { PageContentDynamicZone } from "@/src/types/generated";
 import TextImage from "../modules/TextImage";
 import FeaturedProducts from "../modules/FeaturedProducts";
 import Hero from "@/src/components/modules/Hero";
+import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
+import ListingArticles from "../templates/ListingArticles";
 
 type Props = {
   params: string[];
@@ -100,17 +102,35 @@ const Page = ({ params }: Props) => {
     return <p className="inner-wrap">Une erreur est survenue ou la page est introuvable.</p>;
   }
 
+  const breadcrumbItems = [
+    { label: "Accueil", href: "/" },
+    ...(params ? params.slice(0, -1).map((segment, index) => ({
+      label: segment.charAt(0).toUpperCase() + segment.slice(1),
+      href: "/" + params.slice(0, index + 1).join("/"),
+    })) : []),
+    { label: data.title }
+  ];
+
   return (
     <>
-      {data.slug === "home" && (
+      {data.type === "home" && (
         <CustomTitle level={1} className="sr-only">{data.title}</CustomTitle>
       )}
 
-      {data.slug !== "home" && (
-        <Hero
-          title={data.title}
-          imageUrl={process.env.NEXT_PUBLIC_API_URL + data.illustrationImage.url}
-        />
+      {data.type !== "home" && (
+        <>
+          <Hero title={data.title} imageUrl={process.env.NEXT_PUBLIC_API_URL + data.illustrationImage.url} />
+        </>
+      )}
+
+      {data.type !== "home" && data.type !== "listing_articles" && (
+        <Breadcrumb items={breadcrumbItems} />
+      )}
+
+      {data.type === "listing_articles" && (
+        <>
+          <ListingArticles />
+        </>
       )}
 
       {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}

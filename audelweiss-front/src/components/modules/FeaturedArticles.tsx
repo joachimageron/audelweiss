@@ -52,6 +52,8 @@ export default function FeaturedArticles({ block, className = "" }: Props) {
                 : "",
         })) || [];
 
+    const blogUrl = '/blog';
+
     return (
         <section className={sectionWrapper({ className })}>
             <CustomTitle level={2} className={sectionTitle()}>
@@ -72,7 +74,7 @@ export default function FeaturedArticles({ block, className = "" }: Props) {
             >
                 {articlesFormatted.map((article) => (
                     <SwiperSlide key={article.id}>
-                        <CustomLink href={`/articles/${article.slug}`} className={articleLink()}>
+                        <CustomLink href={`${blogUrl}/${article.slug}`} className={articleLink()}>
                             <div className={articleImageWrapper()}>
                                 <Image
                                     src={article.thumbnailUrl}
@@ -101,7 +103,7 @@ export default function FeaturedArticles({ block, className = "" }: Props) {
 
             {block.link?.url && block.link.label && (
                 <div className="text-center">
-                    <CustomLink href={block.link.url} isButtonLink withIcon>
+                    <CustomLink href={blogUrl} isButtonLink withIcon>
                         {block.link.label}
                     </CustomLink>
                 </div>

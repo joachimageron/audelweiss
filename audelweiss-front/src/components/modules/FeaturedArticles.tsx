@@ -42,7 +42,7 @@ export default function FeaturedArticles({ block, className = "" }: Props) {
         .map((article) => ({
             id: article.documentId,
             title: article.articleTitle,
-            slug: article.documentId,
+            slug: article.articleSlug,
             thumbnailUrl: article.articleThumbnail?.url
                 ? process.env.NEXT_PUBLIC_API_URL + article.articleThumbnail.url
                 : "",

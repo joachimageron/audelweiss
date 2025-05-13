@@ -106,7 +106,7 @@ export default function ListingArticles({ basePath = "/blog" }: { basePath?: str
                 <div className={gridWrapper()}>
                     {matchedArticles.map((article: any) => {
                         return (
-                            <CustomLink href={`${basePath}/${article.documentId}`} className={articleLink()} key={article.documentId}>
+                            <CustomLink href={`${basePath}/${article.articleSlug}`} className={articleLink()} key={article.documentId}>
                                 <div className={articleImageWrapper()}>
                                     {article.articleThumbnail?.url && (
                                         <Image

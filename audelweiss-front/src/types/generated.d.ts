@@ -24,6 +24,7 @@ export type Article = {
   articleCategories_connection?: Maybe<ArticleCategoryRelationResponseCollection>;
   articleContent: ComponentBlocksSingleRichtext;
   articleDescription?: Maybe<Scalars['String']['output']>;
+  articleSlug: Scalars['String']['output'];
   articleThumbnail: UploadFile;
   articleTitle: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -114,6 +115,7 @@ export type ArticleFiltersInput = {
   articleCategories?: InputMaybe<ArticleCategoryFiltersInput>;
   articleContent?: InputMaybe<ComponentBlocksSingleRichtextFiltersInput>;
   articleDescription?: InputMaybe<StringFilterInput>;
+  articleSlug?: InputMaybe<StringFilterInput>;
   articleTitle?: InputMaybe<StringFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   documentId?: InputMaybe<IdFilterInput>;
@@ -127,6 +129,7 @@ export type ArticleInput = {
   articleCategories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   articleContent?: InputMaybe<ComponentBlocksSingleRichtextInput>;
   articleDescription?: InputMaybe<Scalars['String']['input']>;
+  articleSlug?: InputMaybe<Scalars['String']['input']>;
   articleThumbnail?: InputMaybe<Scalars['ID']['input']>;
   articleTitle?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -453,6 +456,145 @@ export type ComponentProductOptionVariantFiltersInput = {
   stock?: InputMaybe<IntFilterInput>;
 };
 
+export type Creation = {
+  __typename?: 'Creation';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  creationCategories: Array<Maybe<CreationCategory>>;
+  creationCategories_connection?: Maybe<CreationCategoryRelationResponseCollection>;
+  creationContent: ComponentBlocksSingleRichtext;
+  creationDescription?: Maybe<Scalars['String']['output']>;
+  creationGallery: Array<Maybe<UploadFile>>;
+  creationGallery_connection?: Maybe<UploadFileRelationResponseCollection>;
+  creationName: Scalars['String']['output'];
+  creationThumbnail: UploadFile;
+  creationTime: Scalars['String']['output'];
+  documentId: Scalars['ID']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type CreationCreationCategoriesArgs = {
+  filters?: InputMaybe<CreationCategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type CreationCreationCategories_ConnectionArgs = {
+  filters?: InputMaybe<CreationCategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type CreationCreationGalleryArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type CreationCreationGallery_ConnectionArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type CreationCategory = {
+  __typename?: 'CreationCategory';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  creations: Array<Maybe<Creation>>;
+  creations_connection?: Maybe<CreationRelationResponseCollection>;
+  documentId: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  slug: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type CreationCategoryCreationsArgs = {
+  filters?: InputMaybe<CreationFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type CreationCategoryCreations_ConnectionArgs = {
+  filters?: InputMaybe<CreationFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type CreationCategoryEntityResponseCollection = {
+  __typename?: 'CreationCategoryEntityResponseCollection';
+  nodes: Array<CreationCategory>;
+  pageInfo: Pagination;
+};
+
+export type CreationCategoryFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<CreationCategoryFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  creations?: InputMaybe<CreationFiltersInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<CreationCategoryFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<CreationCategoryFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type CreationCategoryInput = {
+  creations?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreationCategoryRelationResponseCollection = {
+  __typename?: 'CreationCategoryRelationResponseCollection';
+  nodes: Array<CreationCategory>;
+};
+
+export type CreationEntityResponseCollection = {
+  __typename?: 'CreationEntityResponseCollection';
+  nodes: Array<Creation>;
+  pageInfo: Pagination;
+};
+
+export type CreationFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<CreationFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  creationCategories?: InputMaybe<CreationCategoryFiltersInput>;
+  creationContent?: InputMaybe<ComponentBlocksSingleRichtextFiltersInput>;
+  creationDescription?: InputMaybe<StringFilterInput>;
+  creationName?: InputMaybe<StringFilterInput>;
+  creationTime?: InputMaybe<StringFilterInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<CreationFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<CreationFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type CreationInput = {
+  creationCategories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  creationContent?: InputMaybe<ComponentBlocksSingleRichtextInput>;
+  creationDescription?: InputMaybe<Scalars['String']['input']>;
+  creationGallery?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  creationName?: InputMaybe<Scalars['String']['input']>;
+  creationThumbnail?: InputMaybe<Scalars['ID']['input']>;
+  creationTime?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type CreationRelationResponseCollection = {
+  __typename?: 'CreationRelationResponseCollection';
+  nodes: Array<Creation>;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
@@ -600,7 +742,7 @@ export type FooterInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Creation | CreationCategory | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | SlugifySlug | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -734,6 +876,8 @@ export type Mutation = {
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createArticle?: Maybe<Article>;
   createArticleCategory?: Maybe<ArticleCategory>;
+  createCreation?: Maybe<Creation>;
+  createCreationCategory?: Maybe<CreationCategory>;
   createDiscount?: Maybe<Discount>;
   createOrder?: Maybe<Order>;
   createOrderItem?: Maybe<OrderItem>;
@@ -745,12 +889,15 @@ export type Mutation = {
   createReview?: Maybe<Review>;
   createReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   createReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
+  createSlugifySlug?: Maybe<SlugifySlug>;
   /** Create a new role */
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteArticle?: Maybe<DeleteMutationResponse>;
   deleteArticleCategory?: Maybe<DeleteMutationResponse>;
+  deleteCreation?: Maybe<DeleteMutationResponse>;
+  deleteCreationCategory?: Maybe<DeleteMutationResponse>;
   deleteDiscount?: Maybe<DeleteMutationResponse>;
   deleteFooter?: Maybe<DeleteMutationResponse>;
   deleteHeader?: Maybe<DeleteMutationResponse>;
@@ -764,6 +911,7 @@ export type Mutation = {
   deleteReview?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflow?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflowStage?: Maybe<DeleteMutationResponse>;
+  deleteSlugifySlug?: Maybe<DeleteMutationResponse>;
   deleteUploadFile?: Maybe<UploadFile>;
   /** Delete an existing role */
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
@@ -780,6 +928,8 @@ export type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateArticle?: Maybe<Article>;
   updateArticleCategory?: Maybe<ArticleCategory>;
+  updateCreation?: Maybe<Creation>;
+  updateCreationCategory?: Maybe<CreationCategory>;
   updateDiscount?: Maybe<Discount>;
   updateFooter?: Maybe<Footer>;
   updateHeader?: Maybe<Header>;
@@ -793,6 +943,7 @@ export type Mutation = {
   updateReview?: Maybe<Review>;
   updateReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   updateReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
+  updateSlugifySlug?: Maybe<SlugifySlug>;
   updateUploadFile: UploadFile;
   /** Update an existing role */
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
@@ -816,6 +967,18 @@ export type MutationCreateArticleArgs = {
 
 export type MutationCreateArticleCategoryArgs = {
   data: ArticleCategoryInput;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationCreateCreationArgs = {
+  data: CreationInput;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationCreateCreationCategoryArgs = {
+  data: CreationCategoryInput;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -886,6 +1049,12 @@ export type MutationCreateReviewWorkflowsWorkflowStageArgs = {
 };
 
 
+export type MutationCreateSlugifySlugArgs = {
+  data: SlugifySlugInput;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
 export type MutationCreateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
 };
@@ -902,6 +1071,16 @@ export type MutationDeleteArticleArgs = {
 
 
 export type MutationDeleteArticleCategoryArgs = {
+  documentId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteCreationArgs = {
+  documentId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteCreationCategoryArgs = {
   documentId: Scalars['ID']['input'];
 };
 
@@ -961,6 +1140,11 @@ export type MutationDeleteReviewWorkflowsWorkflowStageArgs = {
 };
 
 
+export type MutationDeleteSlugifySlugArgs = {
+  documentId: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteUploadFileArgs = {
   id: Scalars['ID']['input'];
 };
@@ -1012,6 +1196,20 @@ export type MutationUpdateArticleArgs = {
 
 export type MutationUpdateArticleCategoryArgs = {
   data: ArticleCategoryInput;
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdateCreationArgs = {
+  data: CreationInput;
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdateCreationCategoryArgs = {
+  data: CreationCategoryInput;
   documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
 };
@@ -1101,6 +1299,13 @@ export type MutationUpdateReviewWorkflowsWorkflowArgs = {
 
 export type MutationUpdateReviewWorkflowsWorkflowStageArgs = {
   data: ReviewWorkflowsWorkflowStageInput;
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdateSlugifySlugArgs = {
+  data: SlugifySlugInput;
   documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
 };
@@ -1577,6 +1782,12 @@ export type Query = {
   articleCategory?: Maybe<ArticleCategory>;
   articles: Array<Maybe<Article>>;
   articles_connection?: Maybe<ArticleEntityResponseCollection>;
+  creation?: Maybe<Creation>;
+  creationCategories: Array<Maybe<CreationCategory>>;
+  creationCategories_connection?: Maybe<CreationCategoryEntityResponseCollection>;
+  creationCategory?: Maybe<CreationCategory>;
+  creations: Array<Maybe<Creation>>;
+  creations_connection?: Maybe<CreationEntityResponseCollection>;
   discount?: Maybe<Discount>;
   discounts: Array<Maybe<Discount>>;
   discounts_connection?: Maybe<DiscountEntityResponseCollection>;
@@ -1616,6 +1827,9 @@ export type Query = {
   reviewWorkflowsWorkflows_connection?: Maybe<ReviewWorkflowsWorkflowEntityResponseCollection>;
   reviews: Array<Maybe<Review>>;
   reviews_connection?: Maybe<ReviewEntityResponseCollection>;
+  slugifySlug?: Maybe<SlugifySlug>;
+  slugifySlugs: Array<Maybe<SlugifySlug>>;
+  slugifySlugs_connection?: Maybe<SlugifySlugEntityResponseCollection>;
   uploadFile?: Maybe<UploadFile>;
   uploadFiles: Array<Maybe<UploadFile>>;
   uploadFiles_connection?: Maybe<UploadFileEntityResponseCollection>;
@@ -1666,6 +1880,50 @@ export type QueryArticlesArgs = {
 
 export type QueryArticles_ConnectionArgs = {
   filters?: InputMaybe<ArticleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryCreationArgs = {
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryCreationCategoriesArgs = {
+  filters?: InputMaybe<CreationCategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryCreationCategories_ConnectionArgs = {
+  filters?: InputMaybe<CreationCategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryCreationCategoryArgs = {
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryCreationsArgs = {
+  filters?: InputMaybe<CreationFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryCreations_ConnectionArgs = {
+  filters?: InputMaybe<CreationFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   status?: InputMaybe<PublicationStatus>;
@@ -1946,6 +2204,28 @@ export type QueryReviews_ConnectionArgs = {
 };
 
 
+export type QuerySlugifySlugArgs = {
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QuerySlugifySlugsArgs = {
+  filters?: InputMaybe<SlugifySlugFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QuerySlugifySlugs_ConnectionArgs = {
+  filters?: InputMaybe<SlugifySlugFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
 export type QueryUploadFileArgs = {
   documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
@@ -2165,6 +2445,40 @@ export type ReviewWorkflowsWorkflowStageInput = {
 export type ReviewWorkflowsWorkflowStageRelationResponseCollection = {
   __typename?: 'ReviewWorkflowsWorkflowStageRelationResponseCollection';
   nodes: Array<ReviewWorkflowsWorkflowStage>;
+};
+
+export type SlugifySlug = {
+  __typename?: 'SlugifySlug';
+  count?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  documentId: Scalars['ID']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  slug?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type SlugifySlugEntityResponseCollection = {
+  __typename?: 'SlugifySlugEntityResponseCollection';
+  nodes: Array<SlugifySlug>;
+  pageInfo: Pagination;
+};
+
+export type SlugifySlugFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<SlugifySlugFiltersInput>>>;
+  count?: InputMaybe<IntFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<SlugifySlugFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<SlugifySlugFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type SlugifySlugInput = {
+  count?: InputMaybe<Scalars['Int']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StringFilterInput = {
@@ -2506,11 +2820,11 @@ export type UsersPermissionsUserRelationResponseCollection = {
   nodes: Array<UsersPermissionsUser>;
 };
 
-export type ArticleFieldsFragment = { __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } };
+export type ArticleFieldsFragment = { __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } };
 
 export type CardsListFieldsFragment = { __typename?: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
 
-export type FeaturedArticlesFieldsFragment = { __typename?: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null };
+export type FeaturedArticlesFieldsFragment = { __typename?: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null };
 
 export type HighlightingCreationsFieldsFragment = { __typename?: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null };
 
@@ -2536,16 +2850,16 @@ export type PagesQueryVariables = Exact<{
 }>;
 
 
-export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title: string, slug: string, type: Enum_Page_Type, illustrationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title: string, slug: string, type: Enum_Page_Type, illustrationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
 
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null> };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null> };
 
 export type SingleArticleQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
 }>;
 
 
-export type SingleArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', documentId: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null };
+export type SingleArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null };

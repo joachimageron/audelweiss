@@ -10,7 +10,7 @@ import Button from "@/src/components/atoms/Button";
 import Image from "next/image";
 
 import { tv } from "tailwind-variants";
-import Breadcrumb from "../baseElements/Breadcrumb";
+import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
 
 const styles = tv({
     slots: {
@@ -20,6 +20,7 @@ const styles = tv({
         articleLink: "group relative flex flex-col justify-between p-[1.5rem] min-h-[30rem]",
         articleImageWrapper: "absolute inset-0 rounded-[1rem] overflow-hidden after:content-[''] after:absolute after:inset-0 after:bg-dark-primary after:opacity-[0.35]",
         articleImage: "w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110",
+        articleCategoriesList: "flex items-center gap-[1rem] flex-wrap",
         articleCategory: "relative px-[1rem]! py-[.8rem]! w-fit text-[1.3rem] pointer-events-none",
         articleTitle: "relative text-white text-[2.2rem]",
         articleDate: "relative text-[1.3rem] text-white",
@@ -34,7 +35,7 @@ const filterButton = tv({
     }
 });
 
-const { mainWrapper, filtersWrapper, gridWrapper, articleLink, articleImageWrapper, articleImage, articleCategory, articleTitle, articleDate } = styles();
+const { mainWrapper, filtersWrapper, gridWrapper, articleLink, articleImageWrapper, articleImage, articleCategoriesList, articleCategory, articleTitle, articleDate } = styles();
 
 export default function ListingArticles({ basePath = "/blog" }: { basePath?: string }) {
     const { data, isLoading, isError } = useArticles();
@@ -119,9 +120,21 @@ export default function ListingArticles({ basePath = "/blog" }: { basePath?: str
                                     )}
                                 </div>
 
-                                <Button isSpanButton className={articleCategory()}>
-                                    {article.articleCategories[0]?.name ?? "Sans catégorie"}
-                                </Button>
+                                <ul className={articleCategoriesList()}>
+                                    {article.articleCategories?.length ? (
+                                        article.articleCategories.map((cat: any) => (
+                                            <li key={cat.name}>
+                                                <Button isSpanButton className={articleCategory()}>
+                                                    {cat.name}
+                                                </Button>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li>
+                                            <Button isSpanButton className={articleCategory()}>Sans catégorie</Button>
+                                        </li>
+                                    )}
+                                </ul>
 
                                 <CustomTitle level={3} className={articleTitle()}>
                                     {article.articleTitle}

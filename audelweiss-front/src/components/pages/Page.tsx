@@ -9,7 +9,8 @@ import TextImage from "../modules/TextImage";
 import FeaturedProducts from "../modules/FeaturedProducts";
 import Hero from "@/src/components/modules/Hero";
 import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
-import ListingArticles from "../templates/ListingArticles";
+import ListingArticles from "@/src/components/templates/ListingArticles";
+import ListingCreations from "@/src/components/templates/ListingCreations";
 
 type Props = {
   params: string[];
@@ -123,13 +124,19 @@ const Page = ({ params }: Props) => {
         </>
       )}
 
-      {data.type !== "home" && data.type !== "listing_articles" && (
+      {!["home", "listing_articles", "listing_creations"].includes(data.type) && (
         <Breadcrumb items={breadcrumbItems} />
       )}
 
       {data.type === "listing_articles" && (
         <>
           <ListingArticles />
+        </>
+      )}
+
+      {data.type === "listing_creations" && (
+        <>
+          <ListingCreations />
         </>
       )}
 

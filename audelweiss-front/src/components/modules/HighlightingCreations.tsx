@@ -38,30 +38,32 @@ const HighlightingCreations = ({ block, className = "" }: Props) => {
 
     return (
         <section className={sectionContainer({ className })}>
-            {block.creationsList?.slice(0, 4).map((creation, index) => {
+            {block.creations?.slice(0, 4).map((creation, index) => {
                 if (!creation) return null;
 
                 const orderClass = staticOrderClasses[index] || "";
 
-                const imgSrc = creation.creationImage?.url
-                    ? process.env.NEXT_PUBLIC_API_URL + creation.creationImage.url
+                const imgSrc = creation.creationThumbnail?.url
+                    ? process.env.NEXT_PUBLIC_API_URL + creation.creationThumbnail.url
                     : "";
+
+                const creationsUrl = '/creations';
 
                 return (
                     <div
-                        key={creation.id}
+                        key={creation.documentId}
                         className={`${creationWrapper()} ${orderClass} ${index === 0 ? "lg:ml-[-2.5rem] lg:mt-[-4rem] lg:z-1" : ""
                             } ${index === 1 ? "lg:mr-[-2.5rem] lg:mt-[-4rem] lg:z-1" : ""}`}
                     >
-                        {creation.creationLink?.url ? (
+                        {creation.creationSlug ? (
                             <Link
-                                href={creation.creationLink.url}
+                                href={`${creationsUrl}/${creation.creationSlug}`}
                                 className={creationLink()}
-                                title={creation.creationLegend || ""}
+                                title={creation.creationName || ""}
                             >
                                 <Image
                                     src={imgSrc}
-                                    alt={creation.creationImage?.alternativeText || "Image de création personnalisée"}
+                                    alt={creation.creationThumbnail?.alternativeText || "Image de création personnalisée"}
                                     className={creationLinkImage()}
                                     width={250}
                                     height={400}
@@ -72,7 +74,7 @@ const HighlightingCreations = ({ block, className = "" }: Props) => {
                             <div className={creationLink()}>
                                 <Image
                                     src={imgSrc}
-                                    alt={creation.creationImage?.alternativeText || "Image de création personnalisée"}
+                                    alt={creation.creationThumbnail?.alternativeText || "Image de création personnalisée"}
                                     className={creationImage()}
                                     width={250}
                                     height={400}
@@ -82,9 +84,9 @@ const HighlightingCreations = ({ block, className = "" }: Props) => {
                         )}
 
 
-                        {creation.creationLegend && (
+                        {creation.creationName && (
                             <p className={creationLegend()}>
-                                {creation.creationLegend}
+                                {creation.creationName}
                             </p>
                         )}
                     </div>

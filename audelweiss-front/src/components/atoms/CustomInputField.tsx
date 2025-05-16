@@ -32,7 +32,7 @@ const styles = tv({
     label: "font-medium",
     inputBase:
       "border px-[1.6rem] py-[1.2rem] rounded-[.4rem] text-dark-primary transition outline-none placeholder:text-dark-primary focus:ring-1",
-    errorText: "text-red-500 text-sm",
+    errorText: "text-red-500",
   },
   variants: {
     error: {

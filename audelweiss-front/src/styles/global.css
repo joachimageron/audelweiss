@@ -56,7 +56,7 @@ body {
 }
 
 .inner-wrap {
-  max-width: 124rem;
+  max-width: 134rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
@@ -183,6 +183,28 @@ span.as--icon:hover .a-icon {
 }
 
 /***********************
+** Custom default Swiper
+***********************/
+.swiper-custom-dots .swiper-pagination {
+  position: initial; 
+  margin-top: 2rem;
+}
+
+.swiper-custom-dots .swiper-pagination-bullet {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: var(--color-primary);
+}
+
+/***********************
+** Featured articles' block
+***********************/
+.featured-articles .swiper .swiper-wrapper {
+  justify-content: center;
+}
+
+
+/***********************
 ** Mobile's responsive
 ***********************/
 @media (max-width: 1023px) {
@@ -194,4 +216,9 @@ span.as--icon:hover .a-icon {
   .single-slider .single-slide-image::after {
     opacity: 1;
   }
+
+  .featured-articles .swiper .swiper-wrapper {
+    justify-content: initial;
+  }
+
 }

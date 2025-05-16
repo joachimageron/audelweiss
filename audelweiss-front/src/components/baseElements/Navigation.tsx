@@ -102,7 +102,7 @@ const Navigation = ({ className = '' }: { className?: string }) => {
                     {/* Icône si elle existe */}
                     {heading.icon?.url && (
                       <Image
-                        src={`http://localhost:1337${heading.icon.url}`}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${heading.icon.url}`}
                         alt={`Icône ${heading.label}`}
                         width={20}
                         height={20}

@@ -54,7 +54,7 @@ const CardsList = ({ block }: Props) => {
             <article key={`card-${card?.id}`} className={cardItem({ topMargin: index === 1 })}>
               {card?.backgroundImage && (
                 <Image
-                  src={`http://localhost:1337${card.backgroundImage.url}`}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${card.backgroundImage.url}`}
                   alt=""
                   width={250}
                   height={250}

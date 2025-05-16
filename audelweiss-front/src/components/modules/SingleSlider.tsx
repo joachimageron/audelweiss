@@ -77,7 +77,7 @@ const SingleSlider = ({ block, className = "" }: Props) => {
             return (
               <SwiperSlide key={slide.id} className={slideWrapper()}>
                 <div className={slideImageContainer()}>
-                  <img src={process.env.NEXT_PUBLIC_GRAPHQL_API_URL + slide.backgroundImage?.url || ""} alt={slide.slideTitle || ""} className={slideImage()} />
+                  <img src={process.env.NEXT_PUBLIC_API_URL + slide.backgroundImage?.url || ""} alt={slide.slideTitle || ""} className={slideImage()} />
                 </div>
                 <a
                   href={slide.slideLink?.url}

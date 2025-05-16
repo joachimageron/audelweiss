@@ -4,6 +4,7 @@ import CardsList from "@/src/components/modules/CardsList";
 import HighlightingCreations from "@/src/components/modules/HighlightingCreations";
 import Quote from "@/src/components/modules/Quote";
 import SingleRichtext from "@/src/components/modules/SingleRichtext";
+import FeaturedArticles from "@/src/components/modules/FeaturedArticles";
 
 type Props = {
   blocks: PageContentDynamicZone[];
@@ -25,6 +26,8 @@ const PageBlocks = ({ blocks }: Props) => {
             return <Quote key={`${block.__typename}-${block.id}`} block={block} />;
           case "ComponentBlocksSingleRichtext":
             return <SingleRichtext key={`${block.__typename}-${block.id}`} block={block} />;
+          case "ComponentBlocksFeaturedArticles":
+            return <FeaturedArticles key={`${block.__typename}-${block.id}`} block={block} />;
           default:
             return null;
         }

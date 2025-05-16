@@ -437,6 +437,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+<<<<<<< HEAD
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -728,6 +729,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'contact',
       ]
     > &
+    type: Schema.Attribute.Enumeration<['home', 'edito', 'shop', 'account']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

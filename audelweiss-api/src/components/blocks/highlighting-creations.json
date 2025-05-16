@@ -19,13 +19,10 @@
       "repeatable": false,
       "component": "component.simple-link"
     },
-    "creationsList": {
-      "type": "component",
-      "repeatable": true,
-      "component": "component.creation-presentation",
-      "required": false,
-      "max": 4,
-      "min": 1
+    "creations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::creation.creation"
     }
   }
 }

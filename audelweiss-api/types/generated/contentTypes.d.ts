@@ -422,8 +422,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Required;
     articleDescription: Schema.Attribute.Text;
-    articleSlug: Schema.Attribute.UID<'articleTitle'> &
-      Schema.Attribute.Required;
     articleThumbnail: Schema.Attribute.Media<'images'> &
       Schema.Attribute.Required;
     articleTitle: Schema.Attribute.String & Schema.Attribute.Required;
@@ -437,7 +435,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-<<<<<<< HEAD
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -717,18 +714,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    type: Schema.Attribute.Enumeration<
-      [
-        'home',
-        'edito',
-        'listing-articles',
-        'listing-creations',
-        'shop',
-        'product-sheet',
-        'account',
-        'contact',
-      ]
-    > &
     type: Schema.Attribute.Enumeration<['home', 'edito', 'shop', 'account']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;

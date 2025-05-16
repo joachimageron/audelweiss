@@ -38,12 +38,6 @@
       "enum": [
         "home",
         "edito",
-        "listing-articles",
-        "listing-creations",
-        "shop",
-        "product-sheet",
-        "account",
-        "contact",
         "shop",
         "account"
       ],
@@ -59,3 +53,4 @@
     }
   }
 }
+

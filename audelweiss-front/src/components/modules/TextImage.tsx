@@ -22,7 +22,7 @@ export default function TextImage({
       <div
         className={clsx(
           "flex flex-col lg:flex-row items-center gap-[4rem]",
-          block?.isImageLeft && ("lg:flex-row-reverse")
+          block?.isImageLeft && "lg:flex-row-reverse"
         )}
       >
         {/* Text Column */}
@@ -38,13 +38,15 @@ export default function TextImage({
             "flex justify-center"
           )}
         >
-          {/* <Image
-            src={`http://localhost:1337${block?.image.url}`}
-            alt={block?.image.alternativeText || 'Illustration'}
-            width={600}
-            height={400}
-            className="w-full h-auto object-contain max-w-full"
-          /> */}
+          {block?.image?.url && (
+            <Image
+              src={`http://localhost:1337${block.image.url}`}
+              alt={block.image.alternativeText || 'Illustration'}
+              width={600}
+              height={400}
+              className="w-full h-auto object-contain max-w-full"
+            />
+          )}
         </div>
       </div>
     </section>

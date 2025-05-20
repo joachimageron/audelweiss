@@ -40,7 +40,7 @@ const Header = () => {
       < CustomLink href="/" className={logoLink()} title="Retourner à la page d'accueil" >
         {header?.logo && (
           <Image
-            src={`${process.env.NEXT_PUBLIC_GRAPHQL_API_URL}${header.logo.url}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${header.logo.url}`}
             alt="Logo Audelweiss"
             width={200}
             height={45}

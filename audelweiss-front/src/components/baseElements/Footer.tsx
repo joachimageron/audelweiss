@@ -59,12 +59,12 @@ export default function Footer({ className = '' }: FooterProps) {
                             />
                         </div>
 
-                        <p className="text-2xl leading-[2] my-5">
+                        <p className="text-2xl leading-[2]">
                             Chaque pièce est imaginée et réalisée à la main dans les Hautes-Alpes, avec passion et créativité.
                             Un mélange d’authenticité, d’expérimentation et d’énergie positive pour apporter douceur et harmonie à votre quotidien.
                         </p>
 
-                        <p className="mt-3 text-2xl my-5">Retrouvez-moi sur Instagram pour suivre les actus 🧶✨</p>
+                        <p className="mt-3 text-2xl">Retrouvez-moi sur Instagram pour suivre les actus 🧶✨</p>
 
                         <ul>
                             {footerLinks[2] && footerLinks[2].links.map((link, i) => {
@@ -118,8 +118,8 @@ export default function Footer({ className = '' }: FooterProps) {
                 </div>
 
                 {/* Trait séparateur + copyright */}
-                <div className="text-center text-xxl text-white mt-[5rem] mb-0">
-                    <hr className="my-[2rem] w-[87%] lg:w-[69%] mx-auto border-white-600" />
+                <div className="text-center text-xxl text-white mt-[1.5rem] mb-0">
+                    <hr className="my-[3rem] w-[87%] lg:w-[69%] mx-auto border-white-600" />
                     <p className="leading-[2]">2025 © AUDELWEISS Craft – Site réalisé par Audrey HOSSEPIAN</p>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 import { PageContentDynamicZone } from "@/src/types/generated";
 import SingleSlider from "@/src/components/modules/SingleSlider";
 import CardsList from "@/src/components/modules/CardsList";
-import HighlightingCreations from "@/src/components/modules/HighlightingCreations";
 import Quote from "@/src/components/modules/Quote";
 import SingleRichtext from "@/src/components/modules/SingleRichtext";
 import TextImage from "./modules/TextImage";
+import FeaturedProducts from "@/src/components/modules/FeaturedProducts";
 
 type Props = {
   blocks: PageContentDynamicZone[];
@@ -19,14 +19,14 @@ const PageBlocks = ({ blocks }: Props) => {
             return <CardsList key={`${block.__typename}-${block.id}`} block={block} />;
           case "ComponentBlocksSingleSlider":
             return <SingleSlider key={`${block.__typename}-${block.id}`} block={block} />;
-          case "ComponentBlocksHighlightingCreations":
-            return <HighlightingCreations key={`${block.__typename}-${block.id}`} block={block} />;
           case "ComponentBlocksQuote":
             return <Quote key={`${block.__typename}-${block.id}`} block={block} />;
           case "ComponentBlocksSingleRichtext":
             return <SingleRichtext key={`${block.__typename}-${block.id}`} block={block} />;
           case "ComponentBlocksImageAndText":
             return <TextImage key={`${block.__typename}-${block.id}`} block={block} />;
+          case "ComponentBlocksFeaturedProducts":
+            return <FeaturedProducts key={`${block.__typename}-${block.id}`} block={block} />;
           default:
             return null;
         }

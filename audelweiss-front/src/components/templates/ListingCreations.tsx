@@ -118,8 +118,8 @@ export default function ListingCreations({ basePath = "/creations" }: { basePath
                             <ul className={creationCategoriesList()} >
                                 {creation.creationCategories?.length ? (
                                     creation.creationCategories.map((cat: any) => (
-                                        <li>
-                                            <Button key={cat.slug} isSpanButton className={creationCategory()}>
+                                        <li key={cat.slug}>
+                                            <Button isSpanButton className={creationCategory()}>
                                                 {cat.name}
                                             </Button>
                                         </li>

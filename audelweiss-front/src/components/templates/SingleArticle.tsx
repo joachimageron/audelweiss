@@ -18,7 +18,7 @@ const styles = tv({
         articleHeader: "flex flex-col lg:flex-row gap-x-[5rem] gap-y-[2.5rem] mt-[3rem] mb-[2rem]",
         articleThumbnailWrapper: "w-full max-w-[60rem] lg:w-[40%]",
         articleThumbnailImage: "rounded-[1rem] w-full h-auto",
-        articleIntroductionWrapper: "w-full lg:w-[60%]",
+        articleIntroductionWrapper: "w-full lg:w-[60%] lg:mt-[2rem]",
         articleTitle: "mb-[1rem] text-[3.6rem] lg:text-[5rem] font-dm-sans text-primary",
         articlePublishedDate: "text-dark-primary font-bold",
         articleDescription: "mt-[3rem] text-[1.8rem]",

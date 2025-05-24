@@ -12,7 +12,7 @@ type Props = {
 
 const styles = tv({
     slots: {
-        richtextWrapper: "inner-wrap max-w-[90rem]! text-[1.7rem]",
+        richtextWrapper: "inner-wrap max-w-[105rem]! text-[1.7rem]",
     },
 });
 
@@ -21,7 +21,7 @@ const { richtextWrapper } = styles();
 
 const SingleRichtext = ({ block, className = "" }: Props) => {
     return (
-        <section className={richtextWrapper() + className}>
+        <section className={richtextWrapper() + " " + className}>
             {renderRichText(block.richtextContent)}
         </section>
     );

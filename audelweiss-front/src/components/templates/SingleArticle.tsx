@@ -5,6 +5,7 @@ import { useArticles } from "@/src/hooks/useArticles";
 
 import SingleRichtext from "@/src/components/modules/SingleRichtext";
 import FeaturedArticles from "@/src/components/modules/FeaturedArticles";
+import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
 
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import CustomLink from "@/src/components/atoms/CustomLink";
@@ -42,6 +43,24 @@ export default function SingleArticle({ documentId }: Props) {
     if (isLoading) return <p className="inner-wrap">Chargement de l'article...</p>;
     if (isError || !article) return <p className="inner-wrap">Article introuvable !</p>;
 
+    const breadcrumbItems = [
+        { label: "Accueil", href: "/" },
+        { label: "Blog", href: "/blog" },
+    ];
+
+    if (article.articleCategories?.[0]) {
+        const mainCategory = article.articleCategories[0];
+        const slug = mainCategory.name.toLowerCase().replace(/\s+/g, "-");
+        breadcrumbItems.push({
+            label: mainCategory.name,
+            href: `/blog/categorie/${slug}`,
+        });
+    }
+    breadcrumbItems.push({
+        label: article.articleTitle,
+        href: `/blog/${article.articleSlug}`,
+    });
+
     const relatedArticles = (allArticles ?? [])
         .filter((a: any) => a.documentId !== article.documentId)
         .sort((a: any, b: any) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
@@ -50,6 +69,8 @@ export default function SingleArticle({ documentId }: Props) {
     return (
         <>
             <article className={mainWrapper()}>
+                <Breadcrumb items={breadcrumbItems} />
+
                 <div className={articleHeader()}>
                     {article.articleThumbnail.url && (
                         <div className={articleThumbnailWrapper()}>

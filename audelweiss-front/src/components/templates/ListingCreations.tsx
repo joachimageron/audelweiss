@@ -9,8 +9,10 @@ import CustomTitle from "@/src/components/atoms/CustomTitle";
 import Button from "@/src/components/atoms/Button";
 import Image from "next/image";
 
-import { tv } from "tailwind-variants";
 import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
+
+import { tv } from "tailwind-variants";
+
 
 const styles = tv({
     slots: {

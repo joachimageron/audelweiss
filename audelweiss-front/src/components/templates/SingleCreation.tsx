@@ -1,14 +1,15 @@
 "use client";
 
 import { useSingleCreation } from "@/src/hooks/useSingleCreation";
-import { useCreations } from "@/src/hooks/useCreations";
+
+import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
+import SingleRichtext from "@/src/components/modules/SingleRichtext";
 
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import CustomLink from "@/src/components/atoms/CustomLink";
 import Image from "next/image";
 
 import { tv } from "tailwind-variants";
-import SingleRichtext from "../modules/SingleRichtext";
 
 const styles = tv({
     slots: {
@@ -54,14 +55,21 @@ type Props = {
 
 export default function SingleCreation({ documentId }: Props) {
     const { data: creation, isLoading, isError } = useSingleCreation(documentId);
-    const { data: allCreations } = useCreations();
 
     if (isLoading) return <p className="inner-wrap">Chargement de la création...</p>;
     if (isError || !creation) return <p className="inner-wrap">Création introuvable.</p>;
 
+    const breadcrumbItems = [
+        { label: "Accueil", href: "/" },
+        { label: "Créations", href: "/creations" },
+        { label: creation.creationName }
+    ];
+
     return (
         <>
             <article className={mainWrapper()}>
+                <Breadcrumb items={breadcrumbItems} />
+
                 <div className={header()}>
                     {creation.creationThumbnail?.url && (
                         <div className={thumbnailWrapper()}>

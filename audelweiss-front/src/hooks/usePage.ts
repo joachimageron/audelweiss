@@ -8,6 +8,8 @@ export type Block = {
 };
 
 type Page = {
+  illustrationImage: any;
+  type: string;
   title: string;
   slug: string;
   content: Block[];

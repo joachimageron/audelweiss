@@ -11,6 +11,7 @@ import Hero from "@/src/components/modules/Hero";
 import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
 import ListingArticles from "@/src/components/templates/ListingArticles";
 import ListingCreations from "@/src/components/templates/ListingCreations";
+import ShoppingList from "@/src/components/templates/ShoppingList";
 
 type Props = {
   params: string[];
@@ -137,6 +138,12 @@ const Page = ({ params }: Props) => {
       {data.type === "listing_creations" && (
         <>
           <ListingCreations />
+        </>
+      )}
+
+      {data.type === "shop" && (
+        <>
+          <ShoppingList />
         </>
       )}
 

@@ -23,8 +23,6 @@ const styles = tv({
         priceFilterInput: "border border-gray-300 rounded-[.4rem] px-[1.2rem] py-[.8rem] w-[15rem] text-dark-primary outline-none focus:ring-1 focus:ring-primary",
         errorText: "text-red-600 text-center mb-4 text-[1.6rem]",
         categoriesGrid: "grid grid-cols-1 sm:grid-cols-3 mt-[2rem] w-full",
-        categoryColumnBase: "sm:px-[3rem] py-[1rem]",
-        categoryColumnBorderRight: "sm:border-r border-r-gray-300",
         categoryName: "mb-[1.5rem] text-[1.8rem] font-bold font-aboreto italic text-gray-500 text-center",
         subCategoriesList: "flex flex-wrap gap-x-[3.5rem] gap-y-[1.5rem]",
         subCategorieItem: "min-w-[40%]",
@@ -73,8 +71,7 @@ const paginationButton = tv({
 const {
     mainWrapper, searchAndSort, searchWrapper, sortLabel, sortInput, filtersWrapper, filtersTitle,
     pricesFiltersList, priceFilterItem, priceFilterLabel, priceFilterInput, errorText,
-    categoriesGrid, categoryColumnBase, categoryColumnBorderRight, categoryName,
-    subCategoriesList, subCategorieItem, subCategorieLabel, subCategorieInput,
+    categoriesGrid, categoryName, subCategoriesList, subCategorieItem, subCategorieLabel, subCategorieInput,
     filtersButtons, resetFiltersButton, errorText2, productsGrid, productLink,
     productImageWrapper, productImage, productCategoriesTags, productTag,
     productCardHoverSection, productHoverButton, productName, productCaracteristics,
@@ -219,12 +216,9 @@ export default function ShoppingList() {
                 </div>
             </div>
 
-            {/* Section dépliable des filtres */}
             <div className={filtersWrapper()}>
                 <CustomTitle level={2} className={filtersTitle()}>Filtrer les produits</CustomTitle>
 
-
-                {/* Filtres par prix */}
                 <div className={pricesFiltersList()}>
                     <div className={priceFilterItem()}>
                         <label htmlFor="minPrice" className={priceFilterLabel()}>Prix min</label>
@@ -255,9 +249,7 @@ export default function ShoppingList() {
                 )}
 
 
-                {/* Grille 3 colonnes */}
                 <div className={categoriesGrid()}>
-                    {/* Colonne 1 : Crochet */}
                     <div className={categoryColumn({ last: false })}>
                         <h3 className={categoryName()}>Crochet</h3>
                         <ul className={subCategoriesList()}>
@@ -288,7 +280,6 @@ export default function ShoppingList() {
                         </ul>
                     </div>
 
-                    {/* Colonne 2 : Bois */}
                     <div className={categoryColumn({ last: false })}>
                         <h3 className={categoryName()}>Bois</h3>
                         <ul className={subCategoriesList()}>
@@ -319,7 +310,6 @@ export default function ShoppingList() {
                         </ul>
                     </div>
 
-                    {/* Colonne 3 : Flocage */}
                     <div className={categoryColumn({ last: true })}>
                         <h3 className={categoryName()}>Flocage</h3>
                         <ul className={subCategoriesList()}>
@@ -351,7 +341,6 @@ export default function ShoppingList() {
                     </div>
                 </div>
 
-                {/* Boutons d'action */}
                 <div className={filtersButtons()}>
                     <Button onClick={handleApplyFilters}>Appliquer les filtres</Button>
                     <Button
@@ -377,7 +366,6 @@ export default function ShoppingList() {
                 )
             }
 
-            {/* Grille produits */}
             <div className={productsGrid()}>
                 {paginatedProducts.map((product) => (
                     <CustomLink href="#_" key={product.id} className={productLink()}>
@@ -415,7 +403,6 @@ export default function ShoppingList() {
                 ))}
             </div>
 
-            {/* Pagination */}
             <div className={paginationWrapper()}>
                 {Array.from({ length: totalPages }).map((_, index) => {
                     const pageNum = index + 1;

@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import useScrollTrigger from "@/src/hooks/useScrollTrigger";
 import { ArrowTop } from "@/src/components/icons";
 

@@ -63,6 +63,10 @@ body {
   padding-right: 2rem;
 }
 
+.inner-wrap .inner-wrap {
+  padding: 0;
+}
+
 /***********************
 ** Atoms links/buttons
 ***********************/

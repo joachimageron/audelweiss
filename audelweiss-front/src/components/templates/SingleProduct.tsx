@@ -555,7 +555,7 @@ export default function ProductDetails() {
 
                             {/* Personnalisation facultative du produit */}
                             <div className={criteriaCustomizationWrapper()}>
-                                <h3 className={criteriaCheckboxesLabel()}>Personnalisation</h3>
+                                <h3 className={criteriaCheckboxesLabel()}>Message personnalisé</h3>
                                 <p className={criteriaCustomizationLabel()}>Indiquez le texte à écrire sur le produit.</p>
                                 <input
                                     type="text"

@@ -12,24 +12,58 @@ import InputField from "@/src/components/atoms/CustomInputField";
 
 export const styles = tv({
     slots: {
-        wrapper: "inner-wrap py-[3rem]",
-        table: "w-full min-w-[700px] border-separate border-spacing-y-[3rem]",
-        header: "text-left text-[1.5rem] font-bold text-dark-primary border-b border-gray-300 pb-[.6rem]",
-        row: "border-b border-gray-200 pb-[2rem]",
-        cell: "text-start align-middle text-[1.5rem] text-primary",
-        imageWrapper: "w-[8rem] aspect-square rounded overflow-hidden mr-[2rem]",
-        productInfo: "flex items-center",
-        quantityInput: "w-[6rem] text-center border border-gray-300 p-[.4rem] text-[1.5rem]",
-        promoForm: "flex flex-wrap items-center gap-[1.5rem] h-[4.5rem]",
-        promoInput: "h-full border px-[1rem] py-[.8rem] text-[1.4rem] rounded text-dark-primary",
+        mainWrapper: "inner-wrap py-[3rem]",
+        sectionTitle: "text-[2.8rem] text-center",
+        noProductMessageWrapper: "text-center py-[5rem]",
+        noProductMessage: "text-[1.6rem] text-gray-500 mb-[2rem]",
+        noProductButton: "bg-primary hover:bg-dark-primary",
+        cartTableWrapper: "w-full overflow-x-auto",
+        cartTable: "w-full min-w-[700px] border-separate border-spacing-y-[3rem]",
+        cartTableHeaderRow: "table-row",
+        cartTableHeader: "text-left text-[1.5rem] font-bold text-dark-primary border-b border-gray-300 pb-[.6rem]",
+        cartTableRow: "border-b border-gray-200 pb-[2rem]",
+        cartTableCell: "text-start align-middle text-[1.5rem] text-primary",
+        cartProductInfos: "flex items-center",
+        cartProductImage: "w-[8rem] aspect-square rounded overflow-hidden mr-[2rem]",
+        cartProductCaracteristicsList: "mt-[.6rem] text-[1.3rem] text-gray-500 space-y-[.2rem] list-disc list-inside",
+        cartProductQuantityInput: "w-[6rem] text-center border border-gray-300 p-[.4rem] text-[1.5rem]",
+        cartProductQuantityError: "text-[1.3rem] text-red-500 mt-[.5rem]",
+        cartDeleteProductCell: "text-end align-middle text-[1.5rem] text-primary",
+        cartDeleteProductButton: "p-[1rem] border rounded-[.6rem] text-primary hover:text-dark-primary cursor-pointer",
+        cartTotalSection: "mt-[2rem] flex justify-between flex-wrap gap-[3rem]",
+        cartTotalPriceWrapper: "text-right text-[1.6rem] font-bold text-dark-primary",
+        promoCodeWrapper: "flex flex-wrap items-center gap-[1.5rem] h-[4.5rem]",
+        promoCodeLabel: "sr-only",
+        promoCodeInput: "h-full border px-[1rem] py-[.8rem] text-[1.4rem] rounded text-dark-primary",
+        promoCodeButton: "h-full",
+        deleteProductModalOverlay: "fixed inset-0 bg-black/50 flex items-center justify-center z-50",
+        deleteProductModalWrapper: "bg-white p-[2rem] rounded shadow-md w-[90%] max-w-[40rem] text-center",
+        deleteProductModalText: "text-[1.6rem] mb-[2rem]",
+        deleteProductModalButtons: "flex justify-center gap-[2rem]",
+        cancelProductDeletionButton: "bg-gray-200! text-text! hover:bg-gray-300!",
+        formSection: "mt-[12rem] mb-[4rem] sm:my-[8rem]",
+        formWrapper: "mt-[3.5rem] flex flex-col gap-[5rem]",
+        formPartTitle: "text-[2rem] font-bold mb-[2rem]",
+        formInputsGrid: "grid grid-cols-1 md:grid-cols-2 gap-[2rem]",
+        formCheckboxWrapper: "my-[2rem] flex items-center gap-[.2rem]",
+        formCheckboxInput: "accent-primary mr-[1rem] w-[2rem] h-[2rem] cursor-pointer",
+        formBottomPart: "flex flex-col gap-[2rem]",
+        formTexteareaWrapper: "flex flex-col gap-[.5rem]",
+        formTexteareaInput: "border px-[1.6rem] py-[1.2rem] rounded-[.4rem] text-dark-primary placeholder:text-dark-primary focus:ring-1 focus:ring-primary outline-none resize-none",
+        formSubmitButton: "mt-[2rem] text-[1.6rem] self-center"
     },
 });
 
 export const {
-    wrapper, table, header, row, cell, imageWrapper, productInfo, quantityInput,
-    promoForm, promoInput
+    mainWrapper, sectionTitle, noProductMessageWrapper, noProductMessage, noProductButton, cartTableWrapper, cartTable, cartTableHeaderRow,
+    cartTableHeader, cartTableRow, cartTableCell, cartProductInfos, cartProductImage, cartProductCaracteristicsList, cartProductQuantityInput,
+    cartProductQuantityError, cartDeleteProductCell, cartDeleteProductButton, cartTotalSection, cartTotalPriceWrapper, promoCodeWrapper, promoCodeLabel,
+    promoCodeInput, promoCodeButton, deleteProductModalOverlay, deleteProductModalWrapper, deleteProductModalText, deleteProductModalButtons,
+    cancelProductDeletionButton, formSection, formWrapper, formPartTitle, formInputsGrid, formCheckboxWrapper, formCheckboxInput, formBottomPart,
+    formTexteareaWrapper, formTexteareaInput, formSubmitButton
 } = styles();
 
+// TODO BACK: Dynamiser les données des produits
 const MOCK_CART = [
     {
         id: 1,
@@ -96,41 +130,39 @@ export default function ShoppingCart() {
     };
 
     return (
-        <div className={wrapper()}>
-            <section className="text-center">
-                <CustomTitle level={2} className="text-[2.8rem]">Contenu de votre panier</CustomTitle>
+        <div className={mainWrapper()}>
+            <section>
+                <CustomTitle level={2} className={sectionTitle()}>Contenu de votre panier</CustomTitle>
 
                 {cartItems.length === 0 ? (
-                    <div className="text-center py-[5rem]">
-                        <p className="text-[1.6rem] text-gray-500 mb-[2rem]">Votre panier est vide.</p>
-                        <CustomLink href="/boutique" isButtonLink className="bg-primary hover:bg-dark-primary" withIcon>
-                            Se balader dans la boutique
-                        </CustomLink>
+                    <div className={noProductMessageWrapper()}>
+                        <p className={noProductMessage()}>Votre panier est vide.</p>
+                        <CustomLink href="/boutique" isButtonLink className={noProductButton()} withIcon>Se balader dans la boutique</CustomLink>
                     </div>
                 ) : (
                     <>
-                        <div className="w-full overflow-x-auto">
-                            <table className={table()}>
+                        <div className={cartTableWrapper()}>
+                            <table className={cartTable()}>
                                 <thead>
-                                    <tr className="table-row">
-                                        <th className={header()}>Produit</th>
-                                        <th className={header()}>Prix unitaire</th>
-                                        <th className={header()}>Quantité</th>
-                                        <th className={header()}>Total du produit</th>
+                                    <tr className={cartTableHeaderRow()}>
+                                        <th className={cartTableHeader()}>Produit</th>
+                                        <th className={cartTableHeader()}>Prix unitaire</th>
+                                        <th className={cartTableHeader()}>Quantité</th>
+                                        <th className={cartTableHeader()}>Total du produit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {cartItems.map(item => (
-                                        <tr key={item.id} className={row()}>
-                                            <td className={cell()}>
-                                                <div className={productInfo()}>
-                                                    <div className={imageWrapper()}>
+                                        <tr key={item.id} className={cartTableRow()}>
+                                            <td className={cartTableCell()}>
+                                                <div className={cartProductInfos()}>
+                                                    <div className={cartProductImage()}>
                                                         <Image src={item.image} alt={item.name} width={80} height={80} />
                                                     </div>
                                                     <div>
                                                         <p>{item.name}</p>
                                                         {item.details && (
-                                                            <ul className="mt-[.6rem] text-[1.3rem] text-gray-500 space-y-[.2rem] list-disc list-inside">
+                                                            <ul className={cartProductCaracteristicsList()}>
                                                                 {item.details.color && <li>Couleur : {item.details.color}</li>}
                                                                 {item.details.size && <li>Taille : {item.details.size}</li>}
                                                                 {item.details.motif && <li>Motif : {item.details.motif}</li>}
@@ -145,28 +177,28 @@ export default function ShoppingCart() {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className={cell()}>{item.price.toFixed(2)}€</td>
-                                            <td className={cell()}>
+                                            <td className={cartTableCell()}>{item.price.toFixed(2)}€</td>
+                                            <td className={cartTableCell()}>
                                                 <input
                                                     type="number"
                                                     min={1}
                                                     max={item.stock}
                                                     value={item.quantity}
                                                     onChange={e => handleQuantityChange(item.id, +e.target.value)}
-                                                    className={quantityInput()}
+                                                    className={cartProductQuantityInput()}
                                                 />
                                                 {quantityErrors[item.id] && (
-                                                    <p className="text-[1.3rem] text-red-500 mt-[.5rem]">{quantityErrors[item.id]}</p>
+                                                    <p className={cartProductQuantityError()}>{quantityErrors[item.id]}</p>
                                                 )}
                                             </td>
-                                            <td className={cell()}>{(item.price * item.quantity).toFixed(2)}€</td>
-                                            <td className="text-end align-middle text-[1.5rem] text-primary">
+                                            <td className={cartTableCell()}>{(item.price * item.quantity).toFixed(2)}€</td>
+                                            <td className={cartDeleteProductCell()}>
                                                 <button
                                                     onClick={() => {
                                                         setProductToDelete(item.id);
                                                         setShowConfirm(true);
                                                     }}
-                                                    className="p-[1rem] border rounded-[.6rem] text-primary hover:text-dark-primary cursor-pointer"
+                                                    className={cartDeleteProductButton()}
                                                     aria-label="Supprimer ce produit"
                                                 >
                                                     <Trash2 size={20} />
@@ -177,21 +209,20 @@ export default function ShoppingCart() {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="mt-[2rem] flex justify-between flex-wrap gap-[3rem]">
-                            <div className="text-right text-[1.6rem] font-bold text-dark-primary">
-                                Total à payer : {totalAmount.toFixed(2)}€
-                            </div>
-                            <form className={promoForm()}>
-                                <label htmlFor="promo" className="sr-only">Saisissez un code promo</label>
+                        <div className={cartTotalSection()}>
+                            <div className={cartTotalPriceWrapper()}>Total à payer : {totalAmount.toFixed(2)}€</div>
+                            {/* TODO BACK: Gérer les codes promos */}
+                            <form className={promoCodeWrapper()}>
+                                <label htmlFor="promo" className={promoCodeLabel()}>Saisissez un code promo</label>
                                 <input
                                     id="promo"
                                     type="text"
                                     value={promo}
                                     onChange={e => setPromo(e.target.value)}
                                     placeholder="Code promo"
-                                    className={promoInput()}
+                                    className={promoCodeInput()}
                                 />
-                                <Button type="submit" className="h-full">Valider le code promo</Button>
+                                <Button type="submit" className={promoCodeButton()}>Valider le code promo</Button>
                             </form>
                         </div>
                     </>
@@ -199,12 +230,10 @@ export default function ShoppingCart() {
             </section>
 
             {showConfirm && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-white p-[2rem] rounded shadow-md w-[90%] max-w-[40rem] text-center">
-                        <p className="text-[1.6rem] mb-[2rem]">
-                            Voulez-vous vraiment supprimer ce produit du panier ?
-                        </p>
-                        <div className="flex justify-center gap-[2rem]">
+                <div className={deleteProductModalOverlay()}>
+                    <div className={deleteProductModalWrapper()}>
+                        <p className={deleteProductModalText()}>Voulez-vous vraiment supprimer ce produit du panier ?</p>
+                        <div className={deleteProductModalButtons()}>
                             <Button
                                 onClick={() => {
                                     setCartItems(prev => prev.filter(item => item.id !== productToDelete));
@@ -215,7 +244,7 @@ export default function ShoppingCart() {
                             </Button>
                             <Button
                                 onClick={() => setShowConfirm(false)}
-                                className="bg-gray-200! text-text! rounded hover:bg-gray-300!">
+                                className={cancelProductDeletionButton()}>
                                 Annuler
                             </Button>
                         </div>
@@ -223,12 +252,13 @@ export default function ShoppingCart() {
                 </div>
             )}
 
-            <section className="mt-[12rem] mb-[4rem] sm:my-[8rem]">
-                <CustomTitle level={2} className="text-[2.8rem] text-center">Vos informations</CustomTitle>
-                <form className="mt-[3.5rem] flex flex-col gap-[5rem]">
+            <section className={formSection()}>
+                <CustomTitle level={2} className={sectionTitle()}>Vos informations</CustomTitle>
+                {/* TODO BACK: Gérer l'autoremplissage des champs avec les données de l'utilisateur s'il est connecté */}
+                <form className={formWrapper()}>
                     <div>
-                        <h2 className="text-[2rem] font-bold mb-[2rem]">Détails de facturation</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem]">
+                        <h3 className={formPartTitle()}>Détails de facturation</h3>
+                        <div className={formInputsGrid()}>
                             <InputField id="billing-lastname" label="Nom" required />
                             <InputField id="billing-firstname" label="Prénom" required />
                             <InputField id="billing-email" label="Adresse mail" type="email" required />
@@ -240,34 +270,34 @@ export default function ShoppingCart() {
                             <InputField id="billing-country" label="Pays" required />
                         </div>
 
-                        <div className="mt-[2rem] flex items-center gap-[.2rem]">
+                        <div className={formCheckboxWrapper()}>
                             <input
                                 id="create-account"
                                 type="checkbox"
                                 checked={createAccount}
                                 onChange={() => setCreateAccount(!createAccount)}
-                                className="accent-primary mr-[1rem] w-[2rem] h-[2rem] cursor-pointer"
+                                className={formCheckboxInput()}
                             />
                             <label htmlFor="create-account">Je souhaite me créer un compte</label>
                         </div>
                     </div>
 
                     <div>
-                        <h2 className="text-[2rem] font-bold">Détails de livraison</h2>
+                        <h3 className={formPartTitle()}>Détails de livraison</h3>
 
-                        <div className="mt-[2rem] flex items-center gap-[.2rem] cursor-pointer">
+                        <div className={formCheckboxWrapper()}>
                             <input
                                 id="shipping-differs"
                                 type="checkbox"
                                 checked={shippingDiffers}
                                 onChange={() => setShippingDiffers(!shippingDiffers)}
-                                className="accent-primary mr-[1rem] w-[2rem] h-[2rem] cursor-pointer"
+                                className={formCheckboxInput()}
                             />
                             <label htmlFor="shipping-differs">L'adresse de livraison est différente de celle de facturation</label>
                         </div>
 
                         {shippingDiffers && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] mt-[3rem]">
+                            <div className={formInputsGrid()}>
                                 <InputField id="shipping-lastname" label="Nom" required />
                                 <InputField id="shipping-firstname" label="Prénom" required />
                                 <InputField id="shipping-address" label="Adresse" required />
@@ -279,18 +309,18 @@ export default function ShoppingCart() {
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-[2rem]">
-                        <div className="flex flex-col gap-[.5rem]">
-                            <label htmlFor="instructions" className="font-medium">Instructions de livraison</label>
+                    <div className={formBottomPart()}>
+                        <div className={formTexteareaWrapper()}>
+                            <label htmlFor="instructions">Instructions de livraison</label>
                             <textarea
                                 id="instructions"
                                 rows={4}
-                                className="border px-[1.6rem] py-[1.2rem] rounded-[.4rem] text-dark-primary placeholder:text-dark-primary focus:ring-1 focus:ring-primary outline-none resize-none"
+                                className={formTexteareaInput()}
                                 placeholder="Laissez un message ou une instruction spéciale pour la livraison"
                             />
                         </div>
 
-                        <Button type="submit" className="mt-[2rem] text-[1.6rem] self-center">
+                        <Button type="submit" className={formSubmitButton()}>
                             Payer {totalAmount.toFixed(2)}€
                         </Button>
                     </div>

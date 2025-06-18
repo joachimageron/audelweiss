@@ -5,7 +5,7 @@ import "@/src/styles/global.css";
 
 import Providers from "@/src/components/providers/providers";
 import Header from "@/src/components/Header";
-import Footer from "@/src/components/baseElements/Footer";
+import Footer from "@/src/components/Footer";
 import ScrollToTopButton from "@/src/components/baseElements/ToTopButton";
 
 const dmSans = DM_Sans({

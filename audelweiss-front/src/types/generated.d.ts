@@ -24,6 +24,7 @@ export type Article = {
   articleCategories_connection?: Maybe<ArticleCategoryRelationResponseCollection>;
   articleContent: ComponentBlocksSingleRichtext;
   articleDescription?: Maybe<Scalars['String']['output']>;
+  articleSlug: Scalars['String']['output'];
   articleThumbnail: UploadFile;
   articleTitle: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -114,6 +115,7 @@ export type ArticleFiltersInput = {
   articleCategories?: InputMaybe<ArticleCategoryFiltersInput>;
   articleContent?: InputMaybe<ComponentBlocksSingleRichtextFiltersInput>;
   articleDescription?: InputMaybe<StringFilterInput>;
+  articleSlug?: InputMaybe<StringFilterInput>;
   articleTitle?: InputMaybe<StringFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   documentId?: InputMaybe<IdFilterInput>;
@@ -127,6 +129,7 @@ export type ArticleInput = {
   articleCategories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   articleContent?: InputMaybe<ComponentBlocksSingleRichtextInput>;
   articleDescription?: InputMaybe<Scalars['String']['input']>;
+  articleSlug?: InputMaybe<Scalars['String']['input']>;
   articleThumbnail?: InputMaybe<Scalars['ID']['input']>;
   articleTitle?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -668,6 +671,8 @@ export enum Enum_Page_Type {
   Account = 'account',
   Edito = 'edito',
   Home = 'home',
+  ListingArticles = 'listing_articles',
+  ListingCreations = 'listing_creations',
   Shop = 'shop'
 }
 
@@ -2812,6 +2817,11 @@ export type UsersPermissionsUserRelationResponseCollection = {
   __typename?: 'UsersPermissionsUserRelationResponseCollection';
   nodes: Array<UsersPermissionsUser>;
 };
+
+export type FooterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FooterQuery = { __typename?: 'Query', footer?: { __typename?: 'Footer', navigation?: Array<{ __typename?: 'ComponentNavigationGroup', id: string, entries?: Array<{ __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, heading?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null } | null> | null } | null };
 
 export type CardsListFieldsFragment = { __typename?: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
 

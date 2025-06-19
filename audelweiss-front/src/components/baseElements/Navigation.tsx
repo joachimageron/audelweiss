@@ -17,12 +17,12 @@ import { tv } from "tailwind-variants";
 
 const styles = tv({
   slots: {
-    navWrapper: "flex-col lg:flex lg:flex-row gap-[2rem] absolute lg:static lg:opacity-100 lg:pointer-events-auto top-full left-0 w-full lg:w-auto bg-white lg:bg-transparent z-50 lg:px-[3rem] px-[2rem] lg:py-[2rem] pb-[2rem] shadow-lg lg:shadow-none focus-within:opacity-100 focus-within:pointer-events-auto transition max-h-mobile-menu",
+    navWrapper: "flex-col lg:flex lg:flex-row gap-[2rem] absolute lg:static lg:opacity-100 lg:pointer-events-auto top-full left-0 w-full lg:w-auto bg-white lg:bg-transparent z-50 lg:px-[3rem] px-[2rem] shadow-lg lg:shadow-none focus-within:opacity-100 focus-within:pointer-events-auto transition max-h-mobile-menu",
     navList: "flex flex-col lg:items-center lg:flex-row lg:gap-[2rem] gap-[.5rem] w-full",
-    navItem: "relative flex flex-col group",
-    navLink: "nav-link flex items-center lg:gap-[.7rem] gap-[1.2rem] py-[1rem] text-[1.4rem] font-semibold uppercase as--hover-filter-primary transition",
-    subMenu: "lg:absolute lg:left-[50%] lg:top-full lg:translate-x-[-50%] lg:py-[1rem] lg:shadow-lg lg:group-hover:opacity-100 lg:group-hover:pointer-events-auto lg:group-focus-within:opacity-100 lg:group-focus-within:pointer-events-auto lg:opacity-0 lg:pointer-events-none min-w-[100%] bg-white flex flex-col transition z-40",
-    subLink: "inline-block lg:px-[1.5rem] px-[2.3rem] py-[1rem] w-full text-[1.4rem] font-semibold uppercase",
+    navItem: "flex flex-col group",
+    navLink: "nav-link flex items-center lg:gap-[.7rem] gap-[1.2rem] py-[1rem] lg:py-[3.8rem] text-[1.4rem] font-semibold uppercase as--hover-filter-primary transition",
+    subMenu: "lg:absolute lg:left-0 lg:top-[99%] lg:p-[1.5rem] lg:shadow-lg lg:group-hover:opacity-100 lg:group-hover:pointer-events-auto lg:group-focus-within:opacity-100 lg:group-focus-within:pointer-events-auto lg:opacity-0 lg:pointer-events-none min-w-[100%] bg-white flex lg:flex-row flex-col lg:gap-0 gap-[1rem] lg:mb-0 mb-[.6rem] lg:border-t border-t-light-primary transition z-40",
+    subLink: "inline-block lg:px-[1.5rem] lg:mb-[.6rem] lg:px-[2.3rem] px-[1.4rem] py-[1rem] w-full text-[1.5rem] font-semibold uppercase",
     burgerButton: "lg:hidden cursor-pointer as--hover-filter-primary transition-all",
     closeIcon: "w-4 h-4",
     burgerIcon: "w-3 h-3",
@@ -122,16 +122,53 @@ const Navigation = ({ className = '' }: { className?: string }) => {
                     {entries.map((entry, subIndex) => {
                       const isSubActive = pathname === entry?.url;
                       return (
-                        <li key={subIndex}>
-                          <CustomLink
-                            href={entry?.url || '#'}
-                            className={subLink({ active: isSubActive })}
-                          >
-                            {entry?.label}
-                          </CustomLink>
+                        <li key={subIndex} className="flex flex-col flex-1 lg:border-r border-r-light-primary">
+                          <div>
+                            <CustomLink
+                              href={entry?.url || '#'}
+                              className={subLink({ active: isSubActive })}
+                            >
+                              {entry?.label}
+                            </CustomLink>
+                            <ul className="flex flex-col gap-[1rem]">
+                              <li>
+                                <CustomLink
+                                  href='#_'
+                                  className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
+                                >
+                                  Decoration
+                                </CustomLink>
+                              </li>
+                              <li>
+                                <CustomLink
+                                  href='#_'
+                                  className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
+                                >
+                                  Vêtement
+                                </CustomLink>
+                              </li>
+                              <li>
+                                <CustomLink
+                                  href='#_'
+                                  className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
+                                >
+                                  Aménagement d'intérieur
+                                </CustomLink>
+                              </li>
+                            </ul>
+                          </div>
                         </li>
                       );
                     })}
+                    <li className="lg:block hidden ml-[2rem]">
+                      <Image
+                        src="https://picsum.photos/250/320"
+                        alt="texte alternatif"
+                        width={250}
+                        height={320}
+                        className="rounded-[.6rem]"
+                      />
+                    </li>
                   </ul>
                 )}
               </li>

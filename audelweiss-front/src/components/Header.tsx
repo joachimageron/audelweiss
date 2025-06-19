@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 const styles = tv({
   slots: {
     headerWrapper:
-      "z-50 transition-transform duration-300 lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] bg-white shadow-md",
+      "z-50 transition-transform duration-300 lg:relative fixed top-0 left-0 w-full flex gap-[2rem] items-center lg:px-[6rem] px-[1.5rem] py-[1.5rem] lg:py-0 bg-white shadow-md",
     logoLink: "mr-auto",
     logoImage: "max-w-[20rem]",
   },

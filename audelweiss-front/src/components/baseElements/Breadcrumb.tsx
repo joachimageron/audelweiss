@@ -5,7 +5,7 @@ import { tv } from "tailwind-variants";
 
 const styles = tv({
     slots: {
-        breadcrumbWrapper: "inner-wrap w-full bg-background py-[1.5rem] text-[1.4rem]",
+        breadcrumbWrapper: "inner-wrap w-full bg-background py-[1.5rem]! text-[1.4rem]",
         breadcrumbList: "flex items-center gap-[.5rem] flex-wrap",
         breadcrumbListItem: "flex items-center gap-[.5rem]",
         breadcrumbListItemLink: "text-primary hover:text-dark-primary hover:underline transition",

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import CustomLink from "@/src/components/atoms/CustomLink";
-import { Instagram } from "@/src/components/icons";
 import { useFooter } from "@/src/hooks/useFooter";
 import { renderRichText } from '@/src/utils/renderRichtext';
 
@@ -15,10 +14,26 @@ export default function Footer({ className = '' }) {
     <footer className={`bg-dark-background text-white px-[2rem] py-[4rem] lg:px-[6rem] ${className}`}>
       <div className="mx-auto h-full flex flex-col justify-between">
 
-        <div className="w-[87%] lg:w-[69%] flex flex-col lg:flex-row gap-[3rem] items-center mx-auto my-auto">
+      <div className="inner-wrap flex flex-col lg:flex-row gap-[3rem] items-center mx-auto my-auto">
+          {/* Navigation gauche */}
+          {footer.navigation?.[0] && (
+            <div className="order-1 flex flex-col justify-center h-full flex-1 items-center text-center lg:items-start lg:text-left">
+              <h4 className="text-3xl font-semibold mb-[1rem]">{footer.navigation[0].heading?.label}</h4>
+              <ul className="flex flex-col gap-[.7rem] font-semibold">
+                {footer.navigation[0].entries?.map((link, i) => (
+                  <li key={i}>
+                    <CustomLink href={link.url} className="text-primary transition">
+                      {link.label}
+                    </CustomLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Colonne centrale */}
-          <div className="order-1 lg:order-2 flex flex-col justify-center h-full text-center flex-2">
-            <div className="mb-5 flex justify-center">
+          <div className="lg:order-2 order-0 flex flex-col justify-center h-full text-center flex-2">
+            <div className="mb-3 flex justify-center">
               {footer.logo?.url && (
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}${footer.logo.url}`}
@@ -28,19 +43,24 @@ export default function Footer({ className = '' }) {
                 />
               )}
             </div>
-            
+
             {footer.richtext && (
-                <div className="text-2xl leading-[2]">
-                    {renderRichText(footer.richtext)}
-                </div>
+              <div className="text-2xl leading-[2]">{renderRichText(footer.richtext)}</div>
             )}
 
-            <ul>
-              {footer.reseaux?.map((link, i) => (
-                <li key={i} className="flex justify-center mt-5">
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
-                    <div className="p-[18px] border border-white rounded-full transition hover:opacity-65 hover:text-primary">
-                      <Instagram className="mx-auto invert" />
+            <ul className="flex justify-center gap-[2rem] flex-wrap">
+              {footer.reseaux?.map((reseau, i) => (
+                <li key={i} className="">
+                  <a href={reseau.url} target="_blank" rel="noopener noreferrer">
+                    <div className="p-[10px] border border-white rounded-full transition hover:opacity-65 hover:text-primary">
+                      {reseau.icon?.url && (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_API_URL}${reseau.icon.url}`}
+                          alt={reseau.icon.alternativeText || 'Réseau social'}
+                          width={20}
+                          height={20}
+                        />
+                      )}
                     </div>
                   </a>
                 </li>
@@ -48,15 +68,12 @@ export default function Footer({ className = '' }) {
             </ul>
           </div>
 
-          {/* Navigation */}
-          {footer.navigation?.map((navGroup, index) => (
-            <div
-              key={navGroup.id}
-              className={`order-${index === 0 ? 2 : 3} lg:order-${index === 0 ? 1 : 3} flex flex-col justify-center h-full flex-1 items-center text-center ${index === 0 ? 'lg:items-start lg:text-left' : 'lg:items-end lg:text-right'}`}
-            >
-              <h4 className="text-3xl font-semibold mb-[1rem]">{navGroup.heading?.label}</h4>
+          {/* Navigation droite */}
+          {footer.navigation?.[1] && (
+            <div className="order-3 flex flex-col justify-center h-full flex-1 items-center text-center lg:items-end lg:text-right">
+              <h4 className="text-3xl font-semibold mb-[1rem]">{footer.navigation[1].heading?.label}</h4>
               <ul className="flex flex-col gap-[.7rem] font-semibold">
-                {navGroup?.entries?.map((link, i) => (
+                {footer.navigation[1].entries?.map((link, i) => (
                   <li key={i}>
                     <CustomLink href={link.url} className="text-primary transition">
                       {link.label}
@@ -65,8 +82,9 @@ export default function Footer({ className = '' }) {
                 ))}
               </ul>
             </div>
-          ))}
+          )}
         </div>
+
 
         <div className="text-center text-xxl text-white mt-[1.5rem] mb-0">
           <hr className="my-[3rem] w-[87%] lg:w-[69%] mx-auto border-white-600" />

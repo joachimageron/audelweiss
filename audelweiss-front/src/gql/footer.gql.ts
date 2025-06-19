@@ -6,7 +6,10 @@ export const footerQuery = gql`
   query Footer {
     footer {
       reseaux {
-        ...ImageFields
+        url
+        icon {
+          ...ImageFields
+        }
       }
       richtext
       logo {

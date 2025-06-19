@@ -341,6 +341,26 @@ export type ComponentComponentLargeSlideFiltersInput = {
   slideTitle?: InputMaybe<StringFilterInput>;
 };
 
+export type ComponentComponentReseaux = {
+  __typename?: 'ComponentComponentReseaux';
+  icon?: Maybe<UploadFile>;
+  id: Scalars['ID']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentComponentReseauxFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentComponentReseauxFiltersInput>>>;
+  not?: InputMaybe<ComponentComponentReseauxFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentComponentReseauxFiltersInput>>>;
+  url?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentComponentReseauxInput = {
+  icon?: InputMaybe<Scalars['ID']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ComponentComponentSimpleLink = {
   __typename?: 'ComponentComponentSimpleLink';
   id: Scalars['ID']['output'];
@@ -673,7 +693,8 @@ export enum Enum_Page_Type {
   Home = 'home',
   ListingArticles = 'listing_articles',
   ListingCreations = 'listing_creations',
-  Shop = 'shop'
+  Shop = 'shop',
+  ShoppingCart = 'shopping_cart'
 }
 
 export enum Enum_Productvariant_Format {
@@ -723,8 +744,11 @@ export type Footer = {
   __typename?: 'Footer';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
+  logo?: Maybe<UploadFile>;
   navigation?: Maybe<Array<Maybe<ComponentNavigationGroup>>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  reseaux?: Maybe<Array<Maybe<ComponentComponentReseaux>>>;
+  richtext?: Maybe<Scalars['JSON']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -735,12 +759,22 @@ export type FooterNavigationArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type FooterInput = {
-  navigation?: InputMaybe<Array<InputMaybe<ComponentNavigationGroupInput>>>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+
+export type FooterReseauxArgs = {
+  filters?: InputMaybe<ComponentComponentReseauxFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Creation | CreationCategory | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | SlugifySlug | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type FooterInput = {
+  logo?: InputMaybe<Scalars['ID']['input']>;
+  navigation?: InputMaybe<Array<InputMaybe<ComponentNavigationGroupInput>>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  reseaux?: InputMaybe<Array<InputMaybe<ComponentComponentReseauxInput>>>;
+  richtext?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentReseaux | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Creation | CreationCategory | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | SlugifySlug | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -2821,7 +2855,7 @@ export type UsersPermissionsUserRelationResponseCollection = {
 export type FooterQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FooterQuery = { __typename?: 'Query', footer?: { __typename?: 'Footer', navigation?: Array<{ __typename?: 'ComponentNavigationGroup', id: string, entries?: Array<{ __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, heading?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null } | null> | null } | null };
+export type FooterQuery = { __typename?: 'Query', footer?: { __typename?: 'Footer', richtext?: any | null, reseaux?: Array<{ __typename?: 'ComponentComponentReseaux', url?: string | null, icon?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> | null, logo?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null, navigation?: Array<{ __typename?: 'ComponentNavigationGroup', id: string, entries?: Array<{ __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, heading?: { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null } | null } | null> | null } | null };
 
 export type CardsListFieldsFragment = { __typename?: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
 

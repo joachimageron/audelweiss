@@ -1,5 +1,7 @@
 "use client";
 
+import React, { AnchorHTMLAttributes } from "react";
+
 import Link from "next/link";
 import { ArrowRight } from "@/src/components/icons";
 
@@ -9,7 +11,7 @@ import clsx from "clsx";
 /**
  * Props for the CustomLink component
  */
-type CustomLinkProps = {
+type CustomLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   /**
    * href ---> link's target
    */
@@ -76,12 +78,14 @@ const CustomLink = ({
   target = "_self",
   withIcon = false,
   isButtonLink = false,
+  ...rest
 }: CustomLinkProps) => {
   return (
     <Link
       href={href}
       target={target}
       title={title}
+      {...rest}
       className={clsx(baseLink({ isButtonLink, withIcon }), className)}
     >
       {children}

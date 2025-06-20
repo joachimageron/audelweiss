@@ -8,9 +8,6 @@ export const headerQuery = gql`
         url
       }
       navigation {
-        entries {
-          ...NavLinkFields
-        }
         heading {
           ...NavLinkFields
         }

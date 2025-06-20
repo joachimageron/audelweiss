@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 import { useHeader } from "@/src/hooks/useHeader";
+import { useProductCategories } from "@/src/hooks/useProductCategories";
 import useLockBodyScroll from "@/src/hooks/useBodyScrollLock";
 
 import CustomLink from "@/src/components/atoms/CustomLink";
@@ -13,6 +14,7 @@ import CustomInputField from "@/src/components/atoms/CustomInputField";
 import { Burger, Close, Search } from "@/src/components/icons";
 
 import { tv } from "tailwind-variants";
+import clsx from "clsx";
 
 
 const styles = tv({
@@ -68,9 +70,13 @@ const { navWrapper, navList, navItem, navLink, subMenu, subLink, burgerButton, c
 const Navigation = ({ className = '' }: { className?: string }) => {
   const pathname = usePathname();
   const { data: header, isLoading } = useHeader({ queryKey: ['header'] });
+  const { data: productCategories } = useProductCategories();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+  const [isImageVisible, setIsImageVisible] = useState(true);
 
   useLockBodyScroll(isOpen || isSearchOpen);
 
@@ -92,14 +98,12 @@ const Navigation = ({ className = '' }: { className?: string }) => {
         <ul className={navList()}>
           {header.navigation.map((group) => {
             const heading = group?.heading;
-            const entries = group?.entries || [];
             const isActive = pathname === heading?.url;
 
             return (
               <li key={group?.id} className={navItem()}>
                 {heading && (
                   <CustomLink href={heading.url} className={navLink({ active: isActive })}>
-                    {/* Icône si elle existe */}
                     {heading.icon?.url && (
                       <Image
                         src={`${process.env.NEXT_PUBLIC_API_URL}${heading.icon.url}`}
@@ -110,65 +114,70 @@ const Navigation = ({ className = '' }: { className?: string }) => {
                       />
                     )}
 
-                    {/* Texte selon hasIconOnly */}
                     <span className={heading.icon?.url && heading.hasIconOnly ? "lg:hidden" : ""}>
                       {heading.label}
                     </span>
                   </CustomLink>
                 )}
 
-                {entries.length > 0 && (
+                {heading?.hasShopMegamenu && productCategories && (
                   <ul className={subMenu()}>
-                    {entries.map((entry, subIndex) => {
-                      const isSubActive = pathname === entry?.url;
-                      return (
-                        <li key={subIndex} className="flex flex-col flex-1 lg:border-r border-r-light-primary">
-                          <div>
-                            <CustomLink
-                              href={entry?.url || '#'}
-                              className={subLink({ active: isSubActive })}
-                            >
-                              {entry?.label}
-                            </CustomLink>
-                            <ul className="flex flex-col gap-[1rem]">
-                              <li>
-                                <CustomLink
-                                  href='#_'
-                                  className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
-                                >
-                                  Decoration
-                                </CustomLink>
-                              </li>
-                              <li>
-                                <CustomLink
-                                  href='#_'
-                                  className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
-                                >
-                                  Vêtement
-                                </CustomLink>
-                              </li>
-                              <li>
-                                <CustomLink
-                                  href='#_'
-                                  className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
-                                >
-                                  Aménagement d'intérieur
-                                </CustomLink>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                      );
-                    })}
-                    <li className="lg:block hidden ml-[2rem]">
-                      <Image
-                        src="https://picsum.photos/250/320"
-                        alt="texte alternatif"
-                        width={250}
-                        height={320}
-                        className="rounded-[.6rem]"
-                      />
-                    </li>
+                    {productCategories.map((category) => (
+                      <li
+                        key={category.documentId}
+                        className="flex flex-col flex-1 lg:border-r border-r-light-primary"
+                      >
+                        <CustomLink
+                          href={`/boutique/categorie/${category.slug}`}
+                          onMouseEnter={() => {
+                            if (category.illustration?.url) {
+                              setHoveredImage(category.illustration.url);
+                              setIsImageVisible(false);
+                              setTimeout(() => setIsImageVisible(true), 8);
+                            }
+                          }}
+                          className={subLink({ active: pathname === `/categorie/${category.slug}` })}>
+                          {category.name}
+                        </CustomLink>
+
+                        <ul className="flex flex-col gap-[1rem]">
+                          {category.product_subcategories?.map((sub) => (
+                            <li key={sub.documentId}>
+                              <CustomLink
+                                href={`/boutique/categorie/${category.slug}/${sub.slug}`}
+                                onMouseEnter={() => {
+                                  if (sub.illustration?.url) {
+                                    setHoveredImage(sub.illustration.url);
+                                  } else if (category.illustration?.url) {
+                                    setHoveredImage(category.illustration.url);
+                                  }
+                                  setIsImageVisible(false);
+                                  setTimeout(() => setIsImageVisible(true), 8);
+                                }}
+                                className="block lg:px-[2.3rem] px-[3.4rem] text-[1.6rem] w-full hover:text-primary"
+                              >
+                                {sub.name}
+                              </CustomLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+
+                    {(hoveredImage || productCategories[0]?.illustration?.url) && (
+                      <li className="lg:block hidden ml-[2rem]">
+                        <Image
+                          key={hoveredImage || "default"}
+                          src={`${process.env.NEXT_PUBLIC_API_URL}${hoveredImage || productCategories[0].illustration.url}`}
+                          alt="Illustration"
+                          width={250}
+                          height={320}
+                          className={clsx(
+                            "rounded-[.6rem] h-[32rem] w-[25rem] object-cover transition-opacity duration-500",
+                            isImageVisible ? "opacity-100" : "opacity-0"
+                          )} />
+                      </li>
+                    )}
                   </ul>
                 )}
               </li>

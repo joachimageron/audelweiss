@@ -1,32 +1,30 @@
 import gql from "graphql-tag";
-import { navLinkFragment } from "@/src/gql/fragments/navLinkFragment.gql";
 import { imageFragment } from "@/src/gql/fragments/imageFragment.gql";
+import { simpleLinkFragment } from "@/src/gql/fragments/simpleLinkFragment.gql";
 
 export const footerQuery = gql`
   query Footer {
     footer {
+      logo {
+        ...ImageFields
+      }
+      centralRichtext
       reseaux {
         url
         icon {
           ...ImageFields
         }
       }
-      richtext
-      logo {
-        ...ImageFields
+      leftColumnTitle
+      leftColumnLinks {
+        ...SimpleLinkFields
       }
-      navigation {
-        id
-        entries {
-          ...NavLinkFields
-        }
-        heading {
-          ...NavLinkFields
-        }
+      rightColumnTitle
+      rightColumnLinks {
+        ...SimpleLinkFields
       }
     }
   }
-
-  ${navLinkFragment}
   ${imageFragment}
+  ${simpleLinkFragment}
 `;

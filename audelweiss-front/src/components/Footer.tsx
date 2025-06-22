@@ -9,12 +9,11 @@ export default function Footer({ className = '' }) {
   const { data: footer, isLoading } = useFooter({ queryKey: ["footer"] });
 
   if (isLoading || !footer) return null;
-  console.log(renderRichText(footer.richtext));
   return (
     <footer className={`bg-dark-background text-white px-[2rem] py-[4rem] lg:px-[6rem] ${className}`}>
       <div className="mx-auto h-full flex flex-col justify-between">
 
-      <div className="inner-wrap flex flex-col lg:flex-row gap-[3rem] items-center mx-auto my-auto">
+        <div className="inner-wrap flex flex-col lg:flex-row gap-[3rem] items-center mx-auto my-auto">
           {/* Navigation gauche */}
           {footer.navigation?.[0] && (
             <div className="order-1 flex flex-col justify-center h-full flex-1 items-center text-center lg:items-start lg:text-left">

@@ -27,13 +27,6 @@ export type Article = {
   articleSlug: Scalars['String']['output'];
   articleThumbnail: UploadFile;
   articleTitle: Scalars['String']['output'];
-  articleCategories: Array<Maybe<ArticleCategory>>;
-  articleCategories_connection?: Maybe<ArticleCategoryRelationResponseCollection>;
-  articleContent: ComponentBlocksSingleRichtext;
-  articleDescription?: Maybe<Scalars['String']['output']>;
-  articleSlug: Scalars['String']['output'];
-  articleThumbnail: UploadFile;
-  articleTitle: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -381,6 +374,12 @@ export type ComponentComponentSimpleLinkFiltersInput = {
   not?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ComponentComponentSimpleLinkFiltersInput>>>;
   url?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentComponentSimpleLinkInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ComponentNavigationGroup = {
@@ -742,19 +741,22 @@ export type FloatFilterInput = {
 
 export type Footer = {
   __typename?: 'Footer';
+  centralRichtext?: Maybe<Scalars['JSON']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
+  leftColumnLinks?: Maybe<Array<Maybe<ComponentComponentSimpleLink>>>;
+  leftColumnTitle?: Maybe<Scalars['String']['output']>;
   logo?: Maybe<UploadFile>;
-  navigation?: Maybe<Array<Maybe<ComponentNavigationGroup>>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   reseaux?: Maybe<Array<Maybe<ComponentComponentReseaux>>>;
-  richtext?: Maybe<Scalars['JSON']['output']>;
+  rightColumnLinks?: Maybe<Array<Maybe<ComponentComponentSimpleLink>>>;
+  rightColumnTitle?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
 
-export type FooterNavigationArgs = {
-  filters?: InputMaybe<ComponentNavigationGroupFiltersInput>;
+export type FooterLeftColumnLinksArgs = {
+  filters?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -766,15 +768,25 @@ export type FooterReseauxArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type FooterInput = {
-  logo?: InputMaybe<Scalars['ID']['input']>;
-  navigation?: InputMaybe<Array<InputMaybe<ComponentNavigationGroupInput>>>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  reseaux?: InputMaybe<Array<InputMaybe<ComponentComponentReseauxInput>>>;
-  richtext?: InputMaybe<Scalars['JSON']['input']>;
+
+export type FooterRightColumnLinksArgs = {
+  filters?: InputMaybe<ComponentComponentSimpleLinkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHero | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type FooterInput = {
+  centralRichtext?: InputMaybe<Scalars['JSON']['input']>;
+  leftColumnLinks?: InputMaybe<Array<InputMaybe<ComponentComponentSimpleLinkInput>>>;
+  leftColumnTitle?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  reseaux?: InputMaybe<Array<InputMaybe<ComponentComponentReseauxInput>>>;
+  rightColumnLinks?: InputMaybe<Array<InputMaybe<ComponentComponentSimpleLinkInput>>>;
+  rightColumnTitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentReseaux | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Creation | CreationCategory | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductSubcategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | SlugifySlug | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -2921,9 +2933,18 @@ export type UsersPermissionsUserRelationResponseCollection = {
   nodes: Array<UsersPermissionsUser>;
 };
 
+export type FooterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FooterQuery = { __typename?: 'Query', footer?: { __typename?: 'Footer', centralRichtext?: any | null, leftColumnTitle?: string | null, rightColumnTitle?: string | null, logo?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null, reseaux?: Array<{ __typename?: 'ComponentComponentReseaux', url?: string | null, icon?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> | null, leftColumnLinks?: Array<{ __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null> | null, rightColumnLinks?: Array<{ __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null> | null } | null };
+
+export type ArticleFieldsFragment = { __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } };
+
 export type CardsListFieldsFragment = { __typename?: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
 
-export type HighlightingCreationsFieldsFragment = { __typename?: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null };
+export type FeaturedArticlesFieldsFragment = { __typename?: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null };
+
+export type FeaturedProductsFieldsFragment = { __typename?: 'ComponentBlocksFeaturedProducts', id: string, headingBlock?: any | null, products: Array<{ __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null>, blockLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null };
 
 export type QuoteFieldsFragment = { __typename?: 'ComponentBlocksQuote', id: string, text: string };
 
@@ -2931,9 +2952,17 @@ export type SingleRichtextFieldsFragment = { __typename?: 'ComponentBlocksSingle
 
 export type SingleSliderFieldsFragment = { __typename?: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> };
 
+export type TextImageFieldsFragment = { __typename?: 'ComponentBlocksImageAndText', id: string, textWithImage: any, isImageLeft?: boolean | null, isImageTaller?: boolean | null, image: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } };
+
+export type CreationFieldsFragment = { __typename?: 'Creation', documentId: string, creationName: string, creationDescription?: string | null, creationTime: string, creationSlug?: string | null, publishedAt?: any | null, creationCategories: Array<{ __typename?: 'CreationCategory', name: string, slug: string } | null>, creationThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any }, creationGallery: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> };
+
 export type ImageFieldsFragment = { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string };
 
-export type NavLinkFieldsFragment = { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null };
+export type NavLinkFieldsFragment = { __typename?: 'ComponentNavigationLink', label: string, url: string, hasIconOnly?: boolean | null, hasShopMegamenu?: boolean | null, icon?: { __typename?: 'UploadFile', url: string } | null };
+
+export type ProductCategoriesFieldsFragment = { __typename?: 'ProductCategory', documentId: string, slug: string, name: string, illustration: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, product_subcategories: Array<{ __typename?: 'ProductSubcategory', documentId: string, slug: string, name: string, illustration: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } } | null> };
+
+export type ProductFieldsFragment = { __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> };
 
 export type SimpleLinkFieldsFragment = { __typename?: 'ComponentComponentSimpleLink', label: string, url: string };
 
@@ -2947,4 +2976,33 @@ export type PagesQueryVariables = Exact<{
 }>;
 
 
-export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles' } | { __typename: 'ComponentBlocksFeaturedProducts' } | { __typename: 'ComponentBlocksHero' } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creationsList?: Array<{ __typename?: 'ComponentComponentCreationPresentation', id: string, creationLegend?: string | null, creationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> | null } | { __typename: 'ComponentBlocksImageAndText' } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title: string, slug: string, type: Enum_Page_Type, illustrationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts', id: string, headingBlock?: any | null, products: Array<{ __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null>, blockLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksHighlightingCreations' } | { __typename: 'ComponentBlocksImageAndText', id: string, textWithImage: any, isImageLeft?: boolean | null, isImageTaller?: boolean | null, image: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+
+export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null> };
+
+export type CreationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreationsQuery = { __typename?: 'Query', creations: Array<{ __typename?: 'Creation', documentId: string, creationName: string, creationDescription?: string | null, creationTime: string, creationSlug?: string | null, publishedAt?: any | null, creationCategories: Array<{ __typename?: 'CreationCategory', name: string, slug: string } | null>, creationThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any }, creationGallery: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null> };
+
+export type ProductCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductCategoriesQuery = { __typename?: 'Query', productCategories: Array<{ __typename?: 'ProductCategory', documentId: string, slug: string, name: string, illustration: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, product_subcategories: Array<{ __typename?: 'ProductSubcategory', documentId: string, slug: string, name: string, illustration: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } } | null> } | null> };
+
+export type SingleArticleQueryVariables = Exact<{
+  documentId: Scalars['ID']['input'];
+}>;
+
+
+export type SingleArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null };
+
+export type SingleCreationQueryVariables = Exact<{
+  documentId: Scalars['ID']['input'];
+}>;
+
+
+export type SingleCreationQuery = { __typename?: 'Query', creation?: { __typename?: 'Creation', documentId: string, creationName: string, creationDescription?: string | null, creationTime: string, creationSlug?: string | null, publishedAt?: any | null, creationCategories: Array<{ __typename?: 'CreationCategory', name: string, slug: string } | null>, creationThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any }, creationGallery: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null };

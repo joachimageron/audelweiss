@@ -73,9 +73,9 @@ export interface BlocksImageAndText extends Struct.ComponentSchema {
   attributes: {
     image: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
-    imagePosition: Schema.Attribute.Enumeration<['left', 'right']> &
-      Schema.Attribute.DefaultTo<'left'>;
-    text: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    isImageLeft: Schema.Attribute.Boolean;
+    isImageTaller: Schema.Attribute.Boolean;
+    textWithImage: Schema.Attribute.Blocks & Schema.Attribute.Required;
   };
 }
 

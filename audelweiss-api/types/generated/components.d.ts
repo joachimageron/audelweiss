@@ -30,7 +30,6 @@ export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   };
   attributes: {
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    link: Schema.Attribute.Component<'component.simple-link', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -48,6 +47,24 @@ export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksHero extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_heroes';
+  info: {
+    description: '';
+    displayName: 'Hero';
+    icon: 'layout';
+  };
+  attributes: {
+    background: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    > &
+      Schema.Attribute.Required;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    subHeading: Schema.Attribute.Text;
+  };
+}
+
 export interface BlocksHighlightingCreations extends Struct.ComponentSchema {
   collectionName: 'components_blocks_highlighting_creations';
   info: {
@@ -57,7 +74,17 @@ export interface BlocksHighlightingCreations extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.Blocks;
-    creations: Schema.Attribute.Relation<'oneToMany', 'api::creation.creation'>;
+    creationsList: Schema.Attribute.Component<
+      'component.creation-presentation',
+      true
+    > &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 1;
+        },
+        number
+      >;
     link: Schema.Attribute.Component<'component.simple-link', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -119,6 +146,17 @@ export interface BlocksSingleSlider extends Struct.ComponentSchema {
         },
         number
       >;
+  };
+}
+
+export interface BlocksTest extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_tests';
+  info: {
+    displayName: 'test';
+    icon: 'briefcase';
+  };
+  attributes: {
+    rdsfc: Schema.Attribute.RichText;
   };
 }
 
@@ -271,11 +309,13 @@ declare module '@strapi/strapi' {
       'blocks.cards-list': BlocksCardsList;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-products': BlocksFeaturedProducts;
+      'blocks.hero': BlocksHero;
       'blocks.highlighting-creations': BlocksHighlightingCreations;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;
       'blocks.single-richtext': BlocksSingleRichtext;
       'blocks.single-slider': BlocksSingleSlider;
+      'blocks.test': BlocksTest;
       'component.card': ComponentCard;
       'component.creation-presentation': ComponentCreationPresentation;
       'component.large-slide': ComponentLargeSlide;

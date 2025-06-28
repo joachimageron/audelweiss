@@ -40,7 +40,7 @@ const {
 
 export default function ComptePage() {
   const router = useRouter();
-  const { isAuthenticated, loading, logout, user } = useUser();
+  const { isAuthenticated, loading, logout, user, updateUser } = useUser();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -87,10 +87,15 @@ export default function ComptePage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic will be implemented later
-    console.log("Form data submitted:", formData);
+    try {
+      await updateUser(formData);
+      // Succès - l'utilisateur est automatiquement mis à jour
+    } catch (error) {
+      // Erreur gérée automatiquement via le state error
+      console.error('Erreur lors de la mise à jour:', error);
+    }
   };
 
   return (

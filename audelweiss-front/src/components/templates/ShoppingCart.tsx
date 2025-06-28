@@ -1,14 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
+
+import { useCart } from "@/src/components/providers/CartProvider";
 
 import { tv } from "tailwind-variants";
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import Button from "@/src/components/atoms/Button";
 import CustomLink from "@/src/components/atoms/CustomLink";
-import InputField from "@/src/components/atoms/CustomInputField";
 
 export const styles = tv({
     slots: {
@@ -25,6 +26,7 @@ export const styles = tv({
         cartTableCell: "text-start align-middle text-[1.5rem] text-primary",
         cartProductInfos: "flex items-center",
         cartProductImage: "w-[8rem] aspect-square rounded overflow-hidden mr-[2rem]",
+        cartProductLink: "as--underline-hover",
         cartProductCaracteristicsList: "mt-[.6rem] text-[1.3rem] text-gray-500 space-y-[.2rem] list-disc list-inside",
         cartProductQuantityInput: "w-[6rem] text-center border border-gray-300 p-[.4rem] text-[1.5rem]",
         cartProductQuantityError: "text-[1.3rem] text-red-500 mt-[.5rem]",
@@ -41,26 +43,16 @@ export const styles = tv({
         deleteProductModalText: "text-[1.6rem] mb-[2rem]",
         deleteProductModalButtons: "flex justify-center gap-[2rem]",
         cancelProductDeletionButton: "bg-gray-200! text-text! hover:bg-gray-300!",
-        formSection: "mt-[12rem] mb-[4rem] sm:my-[8rem]",
-        formWrapper: "mt-[3.5rem] flex flex-col gap-[5rem]",
-        formPartTitle: "text-[2rem] font-bold mb-[2rem]",
-        formInputsGrid: "grid grid-cols-1 md:grid-cols-2 gap-[2rem]",
-        formCheckboxWrapper: "my-[2rem] flex items-center gap-[.2rem]",
-        formCheckboxInput: "accent-primary mr-[1rem] w-[2rem] h-[2rem] cursor-pointer",
-        formBottomPart: "flex flex-col gap-[2rem]",
-        formTexteareaWrapper: "flex flex-col gap-[.5rem]",
-        formTexteareaInput: "border px-[1.6rem] py-[1.2rem] rounded-[.4rem] text-dark-primary placeholder:text-dark-primary focus:ring-1 focus:ring-primary outline-none resize-none",
-        formSubmitButton: "mt-[2rem] text-[1.6rem] self-center"
+        paymentButtonArea: "flex justify-center mt-[12rem] mb-[5rem] lg:my-[8rem]",
     },
 });
 
 export const {
     mainWrapper, sectionTitle, noProductMessageWrapper, noProductMessage, noProductButton, cartTableWrapper, cartTable, cartTableHeaderRow,
-    cartTableHeader, cartTableRow, cartTableCell, cartProductInfos, cartProductImage, cartProductCaracteristicsList, cartProductQuantityInput,
+    cartTableHeader, cartTableRow, cartTableCell, cartProductInfos, cartProductImage, cartProductLink, cartProductCaracteristicsList, cartProductQuantityInput,
     cartProductQuantityError, cartDeleteProductCell, cartDeleteProductButton, cartTotalSection, cartTotalPriceWrapper, promoCodeWrapper, promoCodeLabel,
     promoCodeInput, promoCodeButton, deleteProductModalOverlay, deleteProductModalWrapper, deleteProductModalText, deleteProductModalButtons,
-    cancelProductDeletionButton, formSection, formWrapper, formPartTitle, formInputsGrid, formCheckboxWrapper, formCheckboxInput, formBottomPart,
-    formTexteareaWrapper, formTexteareaInput, formSubmitButton
+    cancelProductDeletionButton, paymentButtonArea
 } = styles();
 
 // TODO BACK: Dynamiser les données des produits
@@ -68,6 +60,7 @@ const MOCK_CART = [
     {
         id: 1,
         name: "SCRUNCHY | Tricotine• - RM1 - Mauve",
+        slug: "/boutique/slugProduit1",
         image: "https://picsum.photos/140/140",
         price: 4.0,
         quantity: 2,
@@ -85,6 +78,7 @@ const MOCK_CART = [
     {
         id: 2,
         name: "Porte-clé montagne personnalisé",
+        slug: "/boutique/slugProduit2",
         image: "https://picsum.photos/200/300",
         price: 8.0,
         quantity: 5,
@@ -97,17 +91,19 @@ const MOCK_CART = [
     },
 ];
 
+
 export default function ShoppingCart() {
-    const [cartItems, setCartItems] = useState(MOCK_CART);
+    const { cartItems, setCartItems, total } = useCart();
     const [promo, setPromo] = useState("");
     const [productToDelete, setProductToDelete] = useState<number | null>(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [quantityErrors, setQuantityErrors] = useState<Record<number, string>>({});
-    const [createAccount, setCreateAccount] = useState(false);
-    const [shippingDiffers, setShippingDiffers] = useState(false);
 
     const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+    useEffect(() => {
+        setCartItems(MOCK_CART); // initialisation dans le contexte global
+    }, []);
 
     const handleQuantityChange = (id: number, value: number) => {
         setCartItems(prev =>
@@ -132,7 +128,7 @@ export default function ShoppingCart() {
     return (
         <div className={mainWrapper()}>
             <section>
-                <CustomTitle level={2} className={sectionTitle()}>Contenu de votre panier</CustomTitle>
+                <CustomTitle level={2} className={sectionTitle()}>Contenu du panier</CustomTitle>
 
                 {cartItems.length === 0 ? (
                     <div className={noProductMessageWrapper()}>
@@ -160,7 +156,7 @@ export default function ShoppingCart() {
                                                         <Image src={item.image} alt={item.name} width={80} height={80} />
                                                     </div>
                                                     <div>
-                                                        <p>{item.name}</p>
+                                                        <CustomLink className={cartProductLink()} href={item.slug}>{item.name}</CustomLink>
                                                         {item.details && (
                                                             <ul className={cartProductCaracteristicsList()}>
                                                                 {item.details.color && <li>Couleur : {item.details.color}</li>}
@@ -252,80 +248,11 @@ export default function ShoppingCart() {
                 </div>
             )}
 
-            <section className={formSection()}>
-                <CustomTitle level={2} className={sectionTitle()}>Vos informations</CustomTitle>
-                {/* TODO BACK: Gérer l'autoremplissage des champs avec les données de l'utilisateur s'il est connecté */}
-                <form className={formWrapper()}>
-                    <div>
-                        <h3 className={formPartTitle()}>Détails de facturation</h3>
-                        <div className={formInputsGrid()}>
-                            <InputField id="billing-lastname" label="Nom" required />
-                            <InputField id="billing-firstname" label="Prénom" required />
-                            <InputField id="billing-email" label="Adresse mail" type="email" required />
-                            <InputField id="billing-phone" label="Téléphone" type="tel" required />
-                            <InputField id="billing-address" label="Adresse" required />
-                            <InputField id="billing-address2" label="Complément d'adresse" />
-                            <InputField id="billing-postal" label="Code postal" required />
-                            <InputField id="billing-city" label="Ville" required />
-                            <InputField id="billing-country" label="Pays" required />
-                        </div>
-
-                        <div className={formCheckboxWrapper()}>
-                            <input
-                                id="create-account"
-                                type="checkbox"
-                                checked={createAccount}
-                                onChange={() => setCreateAccount(!createAccount)}
-                                className={formCheckboxInput()}
-                            />
-                            <label htmlFor="create-account">Je souhaite me créer un compte</label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 className={formPartTitle()}>Détails de livraison</h3>
-
-                        <div className={formCheckboxWrapper()}>
-                            <input
-                                id="shipping-differs"
-                                type="checkbox"
-                                checked={shippingDiffers}
-                                onChange={() => setShippingDiffers(!shippingDiffers)}
-                                className={formCheckboxInput()}
-                            />
-                            <label htmlFor="shipping-differs">L'adresse de livraison est différente de celle de facturation</label>
-                        </div>
-
-                        {shippingDiffers && (
-                            <div className={formInputsGrid()}>
-                                <InputField id="shipping-lastname" label="Nom" required />
-                                <InputField id="shipping-firstname" label="Prénom" required />
-                                <InputField id="shipping-address" label="Adresse" required />
-                                <InputField id="shipping-address2" label="Complément d'adresse" />
-                                <InputField id="shipping-postal" label="Code postal" required />
-                                <InputField id="shipping-city" label="Ville" required />
-                                <InputField id="shipping-country" label="Pays" required />
-                            </div>
-                        )}
-                    </div>
-
-                    <div className={formBottomPart()}>
-                        <div className={formTexteareaWrapper()}>
-                            <label htmlFor="instructions">Instructions de livraison</label>
-                            <textarea
-                                id="instructions"
-                                rows={4}
-                                className={formTexteareaInput()}
-                                placeholder="Laissez un message ou une instruction spéciale pour la livraison"
-                            />
-                        </div>
-
-                        <Button type="submit" className={formSubmitButton()}>
-                            Payer {totalAmount.toFixed(2)}€
-                        </Button>
-                    </div>
-                </form>
-            </section>
-        </div>
+            <div className={paymentButtonArea()}>
+                <CustomLink href="/commande" isButtonLink withIcon>
+                    Valider la commande
+                </CustomLink>
+            </div>
+        </div >
     );
 }

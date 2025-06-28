@@ -153,62 +153,6 @@ const MOCK_PRODUCT = {
     stockQuantity: 5
 };
 
-const MOCK_LINKED_PRODUCTS = [
-    {
-        id: 1,
-        name: "Boucles d’oreilles artisanales",
-        price: "35€",
-        image: {
-            src: "/images/boucle.webp",
-            alt: "Boucles d’oreilles",
-        },
-        link: {
-            label: "",
-            href: "/",
-        },
-        promo: true,
-    },
-    {
-        id: 2,
-        name: "Collier fait main",
-        price: "42€",
-        image: {
-            src: "/images/collier.jpeg",
-            alt: "Collier",
-        },
-        link: {
-            label: "",
-            href: "/",
-        },
-        promo: false,
-    },
-    {
-        id: 3,
-        name: "Bracelet perlé",
-        price: "29€",
-        image: {
-            src: "/images/bracelet.webp",
-        },
-        link: {
-            label: "",
-            href: "/",
-        },
-        promo: true,
-    },
-    {
-        id: 4,
-        name: "Bague perlé",
-        price: "29€",
-        image: {
-            src: "/images/bague.webp",
-        },
-        link: {
-            label: "",
-            href: "/",
-        },
-        promo: true,
-    },
-];
 
 export default function ProductDetails() {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
@@ -622,13 +566,6 @@ export default function ProductDetails() {
                         <p className="mb-[2.5rem]">Offrir une patate positive, ce n’est pas juste offrir un objet, c’est transmettre une intention : celle d’apporter un peu de douceur et de bienveillance dans le quotidien de quelqu’un. Fait main et souvent personnalisable, c’est un cadeau qui sort de l’ordinaire. Tu peux choisir sa couleur, ajouter un petit message brodé ou même lui donner une expression unique. Résultat : une création qui fait mouche à tous les coups.</p>
                     </div>
                 </section>
-
-                {/* TODO : Au lieu d'afficher les produits à partir d'un mock, il faudrait récupérer les plus récents qui possèdent au moins une catégorie en commun avec le produit  */}
-                <FeaturedProducts
-                    description={<h2>Vous pourriez également être intéréssé par ces produits</h2>}
-                    products={MOCK_LINKED_PRODUCTS}
-                    linkHref="/boutique"
-                />
             </article >
         </>
     );

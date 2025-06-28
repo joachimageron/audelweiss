@@ -13,6 +13,7 @@ import ListingArticles from "@/src/components/templates/ListingArticles";
 import ListingCreations from "@/src/components/templates/ListingCreations";
 import ShoppingList from "@/src/components/templates/ShoppingList";
 import ShoppingCart from "@/src/components/templates/ShoppingCart";
+import ShoppingForm from "../templates/ShoppingForm";
 
 type Props = {
   params: string[];
@@ -75,6 +76,12 @@ const Page = ({ params }: Props) => {
       {data.type === "shopping_cart" && (
         <>
           <ShoppingCart />
+        </>
+      )}
+
+      {data.type === "shopping_form" && (
+        <>
+          <ShoppingForm />
         </>
       )}
 

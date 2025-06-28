@@ -13,7 +13,7 @@ type Props = {
 
 const PageBlocks = ({ blocks }: Props) => {
   return (
-    <div className="[&>*:not(:first-child)]:mt-[7rem] last:[&>*:not(:last-child)]:mb-[7rem]">
+    <div className="[&>*:not(:first-child)]:mt-[3rem] lg:[&>*:not(:first-child)]:mt-[7rem] last:[&>*:not(:last-child)]:mb-[3rem] lg:last:[&>*:not(:last-child)]:mb-[7rem]">
       {blocks.map(block => {
         switch (block.__typename) {
           case "ComponentBlocksCardsList":

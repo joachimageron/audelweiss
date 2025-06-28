@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 
 const styles = tv({
   slots: {
-    pageContainer: "inner-wrap py-[6rem]",
+    pageContainer: "py-[6rem] max-w-[70rem] mx-2 md:mx-auto",
     pageHeader: "flex justify-between items-center mb-[4rem]",
     pageTitle: "text-[3.5rem]",
     sectionTitle: "text-[2.5rem] mb-[2rem]",

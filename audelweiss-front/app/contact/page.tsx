@@ -76,7 +76,7 @@ export default function ContactPage() {
                 <label className="block mb-2 font-semibold">Objet de votre demande</label>
                 <select
                     {...register("reason", { required: "Veuillez choisir un objet" })}
-                    className="w-full p-3 border border-gray-300 rounded"
+                    className="w-full p-1 border border-gray-300 rounded"
                 >
                     <option value="">-- Sélectionner --</option>
                     <option value="sav">Service après-vente</option>
@@ -91,7 +91,7 @@ export default function ContactPage() {
                 <label className="block mb-2 font-semibold">Message</label>
                 <textarea
                     {...register("message", { required: "Message requis" })}
-                    className="w-full p-3 border border-gray-300 rounded min-h-[150px]"
+                    className="w-full p-2 border border-gray-300 rounded min-h-[150px]"
                 />
                 {errors.message && <p className="text-red-500 mt-1">{errors.message.message}</p>}
             </div>

@@ -4,7 +4,7 @@ import { productCategoriesFragment } from "@/src/gql/fragments/productCategories
 export const productsCategoriesQuery = gql`
   query ProductCategories {
     productCategories {
-      ...productCategoriesFields
+      ...ProductCategoriesFields
     }
   }
   ${productCategoriesFragment}

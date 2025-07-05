@@ -5,13 +5,10 @@ import { usePage } from "@/src/hooks/usePage";
 import PageBlocks from "@/src/components/PageBlocks";
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import { PageContentDynamicZone } from "@/src/types/generated";
-import TextImage from "@/src/components/modules/TextImage";
-import FeaturedProducts from "@/src/components/modules/FeaturedProducts";
 import Hero from "@/src/components/modules/Hero";
 import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
 import ListingArticles from "@/src/components/templates/ListingArticles";
 import ListingCreations from "@/src/components/templates/ListingCreations";
-import ShoppingList from "@/src/components/templates/ShoppingList";
 import ShoppingCart from "@/src/components/templates/ShoppingCart";
 import ShoppingForm from "../templates/ShoppingForm";
 
@@ -30,19 +27,25 @@ const Page = ({ params }: Props) => {
     return <p className="inner-wrap">Une erreur est survenue ou la page est introuvable.</p>;
   }
 
+  console.log("params : ", params);
+
   const breadcrumbItems = [
     { label: "Accueil", href: "/" },
-    ...(params ? params.slice(0, -1).map((segment, index) => ({
-      label: segment.charAt(0).toUpperCase() + segment.slice(1),
-      href: "/" + params.slice(0, index + 1).join("/"),
-    })) : []),
-    { label: data.title }
+    ...(params
+      ? params.slice(0, -1).map((segment, index) => ({
+          label: segment.charAt(0).toUpperCase() + segment.slice(1),
+          href: "/" + params.slice(0, index + 1).join("/"),
+        }))
+      : []),
+    { label: data.title },
   ];
 
   return (
     <>
       {data.type === "home" && (
-        <CustomTitle level={1} className="sr-only">{data.title}</CustomTitle>
+        <CustomTitle level={1} className="sr-only">
+          {data.title}
+        </CustomTitle>
       )}
 
       {data.type !== "home" && (
@@ -51,9 +54,7 @@ const Page = ({ params }: Props) => {
         </>
       )}
 
-      {!["home", "listing_articles", "listing_creations"].includes(data.type) && (
-        <Breadcrumb items={breadcrumbItems} />
-      )}
+      {!["home", "listing_articles", "listing_creations"].includes(data.type) && <Breadcrumb items={breadcrumbItems} />}
 
       {data.type === "listing_articles" && (
         <>
@@ -64,12 +65,6 @@ const Page = ({ params }: Props) => {
       {data.type === "listing_creations" && (
         <>
           <ListingCreations />
-        </>
-      )}
-
-      {data.type === "shop" && (
-        <>
-          <ShoppingList />
         </>
       )}
 

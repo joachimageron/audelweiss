@@ -1,9 +1,9 @@
-"use client";
-import SingleProduct from "@/src/components/templates/SingleProduct";
-import { use } from "react";
+import ProductDetails from "@/src/components/templates/ProductDetails/ProductDetails";
 
-export default function ProductSlugPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = use(params);
+const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
 
-    return <SingleProduct></SingleProduct>
-}
+  return <ProductDetails slug={slug} />;
+};
+
+export default ProductPage;

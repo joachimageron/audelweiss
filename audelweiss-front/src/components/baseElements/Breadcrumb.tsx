@@ -39,7 +39,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                             ) : (
                                 <p>{item.label}</p>
                             )}
-                            {!isLast && <span className={breadcrumbSeparator()}>></span>}
+                            {!isLast && <span className={breadcrumbSeparator()}></span>}
                         </li>
                     );
                 })}

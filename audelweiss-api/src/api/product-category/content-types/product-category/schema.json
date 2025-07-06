@@ -16,8 +16,24 @@
       "required": true
     },
     "slug": {
-      "type": "string",
+      "type": "uid",
+      "targetField": "name",
       "required": true
+    },
+    "illustration": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "product_subcategories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-subcategory.product-subcategory",
+      "mappedBy": "product_category"
     },
     "products": {
       "type": "relation",

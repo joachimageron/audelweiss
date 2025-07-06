@@ -43,7 +43,8 @@ export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
     icon: 'plus';
   };
   attributes: {
-    heading: Schema.Attribute.Blocks;
+    blockLink: Schema.Attribute.Component<'component.simple-link', false>;
+    headingBlock: Schema.Attribute.Blocks;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
   };
 }
@@ -73,9 +74,9 @@ export interface BlocksImageAndText extends Struct.ComponentSchema {
   attributes: {
     image: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
-    imagePosition: Schema.Attribute.Enumeration<['left', 'right']> &
-      Schema.Attribute.DefaultTo<'left'>;
-    text: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    isImageLeft: Schema.Attribute.Boolean;
+    isImageTaller: Schema.Attribute.Boolean;
+    textWithImage: Schema.Attribute.Blocks & Schema.Attribute.Required;
   };
 }
 
@@ -169,6 +170,17 @@ export interface ComponentLargeSlide extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentReseaux extends Struct.ComponentSchema {
+  collectionName: 'components_component_reseaux';
+  info: {
+    displayName: 'reseaux';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentSimpleLink extends Struct.ComponentSchema {
   collectionName: 'components_component_simple_links';
   info: {
@@ -189,7 +201,6 @@ export interface NavigationGroup extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    entries: Schema.Attribute.Component<'navigation.link', true>;
     heading: Schema.Attribute.Component<'navigation.link', false>;
   };
 }
@@ -203,6 +214,7 @@ export interface NavigationLink extends Struct.ComponentSchema {
   };
   attributes: {
     hasIconOnly: Schema.Attribute.Boolean;
+    hasShopMegamenu: Schema.Attribute.Boolean;
     icon: Schema.Attribute.Media<'images' | 'files'>;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
@@ -279,6 +291,7 @@ declare module '@strapi/strapi' {
       'component.card': ComponentCard;
       'component.creation-presentation': ComponentCreationPresentation;
       'component.large-slide': ComponentLargeSlide;
+      'component.reseaux': ComponentReseaux;
       'component.simple-link': ComponentSimpleLink;
       'navigation.group': NavigationGroup;
       'navigation.link': NavigationLink;

@@ -37,6 +37,11 @@
       "repeatable": false,
       "component": "blocks.single-richtext",
       "required": true
+    },
+    "articleSlug": {
+      "type": "uid",
+      "targetField": "articleTitle",
+      "required": true
     }
   }
 }

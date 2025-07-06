@@ -7,7 +7,7 @@
   },
   "options": {},
   "attributes": {
-    "text": {
+    "textWithImage": {
       "type": "blocks",
       "required": true
     },
@@ -20,14 +20,11 @@
         "files"
       ]
     },
-    "imagePosition": {
-      "type": "enumeration",
-      "enum": [
-        "left",
-        "right"
-      ],
-      "default": "left",
-      "required": false
+    "isImageLeft": {
+      "type": "boolean"
+    },
+    "isImageTaller": {
+      "type": "boolean"
     }
   }
 }

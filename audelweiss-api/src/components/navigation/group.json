@@ -11,11 +11,6 @@
       "type": "component",
       "repeatable": false,
       "component": "navigation.link"
-    },
-    "entries": {
-      "type": "component",
-      "repeatable": true,
-      "component": "navigation.link"
     }
   }
 }

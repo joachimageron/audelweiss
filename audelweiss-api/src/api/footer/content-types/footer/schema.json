@@ -11,10 +11,42 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "navigation": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "centralRichtext": {
+      "type": "blocks"
+    },
+    "reseaux": {
+      "displayName": "reseaux",
       "type": "component",
       "repeatable": true,
-      "component": "navigation.group"
+      "component": "component.reseaux"
+    },
+    "leftColumnTitle": {
+      "type": "string",
+      "required": false
+    },
+    "leftColumnLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "component.simple-link"
+    },
+    "rightColumnTitle": {
+      "type": "string"
+    },
+    "rightColumnLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "component.simple-link"
     }
   }
 }

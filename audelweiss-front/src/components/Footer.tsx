@@ -56,7 +56,7 @@ export default function Footer({ className = '' }) {
             <ul className="flex justify-center gap-[2rem] flex-wrap">
               {footer.reseaux?.map((reseau, i) => (
                 <li key={i}>
-                  <CustomLink href={reseau.url} className="block p-[10px] border border-white rounded-full transition hover:border-primary as--hover-filter-primary">
+                  <CustomLink href={reseau.url} className="block p-[10px] border border-white rounded-full as--filter-white transition hover:border-primary as--hover-filter-primary">
                     {reseau.icon?.url && (
                       <Image
                         src={`${process.env.NEXT_PUBLIC_API_URL}${reseau.icon.url}`}

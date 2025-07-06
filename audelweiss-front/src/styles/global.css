@@ -141,8 +141,12 @@ span.as--icon:hover .a-icon {
   filter: var(--filter-text);
 }
 
-.as--hover-filter-primary:hover * {
-  filter: var(--filter-primary);
+.as--filter-white {
+  filter: var(--filter-white);
+}
+
+.as--hover-filter-primary:hover {
+  filter: var(--filter-primary) !important;
 }
 
 /***********************

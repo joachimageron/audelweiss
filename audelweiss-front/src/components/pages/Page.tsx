@@ -27,15 +27,13 @@ const Page = ({ params }: Props) => {
     return <p className="inner-wrap">Une erreur est survenue ou la page est introuvable.</p>;
   }
 
-  console.log("params : ", params);
-
   const breadcrumbItems = [
     { label: "Accueil", href: "/" },
     ...(params
       ? params.slice(0, -1).map((segment, index) => ({
-          label: segment.charAt(0).toUpperCase() + segment.slice(1),
-          href: "/" + params.slice(0, index + 1).join("/"),
-        }))
+        label: segment.charAt(0).toUpperCase() + segment.slice(1),
+        href: "/" + params.slice(0, index + 1).join("/"),
+      }))
       : []),
     { label: data.title },
   ];

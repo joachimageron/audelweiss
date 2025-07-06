@@ -49,7 +49,7 @@ const styles = tv({
     productCaracteristics: "mt-[.8rem] text-center text-[1.5rem]",
     productOldPrice: "text-gray-400 line-through mr-[1rem]",
     productCurrentPrice: "text-primary font-bold",
-    paginationWrapper: "flex justify-center flex-wrap gap-[1rem]",
+    paginationWrapper: "flex justify-center flex-wrap gap-[1rem] mb-[3rem]",
   },
 });
 
@@ -276,9 +276,8 @@ export default function ShoppingList() {
 
   const updateURL = (page = 1, categories = selectedCategories) => {
     const categoryQuery = categories.map(cat => `cat=${encodeURIComponent(cat)}`).join("&");
-    const query = `?sort=${sort}&page=${page}&search=${encodeURIComponent(searchTerm)}&min=${minPrice}&max=${maxPrice}${
-      categoryQuery ? `&${categoryQuery}` : ""
-    }`;
+    const query = `?sort=${sort}&page=${page}&search=${encodeURIComponent(searchTerm)}&min=${minPrice}&max=${maxPrice}${categoryQuery ? `&${categoryQuery}` : ""
+      }`;
     router.push(query);
   };
 
@@ -299,9 +298,8 @@ export default function ShoppingList() {
   const handleSortChange = e => {
     const selected = e.target.value;
     const categoryQuery = selectedCategories.map(cat => `cat=${encodeURIComponent(cat)}`).join("&");
-    const query = `?sort=${selected}&page=1&search=${encodeURIComponent(searchQuery)}&min=${minPrice}&max=${maxPrice}${
-      categoryQuery ? `&${categoryQuery}` : ""
-    }`;
+    const query = `?sort=${selected}&page=1&search=${encodeURIComponent(searchQuery)}&min=${minPrice}&max=${maxPrice}${categoryQuery ? `&${categoryQuery}` : ""
+      }`;
     router.push(query);
   };
 

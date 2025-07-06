@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 
 const styles = tv({
   slots: {
-    pageContainer: "inner-wrap py-[6rem]",
+    pageContainer: "py-[6rem] max-w-[70rem] mx-2 md:mx-auto",
     pageHeader: "flex justify-between items-center mb-[4rem]",
     pageTitle: "text-[3.5rem]",
     sectionTitle: "text-[2.5rem] mb-[2rem]",
@@ -40,7 +40,7 @@ const {
 
 export default function ComptePage() {
   const router = useRouter();
-  const { isAuthenticated, loading, logout, user } = useUser();
+  const { isAuthenticated, loading, logout, user, updateUser } = useUser();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -87,10 +87,15 @@ export default function ComptePage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic will be implemented later
-    console.log("Form data submitted:", formData);
+    try {
+      await updateUser(formData);
+      // Succès - l'utilisateur est automatiquement mis à jour
+    } catch (error) {
+      // Erreur gérée automatiquement via le state error
+      console.error('Erreur lors de la mise à jour:', error);
+    }
   };
 
   return (

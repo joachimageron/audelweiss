@@ -2,13 +2,7 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  User,
-  AuthResponse,
-  LoginCredentials,
-  RegisterCredentials,
-  AuthContextType,
-} from "@/src/types/auth";
+import { User, AuthResponse, LoginCredentials, RegisterCredentials, AuthContextType } from "@/src/types/auth";
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -61,7 +55,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const handleAuthError = async (error: any, fallbackMessage: string) => {
     let errorMessage = fallbackMessage;
-
 
     if (error && typeof error === "object" && "status" in error && "json" in error) {
       try {
@@ -133,6 +126,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     },
   });
 
+  // Nouvelle mutation pour la mise à jour de l'utilisateur
+  const updateUserMutation = useMutation({
+    mutationFn: async (userData: Partial<User>) => {
+      if (!user?.jwt) {
+        throw new Error("Utilisateur non authentifié");
+      }
+
+      const response = await fetch(`${API_URL}/api/user/me`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.jwt}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      const data = await response.json();
+      return {
+        ...data,
+        jwt: user.jwt, // Garder le JWT existant
+      };
+    },
+  });
+
   // --- Actions ---
 
   const register = (credentials: RegisterCredentials): Promise<void> => {
@@ -141,11 +162,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     return new Promise((resolve, reject) => {
       registerMutation.mutate(credentials, {
-        onSuccess: (user) => {
+        onSuccess: user => {
           handleAuthSuccess(user);
           resolve();
         },
-        onError: (error) => {
+        onError: error => {
           handleAuthError(error, "Une erreur est survenue lors de l'inscription.").catch(reject);
         },
         onSettled: () => setLoading(false),
@@ -159,12 +180,30 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     return new Promise((resolve, reject) => {
       loginMutation.mutate(credentials, {
-        onSuccess: (user) => {
+        onSuccess: user => {
           handleAuthSuccess(user);
           resolve();
         },
-        onError: (error) => {
+        onError: error => {
           handleAuthError(error, "Une erreur est survenue lors de la connexion.").catch(reject);
+        },
+        onSettled: () => setLoading(false),
+      });
+    });
+  };
+
+  const updateUser = (userData: Partial<User>): Promise<User> => {
+    setLoading(true);
+    setError(null);
+
+    return new Promise((resolve, reject) => {
+      updateUserMutation.mutate(userData, {
+        onSuccess: updatedUser => {
+          handleAuthSuccess(updatedUser);
+          resolve(updatedUser);
+        },
+        onError: error => {
+          handleAuthError(error, "Une erreur est survenue lors de la mise à jour du profil.").catch(reject);
         },
         onSettled: () => setLoading(false),
       });
@@ -183,11 +222,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const contextValue: AuthContextType = {
     user,
-    loading: loading || registerMutation.isPending || loginMutation.isPending,
+    loading: loading || registerMutation.isPending || loginMutation.isPending || updateUserMutation.isPending,
     error,
     isAuthenticated,
     login,
     register,
+    updateUser,
     logout,
   };
 

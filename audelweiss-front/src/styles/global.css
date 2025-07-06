@@ -63,6 +63,10 @@ body {
   padding-right: 2rem;
 }
 
+.inner-wrap .inner-wrap {
+  padding: 0;
+}
+
 /***********************
 ** Atoms links/buttons
 ***********************/
@@ -137,8 +141,12 @@ span.as--icon:hover .a-icon {
   filter: var(--filter-text);
 }
 
-.as--hover-filter-primary:hover * {
-  filter: var(--filter-primary);
+.as--filter-white {
+  filter: var(--filter-white);
+}
+
+.as--hover-filter-primary:hover {
+  filter: var(--filter-primary) !important;
 }
 
 /***********************

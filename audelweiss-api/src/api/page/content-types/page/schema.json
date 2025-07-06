@@ -38,7 +38,11 @@
       "enum": [
         "home",
         "edito",
+        "listing-articles",
+        "listing-creations",
         "shop",
+        "shopping-cart",
+        "shopping-form",
         "account"
       ],
       "required": true
@@ -53,4 +57,3 @@
     }
   }
 }
-

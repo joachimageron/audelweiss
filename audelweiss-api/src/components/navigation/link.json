@@ -26,6 +26,9 @@
     },
     "hasIconOnly": {
       "type": "boolean"
+    },
+    "hasShopMegamenu": {
+      "type": "boolean"
     }
   }
 }

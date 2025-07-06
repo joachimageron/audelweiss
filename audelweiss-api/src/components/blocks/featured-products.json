@@ -12,8 +12,13 @@
       "relation": "oneToMany",
       "target": "api::product.product"
     },
-    "heading": {
+    "headingBlock": {
       "type": "blocks"
+    },
+    "blockLink": {
+      "type": "component",
+      "repeatable": false,
+      "component": "component.simple-link"
     }
   }
 }

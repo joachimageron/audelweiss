@@ -45,21 +45,21 @@ const RadioVariant = ({ variant, onChange }: Props) => {
     <ul className={base()}>
       {variant.variant_options.map(option => (
         <li key={`variant-option-${option?.documentId}`} className={item({ selected, image: Boolean(option?.image) })}>
-          {option?.image ? (
-            <Image src={option.image.url} alt={option.image.alternativeText || option.label} width={40} height={40} />
-          ) : (
-            <p>{option?.label}</p>
-          )}
-
           <label>
             <input
               type="radio"
               name={variant.name}
               value={option?.label}
-              // checked={selectedValue === option?.label}
-              onChange={() => onChange?.(option?.label as string)}
+              onChange={e => {
+                onChange?.(e.target.value);
+              }}
               className={input({ image: Boolean(option?.image) })}
             />
+            {option?.image ? (
+              <Image src={option.image.url} alt={option.image.alternativeText || option.label} width={40} height={40} />
+            ) : (
+              <span>{option?.label}</span>
+            )}
             {option?.image && <div className={tooltip()}>{option.label}</div>}
           </label>
         </li>

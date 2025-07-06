@@ -16,9 +16,10 @@ const { title, helper, errorMessage } = styles();
 
 type Props = {
   variant: ProductVariant;
+  onVariantChange: (name: string, value: string) => void;
 };
 
-const Variant = ({ variant }: Props) => {
+const Variant = ({ variant, onVariantChange }: Props) => {
   const error = false;
 
   return (
@@ -29,9 +30,15 @@ const Variant = ({ variant }: Props) => {
       </p>
       {variant.helper_text && <p className={helper()}>{variant.helper_text}</p>}
 
-      {variant.format === "radio" && <RadioVariant variant={variant} />}
-      {variant.format === "input" && <InputVariant variant={variant} />}
-      {variant.format === "checkbox" && <CheckboxVariant variant={variant} />}
+      {variant.format === "radio" && (
+        <RadioVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} />
+      )}
+      {variant.format === "input" && (
+        <InputVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} />
+      )}
+      {variant.format === "checkbox" && (
+        <CheckboxVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} />
+      )}
     </div>
   );
 };

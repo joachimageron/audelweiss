@@ -10,10 +10,19 @@ const { base } = radio();
 
 type Props = {
   variant: ProductVariant;
+  onChange?: (value: string) => void;
 };
 
-const InputVariant = ({}: Props) => {
-  return <input type="text" className={base()} />;
+const InputVariant = ({ onChange }: Props) => {
+  return (
+    <input
+      type="text"
+      className={base()}
+      onChange={e => {
+        onChange?.(e.target.value);
+      }}
+    />
+  );
 };
 
 export default InputVariant;

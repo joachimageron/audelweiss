@@ -2,8 +2,18 @@
 
 module.exports = {
   async send(ctx) {
-    const { to, user, text, html } = ctx.request.body;
-    const info = await strapi.service('api::mailer.mailer').send({ to, subject, text, html });
-    ctx.body = { message: 'Mail envoyé', info };
+    const data = ctx.request.body;
+
+    if (!data.to || !data.subject || !data.text || !data.html) {
+      return ctx.badRequest('Champs requis : to, subject, text, html');
+    }
+
+    const result = await strapi.service('api::mailer.mailer').send(data);
+
+    return ctx.send({
+      ...data,
+      result,
+      sent: true,
+    });
   },
 };

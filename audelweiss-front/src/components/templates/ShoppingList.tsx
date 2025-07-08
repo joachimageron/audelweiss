@@ -8,6 +8,9 @@ import { tv } from "tailwind-variants";
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import CustomLink from "@/src/components/atoms/CustomLink";
 import { useProducts } from "@/src/hooks/useProducts";
+import Image from "../atoms/Image";
+import ProductCard from "./ProductsList/ProductCard";
+import { useProductCategories } from "@/src/hooks/useProductCategories";
 
 const styles = tv({
   slots: {
@@ -37,18 +40,6 @@ const styles = tv({
     resetFiltersButton: "bg-secondary hover:bg-dark-secondary",
     errorText2: "text-center text-[1.6rem] text-gray-500 my-[3rem]",
     productsGrid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[3rem] my-[4rem]",
-    productLink: "group flex flex-col",
-    productImageWrapper: "relative w-full aspect-[4/3] rounded-[1rem] overflow-hidden",
-    productImage: "object-cover w-full h-full",
-    productCategoriesTags: "absolute top-[1rem] left-[1rem] flex items-center gap-[1rem] flex-wrap z-1",
-    productTag: "relative px-[1rem]! py-[.8rem]! w-fit text-[1.3rem] pointer-events-none",
-    productCardHoverSection: "absolute bottom-0 left-0 w-full flex justify-center z-10",
-    productHoverButton:
-      "translate-y-0 bg-dark-primary! text-[1.4rem] opacity-0 group-hover:translate-y-[-1.8rem] group-hover:opacity-100 transition-all duration-500",
-    productName: "mt-[1.2rem] text-center text-dark-primary font-medium text-[1.6rem]",
-    productCaracteristics: "mt-[.8rem] text-center text-[1.5rem]",
-    productOldPrice: "text-gray-400 line-through mr-[1rem]",
-    productCurrentPrice: "text-primary font-bold",
     paginationWrapper: "flex justify-center flex-wrap gap-[1rem]",
   },
 });
@@ -96,151 +87,8 @@ const {
   resetFiltersButton,
   errorText2,
   productsGrid,
-  productLink,
-  productImageWrapper,
-  productImage,
-  productCategoriesTags,
-  productTag,
-  productCardHoverSection,
-  productHoverButton,
-  productName,
-  productCaracteristics,
-  productOldPrice,
-  productCurrentPrice,
   paginationWrapper,
 } = styles();
-
-const mockProducts = [
-  {
-    id: 1,
-    name: "Porte-clé crocheté",
-    price: 8,
-    oldPrice: 12,
-    image: "https://picsum.photos/300/225",
-    slug: "porte-cle-crochete",
-    subcategories: ["Autre", "Petit format"],
-    date: "2023-01-01",
-  },
-  {
-    id: 2,
-    name: "Lampe en bois flotté",
-    price: 49,
-    image: "https://picsum.photos/300/226",
-    slug: "lampe-bois-flotte",
-    subcategories: ["Bois flotté"],
-    date: "2024-02-10",
-  },
-  {
-    id: 3,
-    name: "Sweat floqué personnalisé",
-    price: 35,
-    oldPrice: 40,
-    image: "https://picsum.photos/300/227",
-    slug: "sweat-flocage",
-    subcategories: ["Mug céramique"],
-    date: "2023-10-05",
-  },
-  {
-    id: 4,
-    name: "Sac en tissu imprimé",
-    price: 22,
-    image: "https://picsum.photos/300/228",
-    slug: "sac-tissu",
-    subcategories: ["Sweat personnalisé", "Tissu"],
-    date: "2023-08-20",
-  },
-  {
-    id: 5,
-    name: "Tableau abstrait coloré",
-    price: 60,
-    image: "https://picsum.photos/300/229",
-    slug: "tableau-abstrait",
-    subcategories: ["Autre"],
-    date: "2022-12-01",
-  },
-  {
-    id: 6,
-    name: "Tote bag brodé main",
-    price: 27,
-    image: "https://picsum.photos/300/230",
-    slug: "tote-bag-brode",
-    subcategories: ["Sweat personnalisé", "Autre"],
-    date: "2023-05-14",
-  },
-  {
-    id: 7,
-    name: "Mug personnalisé en céramique",
-    price: 18,
-    image: "https://picsum.photos/301/225",
-    slug: "mug-personnalise",
-    subcategories: ["Autre", "Cuisine"],
-    date: "2023-11-22",
-  },
-  {
-    id: 8,
-    name: "Suspension murale macramé",
-    price: 38,
-    image: "https://picsum.photos/302/225",
-    slug: "suspension-macrame",
-    subcategories: ["Textile", "Déco"],
-    date: "2023-07-18",
-  },
-  {
-    id: 9,
-    name: "Bracelet perles naturelles",
-    price: 15,
-    image: "https://picsum.photos/303/225",
-    slug: "bracelet-perles",
-    subcategories: ["Sweat personnalisé", "Perles"],
-    date: "2023-03-11",
-  },
-  {
-    id: 10,
-    name: "Carnet relié à la main",
-    price: 20,
-    image: "https://picsum.photos/304/225",
-    slug: "carnet-reliure",
-    subcategories: ["Sculpté"],
-    date: "2022-11-05",
-  },
-  {
-    id: 11,
-    name: "Boîte à bijoux en bois",
-    price: 55,
-    oldPrice: 70,
-    image: "https://picsum.photos/305/225",
-    slug: "boite-bijoux-bois",
-    subcategories: ["Bois", "Déco"],
-    date: "2024-01-08",
-  },
-  {
-    id: 12,
-    name: "Écharpe tricotée main",
-    price: 42,
-    image: "https://picsum.photos/301/226",
-    slug: "echarpe-tricot",
-    subcategories: ["Sweat personnalisé", "Sculpté"],
-    date: "2023-09-15",
-  },
-  {
-    id: 13,
-    name: "Bague résine fleurs séchées",
-    price: 30,
-    image: "https://picsum.photos/301/227",
-    slug: "bague-resine-fleurs",
-    subcategories: ["Bijoux", "Petit format"],
-    date: "2023-04-30",
-  },
-  {
-    id: 14,
-    name: "Coussin brodé géométrique",
-    price: 33,
-    image: "https://picsum.photos/301/228",
-    slug: "coussin-brode",
-    subcategories: ["Sculpté", "Autre"],
-    date: "2023-06-08",
-  },
-];
 
 const PRODUCTS_PER_PAGE = 12;
 
@@ -263,16 +111,18 @@ export default function ShoppingList() {
   const [resetTriggered, setResetTriggered] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { data } = useProducts({ queryKey: ["products"] });
-
-  console.log("data : ", data);
+  const { data: products } = useProducts({ queryKey: ["products"] });
+  const { data: categories } = useProductCategories();
 
   useEffect(() => {
     if (resetTriggered) {
       updateURL(1, []);
       setResetTriggered(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategories, minPrice, maxPrice, resetTriggered]);
+
+  if (!products) return;
 
   const updateURL = (page = 1, categories = selectedCategories) => {
     const categoryQuery = categories.map(cat => `cat=${encodeURIComponent(cat)}`).join("&");
@@ -313,12 +163,20 @@ export default function ShoppingList() {
     setTempSelectedCategories(prev => (prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]));
   };
 
-  const filteredProducts = mockProducts.filter(product => {
+  const filteredProducts = products.filter(product => {
+    console.log("selected cat : ", selectedCategories);
     const nameMatch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const minMatch = !initialMin || product.price >= parseFloat(initialMin);
     const maxMatch = !initialMax || product.price <= parseFloat(initialMax);
     const categoryMatch =
-      selectedCategories.length === 0 || selectedCategories.some(cat => product.subcategories.includes(cat));
+      selectedCategories.length === 0 ||
+      selectedCategories.some(
+        cat => product.subcategories && product.subcategories.some(subcat => subcat.slug === cat),
+      );
+    selectedCategories.length === 0 ||
+      selectedCategories.some(
+        cat => product.subcategories && product.subcategories.some(subcat => subcat.slug === cat),
+      );
     return nameMatch && minMatch && maxMatch && categoryMatch;
   });
 
@@ -408,95 +266,27 @@ export default function ShoppingList() {
         {errorMessage && <p className={errorText()}>{errorMessage}</p>}
 
         <div className={categoriesGrid()}>
-          <div className={categoryColumn({ last: false })}>
-            <h3 className={categoryName()}>Crochet</h3>
-            <ul className={subCategoriesList()}>
-              <li className={subCategorieItem()}>
-                <label className={subCategorieLabel()}>
-                  <input
-                    type="checkbox"
-                    value="Petit format"
-                    checked={tempSelectedCategories.includes("Petit format")}
-                    onChange={() => handleCategoryChange("Petit format")}
-                    className={subCategorieInput()}
-                  />
-                  Petit format
-                </label>
-              </li>
-              <li className={subCategorieItem()}>
-                <label className={subCategorieLabel()}>
-                  <input
-                    type="checkbox"
-                    value="Autre"
-                    checked={tempSelectedCategories.includes("Autre")}
-                    onChange={() => handleCategoryChange("Autre")}
-                    className={subCategorieInput()}
-                  />
-                  Autre
-                </label>
-              </li>
-            </ul>
-          </div>
-
-          <div className={categoryColumn({ last: false })}>
-            <h3 className={categoryName()}>Bois</h3>
-            <ul className={subCategoriesList()}>
-              <li className={subCategorieItem()}>
-                <label className={subCategorieLabel()}>
-                  <input
-                    type="checkbox"
-                    value="Bois flotté"
-                    checked={tempSelectedCategories.includes("Bois flotté")}
-                    onChange={() => handleCategoryChange("Bois flotté")}
-                    className={subCategorieInput()}
-                  />
-                  Bois flotté
-                </label>
-              </li>
-              <li className={subCategorieItem()}>
-                <label className={subCategorieLabel()}>
-                  <input
-                    type="checkbox"
-                    value="Sculpté"
-                    checked={tempSelectedCategories.includes("Sculpté")}
-                    onChange={() => handleCategoryChange("Sculpté")}
-                    className={subCategorieInput()}
-                  />
-                  Sculpté
-                </label>
-              </li>
-            </ul>
-          </div>
-
-          <div className={categoryColumn({ last: true })}>
-            <h3 className={categoryName()}>Flocage</h3>
-            <ul className={subCategoriesList()}>
-              <li className={subCategorieItem()}>
-                <label className={subCategorieLabel()}>
-                  <input
-                    type="checkbox"
-                    value="Sweat personnalisé"
-                    checked={tempSelectedCategories.includes("Sweat personnalisé")}
-                    onChange={() => handleCategoryChange("Sweat personnalisé")}
-                    className={subCategorieInput()}
-                  />
-                  Sweat personnalisé
-                </label>
-              </li>
-              <li className={subCategorieItem()}>
-                <label className={subCategorieLabel()}>
-                  <input
-                    type="checkbox"
-                    value="Mug céramique"
-                    checked={tempSelectedCategories.includes("Mug céramique")}
-                    onChange={() => handleCategoryChange("Mug céramique")}
-                    className={subCategorieInput()}
-                  />
-                  Mug céramique
-                </label>
-              </li>
-            </ul>
-          </div>
+          {categories?.map(category => (
+            <div key={category.documentId} className={categoryColumn({ last: false })}>
+              <h3 className={categoryName()}>{category.name}</h3>
+              <ul className={subCategoriesList()}>
+                {category.product_subcategories.map(subcategory => (
+                  <li key={subcategory?.documentId} className={subCategorieItem()}>
+                    <label className={subCategorieLabel()}>
+                      <input
+                        type="checkbox"
+                        value={subcategory?.slug}
+                        checked={tempSelectedCategories.includes(subcategory?.slug)}
+                        onChange={e => handleCategoryChange(e.target.value)}
+                        className={subCategorieInput()}
+                      />
+                      {subcategory?.name}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className={filtersButtons()}>
@@ -518,36 +308,13 @@ export default function ShoppingList() {
 
       {sortedProducts.length === 0 && !errorMessage && (
         <p className={errorText2()}>
-          Aucun produit n'a été trouvé avec les critères sélectionnés... Veuillez les modifier
+          Aucun produit n&apos;a été trouvé avec les critères sélectionnés... Veuillez les modifier
         </p>
       )}
 
       <div className={productsGrid()}>
         {paginatedProducts.map(product => (
-          <CustomLink href="#_" key={product.id} className={productLink()}>
-            <div className={productImageWrapper()}>
-              <img src={product.image} alt={product.name} className={productImage()} />
-              <ul className={productCategoriesTags()}>
-                {product.subcategories.map((tag, index) => (
-                  <li key={index}>
-                    <Button isSpanButton className={productTag()}>
-                      {tag}
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-              <div className={productCardHoverSection()}>
-                <Button isSpanButton className={productHoverButton()}>
-                  Commander ce produit
-                </Button>
-              </div>
-            </div>
-            <div className={productName()}>{product.name}</div>
-            <div className={productCaracteristics()}>
-              {product.oldPrice && <span className={productOldPrice()}>{product.oldPrice.toFixed(2)} €</span>}
-              <span className={productCurrentPrice()}>{product.price.toFixed(2)} €</span>
-            </div>
-          </CustomLink>
+          <ProductCard key={product.documentId} product={product} />
         ))}
       </div>
 

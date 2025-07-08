@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 
@@ -10,6 +9,7 @@ import { tv } from "tailwind-variants";
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import Button from "@/src/components/atoms/Button";
 import CustomLink from "@/src/components/atoms/CustomLink";
+import Image from "../atoms/Image";
 
 export const styles = tv({
   slots: {

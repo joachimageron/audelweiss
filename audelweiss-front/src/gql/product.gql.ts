@@ -5,7 +5,7 @@ import { productSubcategoriesFragment } from "./fragments/productSubcategoriesFr
 
 export const productsQuery = gql`
   query Products($filters: ProductFiltersInput) {
-    products(filters: $filters) {
+    products(filters: $filters, pagination: { limit: -1 }) {
       documentId
       name
       content
@@ -33,7 +33,7 @@ export const productsQuery = gql`
 
 export const allProductsQuery = gql`
   query AllProducts {
-    products {
+    products(pagination: { limit: -1 }) {
       documentId
       name
       description

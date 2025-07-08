@@ -12,7 +12,7 @@ export const productVariantFragment = gql`
     sku
     stock
     updatedAt
-    variant_options {
+    variant_options(pagination: { limit: -1 }) {
       ...ProductVariantOptionFields
     }
   }

@@ -40,7 +40,7 @@ const styles = tv({
     resetFiltersButton: "bg-secondary hover:bg-dark-secondary",
     errorText2: "text-center text-[1.6rem] text-gray-500 my-[3rem]",
     productsGrid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[3rem] my-[4rem]",
-    paginationWrapper: "flex justify-center flex-wrap gap-[1rem]",
+    paginationWrapper: "flex justify-center flex-wrap gap-[1rem] mb-[3rem]",
   },
 });
 
@@ -162,7 +162,7 @@ export default function ShoppingList() {
   };
 
   const filteredProducts = products.filter(product => {
-    console.log("selected cat : ", selectedCategories);
+
     const nameMatch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const minMatch = !initialMin || product.price >= parseFloat(initialMin);
     const maxMatch = !initialMax || product.price <= parseFloat(initialMax);
@@ -190,7 +190,7 @@ export default function ShoppingList() {
         return b.name.localeCompare(a.name);
       case "newest":
       default:
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
     }
   });
 

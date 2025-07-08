@@ -10,7 +10,8 @@ import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
 import ListingArticles from "@/src/components/templates/ListingArticles";
 import ListingCreations from "@/src/components/templates/ListingCreations";
 import ShoppingCart from "@/src/components/templates/ShoppingCart";
-import ShoppingForm from "../templates/ShoppingForm";
+import ShoppingForm from "@/src/components/templates/ShoppingForm";
+import ShoppingList from "@/src/components/templates/ShoppingList";
 
 type Props = {
   params: string[];
@@ -53,6 +54,12 @@ const Page = ({ params }: Props) => {
       )}
 
       {!["home", "listing_articles", "listing_creations"].includes(data.type) && <Breadcrumb items={breadcrumbItems} />}
+
+      {data.type === "shop" && (
+        <>
+          <ShoppingList />
+        </>
+      )}
 
       {data.type === "listing_articles" && (
         <>

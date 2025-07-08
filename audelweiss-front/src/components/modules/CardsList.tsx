@@ -19,9 +19,9 @@ const styles = tv({
   slots: {
     sectionContainer: "multiples-columns inner-wrap flex flex-col items-center gap-[5rem]",
     sectionTitle: "text-[3.2rem]",
-    cardsList: "flex justify-center items-start gap-[4.5rem] lg:gap-[3rem] xl:gap-[6rem] flex-wrap",
+    cardsList: "flex justify-center items-start gap-[4.5rem] xl:gap-[9rem] flex-wrap",
     cardItem: "relative lg:flex-1 w-full lg:max-w-[40%]",
-    cardImage: "absolute right-0 lg:right-[-5rem] bottom-[-1rem] z-[-1] opacity-40",
+    cardImage: "absolute right-0 lg:right-[-5rem] bottom-[-1rem] z-[-1] opacity-40 max-w-[15rem] xl:max-w-[initial]",
     cardNumber: "inline-block mb-[1.4rem] text-primary text-[3rem] font-bold font-aboreto opacity-70",
     cardTitle: "mb-[1.5rem] text-[2.4rem]",
     cardDescription: "mb-[1.5rem] leading-[1.9]",
@@ -54,7 +54,7 @@ const CardsList = ({ block }: Props) => {
             <article key={`card-${card?.id}`} className={cardItem({ topMargin: index === 1 })}>
               {card?.backgroundImage && (
                 <Image
-                  src={`http://localhost:1337${card.backgroundImage.url}`}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${card.backgroundImage.url}`}
                   alt=""
                   width={250}
                   height={250}

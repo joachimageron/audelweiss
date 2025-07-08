@@ -412,11 +412,21 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    categories: Schema.Attribute.Relation<
+    articleCategories: Schema.Attribute.Relation<
       'manyToMany',
       'api::article-category.article-category'
     >;
-    content: Schema.Attribute.Blocks;
+    articleContent: Schema.Attribute.Component<
+      'blocks.single-richtext',
+      false
+    > &
+      Schema.Attribute.Required;
+    articleDescription: Schema.Attribute.Text;
+    articleSlug: Schema.Attribute.UID<'articleTitle'> &
+      Schema.Attribute.Required;
+    articleThumbnail: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    articleTitle: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -427,8 +437,87 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    thumbnail: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCreationCategoryCreationCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'creation_categories';
+  info: {
+    displayName: 'Creation category';
+    pluralName: 'creation-categories';
+    singularName: 'creation-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creations: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::creation.creation'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation-category.creation-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
+  collectionName: 'creations';
+  info: {
+    description: '';
+    displayName: 'Creation';
+    pluralName: 'creations';
+    singularName: 'creation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creationCategories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::creation-category.creation-category'
+    >;
+    creationContent: Schema.Attribute.Component<
+      'blocks.single-richtext',
+      false
+    > &
+      Schema.Attribute.Required;
+    creationDescription: Schema.Attribute.Text;
+    creationGallery: Schema.Attribute.Media<
+      'images' | 'videos' | 'files',
+      true
+    >;
+    creationName: Schema.Attribute.String & Schema.Attribute.Required;
+    creationSlug: Schema.Attribute.UID<'creationName'>;
+    creationThumbnail: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    creationTime: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation.creation'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -476,17 +565,23 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    centralRichtext: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    leftColumnLinks: Schema.Attribute.Component<'component.simple-link', true>;
+    leftColumnTitle: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::footer.footer'
     > &
       Schema.Attribute.Private;
-    navigation: Schema.Attribute.Component<'navigation.group', true>;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     publishedAt: Schema.Attribute.DateTime;
+    reseaux: Schema.Attribute.Component<'component.reseaux', true>;
+    rightColumnLinks: Schema.Attribute.Component<'component.simple-link', true>;
+    rightColumnTitle: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -609,25 +704,36 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.cards-list',
         'blocks.quote',
         'blocks.image-and-text',
-        'blocks.hero',
         'blocks.featured-products',
         'blocks.featured-articles',
         'blocks.single-slider',
         'blocks.highlighting-creations',
         'blocks.single-richtext',
-        'blocks.test',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    illustrationImage: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    type: Schema.Attribute.Enumeration<['home', 'about', 'shop']> &
+    type: Schema.Attribute.Enumeration<
+      [
+        'home',
+        'edito',
+        'listing-articles',
+        'listing-creations',
+        'shop',
+        'shopping-cart',
+        'shopping-form',
+        'account',
+      ]
+    > &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -651,6 +757,8 @@ export interface ApiProductCategoryProductCategory
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    illustration: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -658,9 +766,51 @@ export interface ApiProductCategoryProductCategory
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    product_subcategories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-subcategory.product-subcategory'
+    >;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.String & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProductSubcategoryProductSubcategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_subcategories';
+  info: {
+    description: '';
+    displayName: 'Product subcategory';
+    pluralName: 'product-subcategories';
+    singularName: 'product-subcategory';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    illustration: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-subcategory.product-subcategory'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    product_category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::product-category.product-category'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -720,6 +870,7 @@ export interface ApiProductVariantProductVariant
       Schema.Attribute.Private;
     format: Schema.Attribute.Enumeration<['radio', 'checkbox', 'input']> &
       Schema.Attribute.Required;
+    helper_text: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -760,10 +911,11 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::product-category.product-category'
     >;
+    content: Schema.Attribute.Blocks & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -774,9 +926,9 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     photos: Schema.Attribute.Media<'images' | 'files', true> &
       Schema.Attribute.Required;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    productSlug: Schema.Attribute.UID<'name'>;
     publishedAt: Schema.Attribute.DateTime;
     reviews: Schema.Attribute.Relation<'oneToMany', 'api::review.review'>;
-    slug: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1284,12 +1436,15 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    address: Schema.Attribute.String;
+    addressDetail: Schema.Attribute.String;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    city: Schema.Attribute.String;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1298,6 +1453,8 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1310,6 +1467,8 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phone: Schema.Attribute.String;
+    postalCode: Schema.Attribute.String;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1341,6 +1500,8 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article-category.article-category': ApiArticleCategoryArticleCategory;
       'api::article.article': ApiArticleArticle;
+      'api::creation-category.creation-category': ApiCreationCategoryCreationCategory;
+      'api::creation.creation': ApiCreationCreation;
       'api::discount.discount': ApiDiscountDiscount;
       'api::footer.footer': ApiFooterFooter;
       'api::header.header': ApiHeaderHeader;
@@ -1348,6 +1509,7 @@ declare module '@strapi/strapi' {
       'api::order.order': ApiOrderOrder;
       'api::page.page': ApiPagePage;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
+      'api::product-subcategory.product-subcategory': ApiProductSubcategoryProductSubcategory;
       'api::product-variant-option.product-variant-option': ApiProductVariantOptionProductVariantOption;
       'api::product-variant.product-variant': ApiProductVariantProductVariant;
       'api::product.product': ApiProductProduct;

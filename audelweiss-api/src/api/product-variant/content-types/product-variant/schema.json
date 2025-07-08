@@ -47,6 +47,9 @@
     },
     "sku": {
       "type": "string"
+    },
+    "helper_text": {
+      "type": "string"
     }
   }
 }

@@ -25,13 +25,11 @@
         "blocks.cards-list",
         "blocks.quote",
         "blocks.image-and-text",
-        "blocks.hero",
         "blocks.featured-products",
         "blocks.featured-articles",
         "blocks.single-slider",
         "blocks.highlighting-creations",
-        "blocks.single-richtext",
-        "blocks.test"
+        "blocks.single-richtext"
       ],
       "required": false
     },
@@ -39,10 +37,23 @@
       "type": "enumeration",
       "enum": [
         "home",
-        "about",
-        "shop"
+        "edito",
+        "listing-articles",
+        "listing-creations",
+        "shop",
+        "shopping-cart",
+        "shopping-form",
+        "account"
       ],
       "required": true
+    },
+    "illustrationImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

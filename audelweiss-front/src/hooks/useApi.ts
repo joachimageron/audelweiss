@@ -1,8 +1,19 @@
 import { GraphQLClient } from "graphql-request";
+import { useUser } from "@/src/hooks/useUser";
 
-// TODO: move to .env GRAPHQL_API_URL
-const baseURL = process.env.NEXT_PUBLIC_GRAPHQL_API_URL + "/graphql";
-const api = new GraphQLClient(baseURL);
+const baseURL = process.env.NEXT_PUBLIC_API_URL + "/graphql" || "http://51.83.97.44:1337/graphql";
 
-// made it a hook as we'll later need to add auth
-export const useApi = () => api;
+export const useApi = () => {
+  const { user, isAuthenticated } = useUser();
+
+  const api = new GraphQLClient(baseURL, {
+    headers:
+      isAuthenticated && user?.jwt
+        ? {
+          Authorization: `Bearer ${user.jwt}`,
+        }
+        : {},
+  });
+
+  return api;
+};

@@ -1,67 +1,60 @@
-'use client';
+"use client";
 
 import Image from "next/image";
-import CustomTitle from "@/src/components/atoms/CustomTitle";
-import CustomLink from "@/src/components/atoms/CustomLink";
 import clsx from "clsx";
 
-type TextImageProps = {
-  title: string;
-  content: React.ReactNode;
-  image: {
-    src: string;
-    alt?: string;
-  };
-  link: {
-    label: string;
-    href: string;
-  };
-  imageLeft?: boolean;
-  largeImage?: boolean;
+import { ComponentBlocksImageAndText } from "@/src/types/generated";
+import { renderRichText } from "@/src/utils/renderRichtext";
+import { tv } from "tailwind-variants";
+
+type Props = {
+  block: ComponentBlocksImageAndText;
   className?: string;
 };
 
-export default function TextImage({
-  title,
-  content,
-  image,
-  link,
-  imageLeft = false,
-  largeImage = false,
-  className = "",
-}: TextImageProps) {
-  return (
-    <section className={clsx("text-image-block inner-wrap py-[5rem]", className)}>
-      <div
-        className={clsx(
-          "flex flex-col lg:flex-row items-center gap-[4rem]",
-          imageLeft && "lg:flex-row-reverse"
-        )}
-      >
-        {/* Text Column */}
-        <div className="w-full lg:w-2/3">
-          <CustomTitle level={2} className="mb-[2rem] text-[2.8rem]">{title}</CustomTitle>
-          <div className="richtext mb-[2rem] me-[5rem] leading-[3rem]">{content}</div>
-          <CustomLink href={link.href} className="text-primary as--underline-hover">
-            {link.label}
-          </CustomLink>
-        </div>
+const styles = tv({
+  slots: {
+    section: "text-image-block inner-wrap py-[5rem]",
+    container: "flex flex-col lg:flex-row items-center gap-x-[4rem] gap-y-[1rem]",
+    textCol: "w-full lg:w-2/3",
+    imageCol: "flex justify-center w-full",
+    image: "w-full h-auto object-contain max-w-full rounded-[1rem]",
+  },
+  variants: {
+    isImageLeft: {
+      true: {
+        container: "lg:flex-row-reverse",
+      },
+    },
+    isImageTaller: {
+      true: {
+        imageCol: "lg:w-[60%]",
+      },
+      false: {
+        imageCol: "lg:w-[35%]",
+      },
+    },
+  },
+});
 
-        {/* Image Column */}
-        <div
-          className={clsx(
-            "w-full ms-5",
-            largeImage ? "lg:w-[60%]" : "lg:w-[35%]",
-            "flex justify-center"
+const { section, container, textCol, imageCol, image } = styles();
+
+export default function TextImage({ block, className = "" }: Props) {
+  return (
+    <section className={clsx(section(), className)}>
+      <div className={container({ isImageLeft: block?.isImageLeft })}>
+        <div className={textCol()}>{renderRichText(block?.textWithImage)}</div>
+
+        <div className={imageCol({ isImageTaller: !!block?.isImageTaller })}>
+          {block?.image?.url && (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_API_URL}${block.image.url}`}
+              alt={block.image.alternativeText || "Illustration"}
+              width={600}
+              height={400}
+              className={image()}
+            />
           )}
-        >
-          <Image
-            src={image.src}
-            alt={image.alt || 'Illustration'}
-            width={600}
-            height={400}
-            className="w-full h-auto object-contain max-w-full"
-          />
         </div>
       </div>
     </section>

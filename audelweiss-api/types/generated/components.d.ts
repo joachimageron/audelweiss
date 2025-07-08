@@ -30,6 +30,7 @@ export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   };
   attributes: {
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
+    link: Schema.Attribute.Component<'component.simple-link', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -42,26 +43,9 @@ export interface BlocksFeaturedProducts extends Struct.ComponentSchema {
     icon: 'plus';
   };
   attributes: {
-    heading: Schema.Attribute.Blocks;
+    blockLink: Schema.Attribute.Component<'component.simple-link', false>;
+    headingBlock: Schema.Attribute.Blocks;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
-  };
-}
-
-export interface BlocksHero extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_heroes';
-  info: {
-    description: '';
-    displayName: 'Hero';
-    icon: 'layout';
-  };
-  attributes: {
-    background: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
-    subHeading: Schema.Attribute.Text;
   };
 }
 
@@ -74,17 +58,7 @@ export interface BlocksHighlightingCreations extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.Blocks;
-    creationsList: Schema.Attribute.Component<
-      'component.creation-presentation',
-      true
-    > &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 4;
-          min: 1;
-        },
-        number
-      >;
+    creations: Schema.Attribute.Relation<'oneToMany', 'api::creation.creation'>;
     link: Schema.Attribute.Component<'component.simple-link', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -100,9 +74,9 @@ export interface BlocksImageAndText extends Struct.ComponentSchema {
   attributes: {
     image: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
-    imagePosition: Schema.Attribute.Enumeration<['left', 'right']> &
-      Schema.Attribute.DefaultTo<'left'>;
-    text: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    isImageLeft: Schema.Attribute.Boolean;
+    isImageTaller: Schema.Attribute.Boolean;
+    textWithImage: Schema.Attribute.Blocks & Schema.Attribute.Required;
   };
 }
 
@@ -146,17 +120,6 @@ export interface BlocksSingleSlider extends Struct.ComponentSchema {
         },
         number
       >;
-  };
-}
-
-export interface BlocksTest extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_tests';
-  info: {
-    displayName: 'test';
-    icon: 'briefcase';
-  };
-  attributes: {
-    rdsfc: Schema.Attribute.RichText;
   };
 }
 
@@ -207,6 +170,17 @@ export interface ComponentLargeSlide extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentReseaux extends Struct.ComponentSchema {
+  collectionName: 'components_component_reseaux';
+  info: {
+    displayName: 'reseaux';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentSimpleLink extends Struct.ComponentSchema {
   collectionName: 'components_component_simple_links';
   info: {
@@ -227,7 +201,6 @@ export interface NavigationGroup extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    entries: Schema.Attribute.Component<'navigation.link', true>;
     heading: Schema.Attribute.Component<'navigation.link', false>;
   };
 }
@@ -241,6 +214,7 @@ export interface NavigationLink extends Struct.ComponentSchema {
   };
   attributes: {
     hasIconOnly: Schema.Attribute.Boolean;
+    hasShopMegamenu: Schema.Attribute.Boolean;
     icon: Schema.Attribute.Media<'images' | 'files'>;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
@@ -309,16 +283,15 @@ declare module '@strapi/strapi' {
       'blocks.cards-list': BlocksCardsList;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-products': BlocksFeaturedProducts;
-      'blocks.hero': BlocksHero;
       'blocks.highlighting-creations': BlocksHighlightingCreations;
       'blocks.image-and-text': BlocksImageAndText;
       'blocks.quote': BlocksQuote;
       'blocks.single-richtext': BlocksSingleRichtext;
       'blocks.single-slider': BlocksSingleSlider;
-      'blocks.test': BlocksTest;
       'component.card': ComponentCard;
       'component.creation-presentation': ComponentCreationPresentation;
       'component.large-slide': ComponentLargeSlide;
+      'component.reseaux': ComponentReseaux;
       'component.simple-link': ComponentSimpleLink;
       'navigation.group': NavigationGroup;
       'navigation.link': NavigationLink;

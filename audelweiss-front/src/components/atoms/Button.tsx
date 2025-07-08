@@ -23,6 +23,10 @@ type ButtonProps = {
    */
   className?: string;
   /**
+   * disabled ---> if true: prevent to interact with the button
+   */
+  disabled?: boolean;
+  /**
    * withIcon ---> if true : adding a left arrow icon which appears on hover
    */
   withIcon?: boolean;
@@ -51,10 +55,10 @@ const styles = tv({
 });
 const { customButtonBase, iconArrowRight } = styles();
 
-const Button = ({ children, onClick, type = "button", className = "", withIcon = false, isSpanButton = false, tabIndex }: ButtonProps) => {
+const Button = ({ children, onClick, type = "button", className = "", disabled = false, withIcon = false, isSpanButton = false, tabIndex }: ButtonProps) => {
   const commonProps = {
     onClick,
-    className: clsx(customButtonBase({ withIcon }), className),
+    className: clsx(customButtonBase({ withIcon }), className, disabled && "opacity-50 cursor-not-allowed"),
     tabIndex,
   };
 

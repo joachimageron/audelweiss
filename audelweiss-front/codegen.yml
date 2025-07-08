@@ -1,5 +1,5 @@
 schema:
-  - "http://localhost:1337/graphql"
+  - "http://51.83.97.44:1337/graphql"
 
 documents: "src/**/*.gql.ts"
 

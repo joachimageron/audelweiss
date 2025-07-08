@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "creations",
+  "info": {
+    "singularName": "creation",
+    "pluralName": "creations",
+    "displayName": "Creation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "creationName": {
+      "type": "string",
+      "required": true
+    },
+    "creationCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::creation-category.creation-category",
+      "mappedBy": "creations"
+    },
+    "creationThumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "creationDescription": {
+      "type": "text"
+    },
+    "creationTime": {
+      "type": "string",
+      "required": true
+    },
+    "creationContent": {
+      "type": "component",
+      "repeatable": false,
+      "component": "blocks.single-richtext",
+      "required": true
+    },
+    "creationGallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos",
+        "files"
+      ]
+    },
+    "creationSlug": {
+      "type": "uid",
+      "targetField": "creationName"
+    }
+  }
+}

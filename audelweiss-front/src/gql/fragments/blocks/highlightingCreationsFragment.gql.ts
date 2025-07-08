@@ -1,6 +1,7 @@
 import { gql } from "graphql-tag";
 import { simpleLinkFragment } from "@/src/gql/fragments/simpleLinkFragment.gql";
 import { imageFragment } from "@/src/gql/fragments/imageFragment.gql";
+import { creationFragment } from "@/src/gql/fragments/creationFragment.gql";
 
 export const highlightingCreationsFragment = gql` 
   fragment HighlightingCreationsFields on ComponentBlocksHighlightingCreations {
@@ -12,17 +13,11 @@ export const highlightingCreationsFragment = gql`
       label
       url
     }
-    creationsList {
-      id
-      creationImage {
-        ...ImageFields
-      }
-      creationLink {
-        ...SimpleLinkFields
-      }
-      creationLegend
+    creations {
+      ...CreationFields 
     }
   }
   ${simpleLinkFragment}
   ${imageFragment}
+  ${creationFragment}
 `;

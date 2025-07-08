@@ -27,7 +27,7 @@ const styles = tv({
     nextButton: "right-0",
     slideWrapper: "relative flex justify-end items-center 2xl:px-[14rem] lg:px-[7rem] px-[4rem] lg:py-[5rem] py-[9rem] lg:min-h-[calc(100svh-11rem)]",
     slideImageContainer: "single-slide-image absolute top-0 left-0 w-full h-full",
-    slideImage: "w-full h-full object-cover object-center",
+    slideImage: "w-full h-full object-cover object-left lg:object-center",
     slideContentWrapper: "relative 2xl:pr-[10rem] lg:pr-[2rem] max-w-[68rem]",
     slideSubtitle: "single-slide-subtitle relative mb-[2rem] pl-[5rem] text-[2rem] font-medium",
     slideTitle: "mb-[2.5rem] lg:text-[7.6rem] text-[5.5rem] leading-[.95]",
@@ -77,7 +77,7 @@ const SingleSlider = ({ block, className = "" }: Props) => {
             return (
               <SwiperSlide key={slide.id} className={slideWrapper()}>
                 <div className={slideImageContainer()}>
-                  <img src={process.env.NEXT_PUBLIC_GRAPHQL_API_URL + slide.backgroundImage?.url || ""} alt={slide.slideTitle || ""} className={slideImage()} />
+                  <img src={process.env.NEXT_PUBLIC_API_URL + slide.backgroundImage?.url || ""} alt={slide.slideTitle || ""} className={slideImage()} />
                 </div>
                 <a
                   href={slide.slideLink?.url}

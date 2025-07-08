@@ -8,5 +8,6 @@ export const navLinkFragment = gql`
     icon {
       url
     }
+    hasShopMegamenu
   }
 `;

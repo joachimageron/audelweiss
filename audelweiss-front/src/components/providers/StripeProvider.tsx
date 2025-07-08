@@ -5,14 +5,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
 const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-console.log("Stripe publishable key:", stripeKey);
 if (!stripeKey) {
   throw new Error("Stripe publishable key is not defined in environment variables");
 }
 const stripePromise = loadStripe(stripeKey);
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-console.log("API URL:", API_URL);
 
 export default function StripeProvider({ children }: { children: React.ReactNode }) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);

@@ -85,7 +85,7 @@ export default function CommandePage() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/commande?success=true",
+        return_url: "http://localhost:3000/commande/success",
       },
     });
 

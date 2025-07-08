@@ -7,7 +7,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default {
-  createPaymentIntent: async (ctx, next) => {
+  createPaymentIntent: async (ctx) => {
     console.log("Creating payment intent...");
     try {
       const amount = 1000; // Default to 10.00 EUR if not provided

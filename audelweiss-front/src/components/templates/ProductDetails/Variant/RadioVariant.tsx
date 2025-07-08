@@ -13,7 +13,7 @@ const radio = tv({
   variants: {
     selected: {
       true: {
-        item: "border-primary font-semibold",
+        item: "border-primary border-[.3rem] font-semibold",
       },
       false: {
         item: "border-black",
@@ -47,7 +47,7 @@ const RadioVariant = ({ variant, onChange, value }: Props) => {
           key={`variant-option-${option?.documentId}`}
           className={item({ selected: value === option?.label, image: Boolean(option?.image) })}
         >
-          <label className="block px-[1.6rem] py-[.8rem] cursor-pointer">
+          <label className={`block cursor-pointer ${option?.image ? '' : 'px-[1.6rem] py-[.8rem]'}`}>
             <input
               type="radio"
               name={variant.name}

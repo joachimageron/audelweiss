@@ -66,6 +66,7 @@ const Form = ({ product, className }: Props) => {
           key={`variant-${variant?.documentId}`}
           variant={variant as ProductVariant}
           onVariantChange={onVariantChange}
+          values={variantValues}
         />
       ))}
 

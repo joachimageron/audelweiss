@@ -10,7 +10,8 @@ import Breadcrumb from "@/src/components/baseElements/Breadcrumb";
 import ListingArticles from "@/src/components/templates/ListingArticles";
 import ListingCreations from "@/src/components/templates/ListingCreations";
 import ShoppingCart from "@/src/components/templates/ShoppingCart";
-import ShoppingForm from "../templates/ShoppingForm";
+import ShoppingForm from "@/src/components/templates/ShoppingForm";
+import ShoppingList from "@/src/components/templates/ShoppingList";
 
 type Props = {
   params: string[];
@@ -27,15 +28,13 @@ const Page = ({ params }: Props) => {
     return <p className="inner-wrap">Une erreur est survenue ou la page est introuvable.</p>;
   }
 
-  console.log("params : ", params);
-
   const breadcrumbItems = [
     { label: "Accueil", href: "/" },
     ...(params
       ? params.slice(0, -1).map((segment, index) => ({
-          label: segment.charAt(0).toUpperCase() + segment.slice(1),
-          href: "/" + params.slice(0, index + 1).join("/"),
-        }))
+        label: segment.charAt(0).toUpperCase() + segment.slice(1),
+        href: "/" + params.slice(0, index + 1).join("/"),
+      }))
       : []),
     { label: data.title },
   ];
@@ -56,29 +55,21 @@ const Page = ({ params }: Props) => {
 
       {!["home", "listing_articles", "listing_creations"].includes(data.type) && <Breadcrumb items={breadcrumbItems} />}
 
-      {data.type === "listing_articles" && (
+      {data.type === "shop" && (
         <>
-          <ListingArticles />
+          <ShoppingList />
         </>
       )}
 
-      {data.type === "listing_creations" && (
-        <>
-          <ListingCreations />
-        </>
-      )}
+      {data.type === "shop" && <ShoppingList />}
 
-      {data.type === "shopping_cart" && (
-        <>
-          <ShoppingCart />
-        </>
-      )}
+      {data.type === "listing_articles" && <ListingArticles />}
 
-      {data.type === "shopping_form" && (
-        <>
-          <ShoppingForm />
-        </>
-      )}
+      {data.type === "listing_creations" && <ListingCreations />}
+
+      {data.type === "shopping_cart" && <ShoppingCart />}
+
+      {data.type === "shopping_form" && <ShoppingForm />}
 
       {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}
     </>

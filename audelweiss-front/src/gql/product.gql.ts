@@ -1,7 +1,7 @@
 import { gql } from "graphql-tag";
 import { imageFragment } from "./fragments/imageFragment.gql";
 import { productVariantFragment } from "./fragments/productVariantFragment.gql";
-import { productCategoriesFragment } from "./fragments/productCategoriesFragment.gql";
+import { productSubcategoriesFragment } from "./fragments/productSubcategoriesFragment.gql";
 
 export const productsQuery = gql`
   query Products($filters: ProductFiltersInput) {
@@ -21,14 +21,14 @@ export const productsQuery = gql`
       createdAt
       updatedAt
       publishedAt
-      categories {
-        ...ProductCategoriesFields
+      subcategories {
+        ...ProductSubcategoriesFields
       }
     }
   }
   ${imageFragment}
   ${productVariantFragment}
-  ${productCategoriesFragment}
+  ${productSubcategoriesFragment}
 `;
 
 export const allProductsQuery = gql`
@@ -44,6 +44,9 @@ export const allProductsQuery = gql`
       variants {
         ...ProductVariantFields
       }
+      subcategories {
+        ...ProductSubcategoriesFields
+      }
       productSlug
       createdAt
       updatedAt
@@ -52,4 +55,5 @@ export const allProductsQuery = gql`
   }
   ${imageFragment}
   ${productVariantFragment}
+  ${productSubcategoriesFragment}
 `;

@@ -3,9 +3,10 @@ import SingleSlider from "@/src/components/modules/SingleSlider";
 import CardsList from "@/src/components/modules/CardsList";
 import Quote from "@/src/components/modules/Quote";
 import SingleRichtext from "@/src/components/modules/SingleRichtext";
-import TextImage from "./modules/TextImage";
+import TextImage from "@/src/components/modules/TextImage";
 import FeaturedProducts from "@/src/components/modules/FeaturedProducts";
 import FeaturedArticles from "@/src/components/modules/FeaturedArticles";
+import HighlightingCreations from "@/src/components/modules/HighlightingCreations";
 
 type Props = {
   blocks: PageContentDynamicZone[];
@@ -30,6 +31,8 @@ const PageBlocks = ({ blocks }: Props) => {
             return <FeaturedProducts key={`${block.__typename}-${block.id}`} block={block} />;
           case "ComponentBlocksFeaturedArticles":
             return <FeaturedArticles key={`${block.__typename}-${block.id}`} block={block} />;
+          case "ComponentBlocksHighlightingCreations":
+            return <HighlightingCreations key={`${block.__typename}-${block.id}`} block={block} />;
           default:
             return null;
         }

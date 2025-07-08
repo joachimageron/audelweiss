@@ -59,13 +59,14 @@ export default function ListingArticles({ basePath = "/blog" }: { basePath?: str
     const match = pathname.match(/\/categorie\/([^\/]+)$/);
     const activeCategory = match ? decodeURIComponent(match[1]) : null;
 
-    const matchedArticles = activeCategory
+    const matchedArticles = (activeCategory
         ? data.filter((article: any) =>
             article.articleCategories?.some((cat: any) =>
                 cat.name?.toLowerCase().replace(/\s+/g, "-") === activeCategory
             )
         )
-        : data;
+        : data
+    ).sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 
     const formatSlugToLabel = (slug: string) =>

@@ -3,6 +3,7 @@ import { tv } from "tailwind-variants";
 import RadioVariant from "./RadioVariant";
 import InputVariant from "./InputVariant";
 import CheckboxVariant from "./CheckboxVariant";
+import { useEffect } from "react";
 
 const styles = tv({
   slots: {
@@ -17,21 +18,28 @@ const { title, helper, errorMessage } = styles();
 type Props = {
   variant: ProductVariant;
   onVariantChange: (name: string, value: string) => void;
+  values: Record<string, unknown>;
 };
 
-const Variant = ({ variant, onVariantChange }: Props) => {
+const Variant = ({ variant, onVariantChange, values }: Props) => {
   const error = false;
+
+  useEffect(() => {
+    console.log("values : ", values);
+  }, [values]);
 
   return (
     <div>
       {error && <span className={errorMessage()}>Message d&apos;erreur</span>}
-      <p className={title()}>
-        {variant.name} :{/* {selectedSize && <span className={criteriaRadioLabel()}>{selectedSize}</span>} */}
-      </p>
+      <p className={title()}>{`${variant.name} : ${values[variant.name] ?? ""}`}</p>
       {variant.helper_text && <p className={helper()}>{variant.helper_text}</p>}
 
       {variant.format === "radio" && (
-        <RadioVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} />
+        <RadioVariant
+          variant={variant}
+          onChange={value => onVariantChange(variant.name, value)}
+          value={values[variant.name] ? values[variant.name] : undefined}
+        />
       )}
       {variant.format === "input" && (
         <InputVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} />

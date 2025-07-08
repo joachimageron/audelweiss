@@ -693,7 +693,8 @@ export enum Enum_Page_Type {
   ListingArticles = 'listing_articles',
   ListingCreations = 'listing_creations',
   Shop = 'shop',
-  ShoppingCart = 'shopping_cart'
+  ShoppingCart = 'shopping_cart',
+  ShoppingForm = 'shopping_form'
 }
 
 export enum Enum_Productvariant_Format {
@@ -786,7 +787,7 @@ export type FooterInput = {
   rightColumnTitle?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentReseaux | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Creation | CreationCategory | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductSubcategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | SlugifySlug | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | ArticleCategory | ComponentBlocksCardsList | ComponentBlocksFeaturedArticles | ComponentBlocksFeaturedProducts | ComponentBlocksHighlightingCreations | ComponentBlocksImageAndText | ComponentBlocksQuote | ComponentBlocksSingleRichtext | ComponentBlocksSingleSlider | ComponentComponentCard | ComponentComponentCreationPresentation | ComponentComponentLargeSlide | ComponentComponentReseaux | ComponentComponentSimpleLink | ComponentNavigationGroup | ComponentNavigationLink | ComponentOrderItemDiscountReference | ComponentOrderItemProductReference | ComponentProductOption | ComponentProductOptionVariant | Creation | CreationCategory | Discount | Footer | Header | I18NLocale | Order | OrderItem | Page | Product | ProductCategory | ProductSubcategory | ProductVariant | ProductVariantOption | Review | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -934,7 +935,6 @@ export type Mutation = {
   createReview?: Maybe<Review>;
   createReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   createReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
-  createSlugifySlug?: Maybe<SlugifySlug>;
   /** Create a new role */
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
@@ -957,7 +957,6 @@ export type Mutation = {
   deleteReview?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflow?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflowStage?: Maybe<DeleteMutationResponse>;
-  deleteSlugifySlug?: Maybe<DeleteMutationResponse>;
   deleteUploadFile?: Maybe<UploadFile>;
   /** Delete an existing role */
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
@@ -990,7 +989,6 @@ export type Mutation = {
   updateReview?: Maybe<Review>;
   updateReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   updateReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
-  updateSlugifySlug?: Maybe<SlugifySlug>;
   updateUploadFile: UploadFile;
   /** Update an existing role */
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
@@ -1102,12 +1100,6 @@ export type MutationCreateReviewWorkflowsWorkflowStageArgs = {
 };
 
 
-export type MutationCreateSlugifySlugArgs = {
-  data: SlugifySlugInput;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
 export type MutationCreateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
 };
@@ -1194,11 +1186,6 @@ export type MutationDeleteReviewWorkflowsWorkflowArgs = {
 
 
 export type MutationDeleteReviewWorkflowsWorkflowStageArgs = {
-  documentId: Scalars['ID']['input'];
-};
-
-
-export type MutationDeleteSlugifySlugArgs = {
   documentId: Scalars['ID']['input'];
 };
 
@@ -1364,13 +1351,6 @@ export type MutationUpdateReviewWorkflowsWorkflowArgs = {
 
 export type MutationUpdateReviewWorkflowsWorkflowStageArgs = {
   data: ReviewWorkflowsWorkflowStageInput;
-  documentId: Scalars['ID']['input'];
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type MutationUpdateSlugifySlugArgs = {
-  data: SlugifySlugInput;
   documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
 };
@@ -1550,8 +1530,11 @@ export type PaginationArg = {
 
 export type Product = {
   __typename?: 'Product';
+  categories: Array<Maybe<ProductCategory>>;
+  categories_connection?: Maybe<ProductCategoryRelationResponseCollection>;
+  content: Scalars['JSON']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  description: Scalars['JSON']['output'];
+  description: Scalars['String']['output'];
   documentId: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   photos: Array<Maybe<UploadFile>>;
@@ -1564,6 +1547,20 @@ export type Product = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   variants: Array<Maybe<ProductVariant>>;
   variants_connection?: Maybe<ProductVariantRelationResponseCollection>;
+};
+
+
+export type ProductCategoriesArgs = {
+  filters?: InputMaybe<ProductCategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type ProductCategories_ConnectionArgs = {
+  filters?: InputMaybe<ProductCategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -1616,6 +1613,8 @@ export type ProductCategory = {
   name: Scalars['String']['output'];
   product_subcategories: Array<Maybe<ProductSubcategory>>;
   product_subcategories_connection?: Maybe<ProductSubcategoryRelationResponseCollection>;
+  products: Array<Maybe<Product>>;
+  products_connection?: Maybe<ProductRelationResponseCollection>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1635,6 +1634,20 @@ export type ProductCategoryProduct_Subcategories_ConnectionArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+
+export type ProductCategoryProductsArgs = {
+  filters?: InputMaybe<ProductFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type ProductCategoryProducts_ConnectionArgs = {
+  filters?: InputMaybe<ProductFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type ProductCategoryEntityResponseCollection = {
   __typename?: 'ProductCategoryEntityResponseCollection';
   nodes: Array<ProductCategory>;
@@ -1649,6 +1662,7 @@ export type ProductCategoryFiltersInput = {
   not?: InputMaybe<ProductCategoryFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductCategoryFiltersInput>>>;
   product_subcategories?: InputMaybe<ProductSubcategoryFiltersInput>;
+  products?: InputMaybe<ProductFiltersInput>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
   slug?: InputMaybe<StringFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
@@ -1658,8 +1672,14 @@ export type ProductCategoryInput = {
   illustration?: InputMaybe<Scalars['ID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   product_subcategories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  products?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProductCategoryRelationResponseCollection = {
+  __typename?: 'ProductCategoryRelationResponseCollection';
+  nodes: Array<ProductCategory>;
 };
 
 export type ProductEntityResponseCollection = {
@@ -1670,8 +1690,10 @@ export type ProductEntityResponseCollection = {
 
 export type ProductFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ProductFiltersInput>>>;
+  categories?: InputMaybe<ProductCategoryFiltersInput>;
+  content?: InputMaybe<JsonFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
-  description?: InputMaybe<JsonFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
   documentId?: InputMaybe<IdFilterInput>;
   name?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<ProductFiltersInput>;
@@ -1685,7 +1707,9 @@ export type ProductFiltersInput = {
 };
 
 export type ProductInput = {
-  description?: InputMaybe<Scalars['JSON']['input']>;
+  categories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   photos?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   price?: InputMaybe<Scalars['Float']['input']>;
@@ -1749,6 +1773,7 @@ export type ProductVariant = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
   format: Enum_Productvariant_Format;
+  helper_text?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   product?: Maybe<Product>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1785,6 +1810,7 @@ export type ProductVariantFiltersInput = {
   createdAt?: InputMaybe<DateTimeFilterInput>;
   documentId?: InputMaybe<IdFilterInput>;
   format?: InputMaybe<StringFilterInput>;
+  helper_text?: InputMaybe<StringFilterInput>;
   name?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<ProductVariantFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductVariantFiltersInput>>>;
@@ -1799,6 +1825,7 @@ export type ProductVariantFiltersInput = {
 
 export type ProductVariantInput = {
   format?: InputMaybe<Enum_Productvariant_Format>;
+  helper_text?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   product?: InputMaybe<Scalars['ID']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1918,9 +1945,6 @@ export type Query = {
   reviewWorkflowsWorkflows_connection?: Maybe<ReviewWorkflowsWorkflowEntityResponseCollection>;
   reviews: Array<Maybe<Review>>;
   reviews_connection?: Maybe<ReviewEntityResponseCollection>;
-  slugifySlug?: Maybe<SlugifySlug>;
-  slugifySlugs: Array<Maybe<SlugifySlug>>;
-  slugifySlugs_connection?: Maybe<SlugifySlugEntityResponseCollection>;
   uploadFile?: Maybe<UploadFile>;
   uploadFiles: Array<Maybe<UploadFile>>;
   uploadFiles_connection?: Maybe<UploadFileEntityResponseCollection>;
@@ -2317,28 +2341,6 @@ export type QueryReviews_ConnectionArgs = {
 };
 
 
-export type QuerySlugifySlugArgs = {
-  documentId: Scalars['ID']['input'];
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QuerySlugifySlugsArgs = {
-  filters?: InputMaybe<SlugifySlugFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QuerySlugifySlugs_ConnectionArgs = {
-  filters?: InputMaybe<SlugifySlugFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
 export type QueryUploadFileArgs = {
   documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
@@ -2558,40 +2560,6 @@ export type ReviewWorkflowsWorkflowStageInput = {
 export type ReviewWorkflowsWorkflowStageRelationResponseCollection = {
   __typename?: 'ReviewWorkflowsWorkflowStageRelationResponseCollection';
   nodes: Array<ReviewWorkflowsWorkflowStage>;
-};
-
-export type SlugifySlug = {
-  __typename?: 'SlugifySlug';
-  count?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  documentId: Scalars['ID']['output'];
-  publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type SlugifySlugEntityResponseCollection = {
-  __typename?: 'SlugifySlugEntityResponseCollection';
-  nodes: Array<SlugifySlug>;
-  pageInfo: Pagination;
-};
-
-export type SlugifySlugFiltersInput = {
-  and?: InputMaybe<Array<InputMaybe<SlugifySlugFiltersInput>>>;
-  count?: InputMaybe<IntFilterInput>;
-  createdAt?: InputMaybe<DateTimeFilterInput>;
-  documentId?: InputMaybe<IdFilterInput>;
-  not?: InputMaybe<SlugifySlugFiltersInput>;
-  or?: InputMaybe<Array<InputMaybe<SlugifySlugFiltersInput>>>;
-  publishedAt?: InputMaybe<DateTimeFilterInput>;
-  slug?: InputMaybe<StringFilterInput>;
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
-};
-
-export type SlugifySlugInput = {
-  count?: InputMaybe<Scalars['Int']['input']>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StringFilterInput = {
@@ -2946,6 +2914,8 @@ export type FeaturedArticlesFieldsFragment = { __typename?: 'ComponentBlocksFeat
 
 export type FeaturedProductsFieldsFragment = { __typename?: 'ComponentBlocksFeaturedProducts', id: string, headingBlock?: any | null, products: Array<{ __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null>, blockLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null };
 
+export type HighlightingCreationsFieldsFragment = { __typename?: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creations: Array<{ __typename?: 'Creation', documentId: string, creationName: string, creationDescription?: string | null, creationTime: string, creationSlug?: string | null, publishedAt?: any | null, creationCategories: Array<{ __typename?: 'CreationCategory', name: string, slug: string } | null>, creationThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any }, creationGallery: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null> };
+
 export type QuoteFieldsFragment = { __typename?: 'ComponentBlocksQuote', id: string, text: string };
 
 export type SingleRichtextFieldsFragment = { __typename?: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any };
@@ -2964,6 +2934,10 @@ export type ProductCategoriesFieldsFragment = { __typename?: 'ProductCategory', 
 
 export type ProductFieldsFragment = { __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> };
 
+export type ProductVariantFieldsFragment = { __typename?: 'ProductVariant', documentId: string, createdAt?: any | null, format: Enum_Productvariant_Format, name: string, required: boolean, helper_text?: string | null, sku?: string | null, stock: number, updatedAt?: any | null, variant_options: Array<{ __typename?: 'ProductVariantOption', createdAt?: any | null, documentId: string, label: string, price?: number | null, publishedAt?: any | null, updatedAt?: any | null, image?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> };
+
+export type ProductVariantOptionFieldsFragment = { __typename?: 'ProductVariantOption', createdAt?: any | null, documentId: string, label: string, price?: number | null, publishedAt?: any | null, updatedAt?: any | null, image?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null };
+
 export type SimpleLinkFieldsFragment = { __typename?: 'ComponentComponentSimpleLink', label: string, url: string };
 
 export type HeaderQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2976,7 +2950,19 @@ export type PagesQueryVariables = Exact<{
 }>;
 
 
-export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title: string, slug: string, type: Enum_Page_Type, illustrationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts', id: string, headingBlock?: any | null, products: Array<{ __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null>, blockLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksHighlightingCreations' } | { __typename: 'ComponentBlocksImageAndText', id: string, textWithImage: any, isImageLeft?: boolean | null, isImageTaller?: boolean | null, image: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+export type PagesQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title: string, slug: string, type: Enum_Page_Type, illustrationImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, content?: Array<{ __typename: 'ComponentBlocksCardsList', id: string, heading?: string | null, cards: Array<{ __typename?: 'ComponentComponentCard', id: string, heading: string, description?: string | null, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null, backgroundImage?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | { __typename: 'ComponentBlocksFeaturedArticles', id: string, title: string, articles: Array<{ __typename?: 'Article', documentId: string, articleSlug: string, articleTitle: string, articleDescription?: string | null, publishedAt?: any | null, articleCategories: Array<{ __typename?: 'ArticleCategory', name: string } | null>, articleThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, articleContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any } } | null>, link?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksFeaturedProducts', id: string, headingBlock?: any | null, products: Array<{ __typename?: 'Product', documentId: string, productSlug?: string | null, name: string, price: number, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null>, blockLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | { __typename: 'ComponentBlocksHighlightingCreations', id: string, title: string, content?: any | null, link?: { __typename?: 'ComponentComponentSimpleLink', id: string, label: string, url: string } | null, creations: Array<{ __typename?: 'Creation', documentId: string, creationName: string, creationDescription?: string | null, creationTime: string, creationSlug?: string | null, publishedAt?: any | null, creationCategories: Array<{ __typename?: 'CreationCategory', name: string, slug: string } | null>, creationThumbnail: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, creationContent: { __typename?: 'ComponentBlocksSingleRichtext', richtextContent: any }, creationGallery: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null> } | null> } | { __typename: 'ComponentBlocksImageAndText', id: string, textWithImage: any, isImageLeft?: boolean | null, isImageTaller?: boolean | null, image: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } } | { __typename: 'ComponentBlocksQuote', id: string, text: string } | { __typename: 'ComponentBlocksSingleRichtext', id: string, richtextContent: any } | { __typename: 'ComponentBlocksSingleSlider', id: string, listSlides: Array<{ __typename?: 'ComponentComponentLargeSlide', id: string, slideContent?: string | null, slideOvertitle?: string | null, slideTitle: string, backgroundImage: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, slideLink?: { __typename?: 'ComponentComponentSimpleLink', label: string, url: string } | null } | null> } | { __typename: 'Error' } | null> | null } | null> };
+
+export type ProductsQueryVariables = Exact<{
+  filters?: InputMaybe<ProductFiltersInput>;
+}>;
+
+
+export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', documentId: string, name: string, content: any, description: string, price: number, productSlug?: string | null, createdAt?: any | null, updatedAt?: any | null, publishedAt?: any | null, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null>, variants: Array<{ __typename?: 'ProductVariant', documentId: string, createdAt?: any | null, format: Enum_Productvariant_Format, name: string, required: boolean, helper_text?: string | null, sku?: string | null, stock: number, updatedAt?: any | null, variant_options: Array<{ __typename?: 'ProductVariantOption', createdAt?: any | null, documentId: string, label: string, price?: number | null, publishedAt?: any | null, updatedAt?: any | null, image?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | null>, categories: Array<{ __typename?: 'ProductCategory', documentId: string, slug: string, name: string, illustration: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string }, product_subcategories: Array<{ __typename?: 'ProductSubcategory', documentId: string, slug: string, name: string, illustration: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } } | null> } | null> } | null> };
+
+export type AllProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', documentId: string, name: string, description: string, price: number, productSlug?: string | null, createdAt?: any | null, updatedAt?: any | null, publishedAt?: any | null, photos: Array<{ __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null>, variants: Array<{ __typename?: 'ProductVariant', documentId: string, createdAt?: any | null, format: Enum_Productvariant_Format, name: string, required: boolean, helper_text?: string | null, sku?: string | null, stock: number, updatedAt?: any | null, variant_options: Array<{ __typename?: 'ProductVariantOption', createdAt?: any | null, documentId: string, label: string, price?: number | null, publishedAt?: any | null, updatedAt?: any | null, image?: { __typename?: 'UploadFile', documentId: string, alternativeText?: string | null, caption?: string | null, url: string } | null } | null> } | null> } | null> };
 
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 

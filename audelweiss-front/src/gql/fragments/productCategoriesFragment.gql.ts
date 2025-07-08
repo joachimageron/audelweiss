@@ -1,5 +1,6 @@
 import { gql } from "graphql-tag";
 import { imageFragment } from "@/src/gql/fragments/imageFragment.gql";
+import { productSubcategoriesFragment } from "./productSubcategoriesFragment.gql";
 
 export const productCategoriesFragment = gql`
   fragment ProductCategoriesFields on ProductCategory {
@@ -10,13 +11,9 @@ export const productCategoriesFragment = gql`
       ...ImageFields
     }
     product_subcategories {
-      documentId
-      slug
-      name
-      illustration {
-        ...ImageFields
-      }
+      ...ProductSubcategoriesFields
     }
   }
   ${imageFragment}
+  ${productSubcategoriesFragment}
 `;

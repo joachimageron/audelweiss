@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 import { useCreations } from "@/src/hooks/useCreations";
 
@@ -26,6 +26,7 @@ const styles = tv({
         creationCategory: "relative px-[1rem]! py-[.8rem]! w-fit text-[1.3rem] pointer-events-none",
         creationTitle: "relative text-white text-[2.2rem]",
         creationDuration: "relative text-[1.5rem] text-white font-medium",
+        paginationWrapper: "flex justify-center flex-wrap gap-[1rem] mb-[3rem]",
     },
 });
 const filterButton = tv({
@@ -36,13 +37,28 @@ const filterButton = tv({
         }
     }
 });
+const paginationButton = tv({
+    base: "w-[3.5rem] h-[3.5rem] rounded-[.6rem] border cursor-pointer",
+    variants: {
+        active: {
+            true: "bg-primary text-white",
+            false: "border-gray-300 text-dark-primary hover:bg-gray-100",
+        },
+    },
+});
 
-const { mainWrapper, filtersWrapper, gridWrapper, creationLink, creationImageWrapper, creationImage, creationCategoriesList, creationCategory, creationTitle, creationDuration } = styles();
+const { mainWrapper, filtersWrapper, gridWrapper, creationLink, creationImageWrapper, creationImage, creationCategoriesList, creationCategory, creationTitle, creationDuration, paginationWrapper } = styles();
 
 export default function ListingCreations({ basePath = "/creations" }: { basePath?: string }) {
     const { data, isLoading, isError } = useCreations();
     const pathname = usePathname();
     const currentPath = decodeURIComponent(pathname);
+
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    const currentPage = Number(searchParams.get("page") || 1);
+    const ITEMS_PER_PAGE = 9;
 
     if (isLoading) return <p className="inner-wrap">Chargement des créations...</p>;
     if (isError || !data) return <p className="inner-wrap">Erreur lors du chargement des créations</p>;
@@ -85,6 +101,17 @@ export default function ListingCreations({ basePath = "/creations" }: { basePath
         });
     }
 
+    const sortedCreations = [...matchedCreations].sort((a, b) => {
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+    });
+
+    const totalPages = Math.ceil(sortedCreations.length / ITEMS_PER_PAGE);
+
+    const paginatedCreations = sortedCreations.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
     return (
         <>
             <Breadcrumb items={breadcrumbItems} />
@@ -103,7 +130,7 @@ export default function ListingCreations({ basePath = "/creations" }: { basePath
                     ))}
                 </div>
                 <div className={gridWrapper()}>
-                    {matchedCreations.map((creation: any) => (
+                    {paginatedCreations.map((creation: any) => (
                         <CustomLink href={`${basePath}/${creation.creationSlug}`} key={creation.documentId} className={creationLink()}>
                             <div className={creationImageWrapper()}>
                                 {creation.creationThumbnail?.url && (
@@ -142,6 +169,22 @@ export default function ListingCreations({ basePath = "/creations" }: { basePath
                             </p>
                         </CustomLink>
                     ))}
+                </div>
+
+                <div className={paginationWrapper()}>
+                    {Array.from({ length: totalPages }).map((_, i) => {
+                        const pageNum = i + 1;
+                        const isActive = pageNum === currentPage;
+                        return (
+                            <button
+                                key={pageNum}
+                                onClick={() => router.push(`?page=${pageNum}`)}
+                                className={paginationButton({ active: isActive })}
+                            >
+                                {pageNum}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         </>

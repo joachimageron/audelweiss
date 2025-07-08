@@ -1,6 +1,7 @@
 import { pagesQuery } from "@/src/gql/page.gql";
 import { useQuery } from "@tanstack/react-query";
 import { useApi } from "@/src/hooks/useApi";
+import { UploadFile } from "../types/generated";
 
 export type Block = {
   __typename: string;
@@ -8,7 +9,7 @@ export type Block = {
 };
 
 type Page = {
-  illustrationImage: any;
+  illustrationImage: UploadFile;
   type: string;
   title: string;
   slug: string;

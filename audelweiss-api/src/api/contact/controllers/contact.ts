@@ -5,33 +5,29 @@ export default {
     try {
       const { to, email, subject, text, html } = ctx.request.body;
 
-      // Configure le transporteur nodemailer pour Mailtrap
       const transporter = nodemailer.createTransport({
         host: 'sandbox.smtp.mailtrap.io',
-        port: 2525, // ou 587
+        port: 2525, 
         auth: {
           user: '6413bbf815ba59',
           pass: 'ad37504db05bc2',
         },
       });
 
-      // Prépare le mail
       const mailOptions = {
-        from: email, // ou adresse par défaut
+        from: email, 
         to,
         subject,
         text,
         html,
       };
 
-      // Envoie le mail
       const info = await transporter.sendMail(mailOptions);
 
-      // Pour debug, tu peux renvoyer l’info de Nodemailer
       ctx.body = {
         sent: true,
         message: 'Mail envoyé via Mailtrap!',
-        info, // optionnel
+        info, 
       };
       ctx.status = 200;
     } catch (err) {

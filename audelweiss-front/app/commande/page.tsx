@@ -9,11 +9,20 @@ import CustomTitle from "@/src/components/atoms/CustomTitle";
 import CustomInputField from "@/src/components/atoms/CustomInputField";
 import Button from "@/src/components/atoms/Button";
 
+import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
+// const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.83.97.44:1337";
+
 export default function CommandePage() {
   const router = useRouter();
   const { isAuthenticated, loading, user } = useUser();
   const { cartItems, total } = useCart();
 
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [shippingData, setShippingData] = useState({
     firstName: "",
     lastName: "",
@@ -60,8 +69,41 @@ export default function CommandePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user) return;
     // TODO: Process order with shipping data
     console.log("Order data:", { cartItems, total, shippingData });
+
+    if (!stripe || !elements) {
+      // Stripe.js hasn't yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
+    setIsLoading(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        // Make sure to change this to your payment completion page
+        return_url: "http://localhost:3000/commande?success=true",
+      },
+    });
+
+    setIsLoading(false);
+
+    if (error) {
+      // This point will only be reached if there is an immediate error when confirming the payment
+      // For example, if the card details are incomplete or invalid
+      setMessage(error.message || "An unexpected error occurred.");
+    } else {
+      // The payment has been processed!
+      setMessage("Payment successful! Thank you for your order.");
+      // Optionally redirect to a success page or clear the cart
+      router.push("/success");
+    }
+    console.log("Payment result:", error);
+
+
   };
 
   return (
@@ -215,10 +257,17 @@ export default function CommandePage() {
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-center my-4">
-            <Button type="submit" withIcon>
-              Valider la commande - {total.toFixed(2)}€
+
+          <div className="flex flex-col my-4">
+            <CustomTitle level={2} className="text-[2.2rem] my-[2rem] text-dark-primary">
+              Paiement
+            </CustomTitle>
+            <PaymentElement id="payment-element" options={{ layout: "accordion" }} />
+
+            <Button type="submit" withIcon className="mt-[2rem]">
+              {isLoading ? "Chargement..." : `Valider la commande - ${total.toFixed(2)}€`}
             </Button>
+                  {message && <div id="payment-message">{message}</div>}
           </div>
         </form>
       ) : (

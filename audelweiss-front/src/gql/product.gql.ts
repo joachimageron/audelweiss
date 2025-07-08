@@ -11,6 +11,8 @@ export const productsQuery = gql`
       content
       description
       price
+      stock
+      discount
       photos {
         ...ImageFields
       }

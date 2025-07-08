@@ -25,7 +25,7 @@ const radio = tv({
         input: "",
       },
       false: {
-        item: "text-[1.5rem] px-[1.6rem] py-[.8rem]",
+        item: "text-[1.5rem]",
         input: "sr-only",
       },
     },
@@ -47,7 +47,7 @@ const RadioVariant = ({ variant, onChange, value }: Props) => {
           key={`variant-option-${option?.documentId}`}
           className={item({ selected: value === option?.label, image: Boolean(option?.image) })}
         >
-          <label>
+          <label className="block px-[1.6rem] py-[.8rem] cursor-pointer">
             <input
               type="radio"
               name={variant.name}

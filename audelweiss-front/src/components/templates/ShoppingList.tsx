@@ -164,8 +164,15 @@ export default function ShoppingList() {
   const filteredProducts = products.filter(product => {
 
     const nameMatch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const minMatch = !initialMin || product.price >= parseFloat(initialMin);
-    const maxMatch = !initialMax || product.price <= parseFloat(initialMax);
+
+    const effectivePrice =
+      product.discount > 0 && product.discount < product.price
+        ? product.price - product.discount
+        : product.price;
+
+    const minMatch = !initialMin || effectivePrice >= parseFloat(initialMin);
+    const maxMatch = !initialMax || effectivePrice <= parseFloat(initialMax);
+
     const categoryMatch =
       selectedCategories.length === 0 ||
       selectedCategories.some(
@@ -179,11 +186,14 @@ export default function ShoppingList() {
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const getEffectivePrice = (p) =>
+      p.discount > 0 && p.discount < p.price ? p.price - p.discount : p.price;
+
     switch (sort) {
       case "price-asc":
-        return a.price - b.price;
+        return getEffectivePrice(a) - getEffectivePrice(b);
       case "price-desc":
-        return b.price - a.price;
+        return getEffectivePrice(b) - getEffectivePrice(a);
       case "alpha-asc":
         return a.name.localeCompare(b.name);
       case "alpha-desc":

@@ -61,29 +61,15 @@ const Page = ({ params }: Props) => {
         </>
       )}
 
-      {data.type === "listing_articles" && (
-        <>
-          <ListingArticles />
-        </>
-      )}
+      {data.type === "shop" && <ShoppingList />}
 
-      {data.type === "listing_creations" && (
-        <>
-          <ListingCreations />
-        </>
-      )}
+      {data.type === "listing_articles" && <ListingArticles />}
 
-      {data.type === "shopping_cart" && (
-        <>
-          <ShoppingCart />
-        </>
-      )}
+      {data.type === "listing_creations" && <ListingCreations />}
 
-      {data.type === "shopping_form" && (
-        <>
-          <ShoppingForm />
-        </>
-      )}
+      {data.type === "shopping_cart" && <ShoppingCart />}
+
+      {data.type === "shopping_form" && <ShoppingForm />}
 
       {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}
     </>

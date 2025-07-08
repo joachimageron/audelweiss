@@ -2,15 +2,16 @@ import CustomTitle from "@/src/components/atoms/CustomTitle";
 import { Product } from "@/src/types/generated";
 import { tv } from "tailwind-variants";
 import Form from "./Form";
+import CustomLink from "../../atoms/CustomLink";
 
 const styles = tv({
   slots: {
     base: "flex flex-col gap-[1.5rem] grow-2",
     heading: "text-[3.2rem]",
-    // productCategoriesWrapper: "my-[1rem] py-[1.5rem] text-[1.6rem] border-t border-b border-primary",
-    // productCategoriesTitle: "mr-[1.5rem]",
-    // productCategoriesList: "inline-flex gap-x-[2.5rem] gap-y-[1rem] flex-wrap",
-    // productCategoryItem: "text-primary as--underline-hover",
+    categories: "my-[1rem] py-[1.5rem] text-[1.6rem] border-t border-b border-primary",
+    categoriesHeading: "mr-[1.5rem]",
+    categoriesList: "inline-flex gap-x-[2.5rem] gap-y-[1rem] flex-wrap",
+    categoriesListItem: "text-primary as--underline-hover",
     description: "leading-[1.6]",
     prices: "my-[.8rem] text-[2rem]",
     originalPrice: "text-gray-400 line-through mr-[1.5rem]",
@@ -20,7 +21,19 @@ const styles = tv({
   },
 });
 
-const { base, heading, description, prices, salePrice, variantsHeading, form } = styles();
+const {
+  base,
+  heading,
+  description,
+  prices,
+  salePrice,
+  variantsHeading,
+  form,
+  categories,
+  categoriesHeading,
+  categoriesList,
+  categoriesListItem,
+} = styles();
 
 type Props = {
   product: Product;
@@ -31,26 +44,24 @@ const Aside = ({ product }: Props) => {
   //   const originalPrice = product.price + pomponExtra + optionsExtra + giftWrapExtra;
   //   const discountedPrice = discount + pomponExtra + optionsExtra + giftWrapExtra;
 
-  //   TODO: HANDLE CATEGORIES
-
   return (
     <div className={base()}>
       <CustomTitle level={1} className={heading()}>
         {product.name}
       </CustomTitle>
 
-      {/* <div className={productCategoriesWrapper()}>
-        <span className={productCategoriesTitle()}>Catégorie(s) :</span>
-        <ul className={productCategoriesList()}>
-          {categories.map((cat, index) => (
+      <div className={categories()}>
+        <span className={categoriesHeading()}>Catégorie(s) :</span>
+        <ul className={categoriesList()}>
+          {product.subcategories.map((cat, index) => (
             <li key={index}>
-              <CustomLink href={`/boutique/categorie/${cat.toLowerCase()}`} className={productCategoryItem()}>
-                {cat}
+              <CustomLink href={`/boutique/categorie/${cat.slug}`} className={categoriesListItem()}>
+                {cat.name}
               </CustomLink>
             </li>
           ))}
         </ul>
-      </div> */}
+      </div>
 
       <p className={description()}>{product.description}</p>
 

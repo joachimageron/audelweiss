@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 
@@ -10,6 +9,8 @@ import { tv } from "tailwind-variants";
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import Button from "@/src/components/atoms/Button";
 import CustomLink from "@/src/components/atoms/CustomLink";
+import Image from "../atoms/Image";
+import { useOrders } from "@/src/hooks/useOrders";
 
 export const styles = tv({
   slots: {
@@ -81,42 +82,6 @@ export const {
   paymentButtonArea,
 } = styles();
 
-// TODO BACK: Dynamiser les données des produits
-const MOCK_CART = [
-  {
-    id: 1,
-    name: "SCRUNCHY | Tricotine• - RM1 - Mauve",
-    slug: "/boutique/slugProduit1",
-    image: "https://picsum.photos/140/140",
-    price: 4.0,
-    quantity: 2,
-    stock: 4,
-    details: {
-      color: "Mauve",
-      size: "Femme",
-      motif: "Rayé",
-      pompon: "Oui",
-      options: ["Protection résine"],
-      giftWrap: "Papier kraft",
-      personalization: "Je t'aime ❤️",
-    },
-  },
-  {
-    id: 2,
-    name: "Porte-clé montagne personnalisé",
-    slug: "/boutique/slugProduit2",
-    image: "https://picsum.photos/200/300",
-    price: 8.0,
-    quantity: 5,
-    stock: 10,
-    details: {
-      color: "Vert foncé",
-      size: "Homme",
-      personalization: "Pas moi hahaha",
-    },
-  },
-];
-
 export default function ShoppingCart() {
   const { cartItems, setCartItems, total } = useCart();
   const [promo, setPromo] = useState("");
@@ -141,6 +106,10 @@ export default function ShoppingCart() {
       });
     }
   };
+
+  const { data: orders } = useOrders({ queryKey: ["orders"], filters: { id: "g49z2ehk09t7gtvq0l6hmp00" } });
+
+  console.log("orders : ", orders);
 
   return (
     <div className={mainWrapper()}>

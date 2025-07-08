@@ -1,7 +1,7 @@
 export default {
   routes: [
     {
-     method: 'GET',
+     method: 'POST',
      path: '/create-payment-intent',
      handler: 'stripe.createPaymentIntent',
      config: {

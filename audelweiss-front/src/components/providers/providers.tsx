@@ -5,7 +5,6 @@ import ReactQueryProvider from "@/src/components/providers/ReactQueryProvider";
 import { AuthProvider } from "@/src/components/providers/AuthProvider";
 import { CartProvider } from "@/src/components/providers/CartProvider";
 import { StorageProvider } from "./StorageProvider";
-import StripeProvider from "./StripeProvider";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -26,7 +25,7 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
         <StorageProvider storage={storage}>
           <CartProvider>
             <AuthProvider>
-              <StripeProvider>{children}</StripeProvider>
+                {children}
             </AuthProvider>
           </CartProvider>
         </StorageProvider>

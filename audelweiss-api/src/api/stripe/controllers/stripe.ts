@@ -10,8 +10,10 @@ export default {
   createPaymentIntent: async (ctx) => {
     console.log("Creating payment intent...");
     try {
-      const amount = 1000; // Default to 10.00 EUR if not provided
-      const currency = "eur"; // Default to EUR if not provided
+
+      console.log("body", ctx.request.body);
+      const amount = ctx.request.body.amount || 0; // Default to 0 if not provided
+      const currency = ctx.request.body.currency || "eur"; // Default to EUR if not provided
 
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,

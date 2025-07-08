@@ -245,11 +245,11 @@ export default function ShoppingCart() {
         </div>
       )}
 
-      <div className={paymentButtonArea()}>
+      {cartItems.length > 0 && <div className={paymentButtonArea()}>
         <CustomLink href="/commande" isButtonLink withIcon>
           Valider la commande
         </CustomLink>
-      </div>
+      </div>}
     </div>
   );
 }

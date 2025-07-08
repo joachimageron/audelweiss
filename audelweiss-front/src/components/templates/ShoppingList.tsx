@@ -40,7 +40,7 @@ const styles = tv({
     resetFiltersButton: "bg-secondary hover:bg-dark-secondary",
     errorText2: "text-center text-[1.6rem] text-gray-500 my-[3rem]",
     productsGrid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[3rem] my-[4rem]",
-    paginationWrapper: "flex justify-center flex-wrap gap-[1rem]",
+    paginationWrapper: "flex justify-center flex-wrap gap-[1rem] mb-[3rem]",
   },
 });
 
@@ -162,10 +162,17 @@ export default function ShoppingList() {
   };
 
   const filteredProducts = products.filter(product => {
-    console.log("selected cat : ", selectedCategories);
+
     const nameMatch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const minMatch = !initialMin || product.price >= parseFloat(initialMin);
-    const maxMatch = !initialMax || product.price <= parseFloat(initialMax);
+
+    const effectivePrice =
+      product.discount > 0 && product.discount < product.price
+        ? product.price - product.discount
+        : product.price;
+
+    const minMatch = !initialMin || effectivePrice >= parseFloat(initialMin);
+    const maxMatch = !initialMax || effectivePrice <= parseFloat(initialMax);
+
     const categoryMatch =
       selectedCategories.length === 0 ||
       selectedCategories.some(
@@ -179,18 +186,21 @@ export default function ShoppingList() {
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const getEffectivePrice = (p) =>
+      p.discount > 0 && p.discount < p.price ? p.price - p.discount : p.price;
+
     switch (sort) {
       case "price-asc":
-        return a.price - b.price;
+        return getEffectivePrice(a) - getEffectivePrice(b);
       case "price-desc":
-        return b.price - a.price;
+        return getEffectivePrice(b) - getEffectivePrice(a);
       case "alpha-asc":
         return a.name.localeCompare(b.name);
       case "alpha-desc":
         return b.name.localeCompare(a.name);
       case "newest":
       default:
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
     }
   });
 

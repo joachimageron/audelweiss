@@ -52,11 +52,9 @@ const styles = tv({
     active: {
       true: {
         navLink: "text-dark-primary",
-        megaMenuColTitle: "text-dark-primary",
       },
       false: {
         navLink: "hover:text-primary",
-        megaMenuColTitle: "hover:text-primary",
       },
     },
     searchOpen: {
@@ -144,8 +142,7 @@ const Navigation = ({ className = '' }: { className?: string }) => {
                         key={category.documentId}
                         className={megaMenuCol()}
                       >
-                        <CustomLink
-                          href={`/boutique/categorie/${category.slug}`}
+                        <p
                           onMouseEnter={() => {
                             if (category.illustration?.url) {
                               setHoveredImage(category.illustration.url);
@@ -153,9 +150,10 @@ const Navigation = ({ className = '' }: { className?: string }) => {
                               setTimeout(() => setIsImageVisible(true), 8);
                             }
                           }}
-                          className={megaMenuColTitle({ active: pathname === `/categorie/${category.slug}` })}>
+                          className={megaMenuColTitle()}
+                        >
                           {category.name}
-                        </CustomLink>
+                        </p>
 
                         <ul className={subMenu()}>
                           {category.product_subcategories?.map((sub) => (
@@ -171,7 +169,7 @@ const Navigation = ({ className = '' }: { className?: string }) => {
                                   setIsImageVisible(false);
                                   setTimeout(() => setIsImageVisible(true), 8);
                                 }}
-                                className={subMenuLink()}
+                                className={subMenuLink({ active: pathname === `/boutique/categorie/${category.slug}/${sub.slug}` })}
                               >
                                 {sub.name}
                               </CustomLink>

@@ -33,8 +33,6 @@ export default function ProductDetails({ slug }: Props) {
     { label: product.name, href: `/${slug}` },
   ];
 
-  console.log("product : ", product);
-
   return (
     <>
       <Breadcrumb items={breadcrumbs} />

@@ -26,6 +26,7 @@ const {
   heading,
   description,
   prices,
+  originalPrice,
   salePrice,
   variantsHeading,
   form,
@@ -40,9 +41,6 @@ type Props = {
 };
 
 const Aside = ({ product }: Props) => {
-  // TODO: HANDLE DISCOUNTS AND VARIANTS
-  //   const originalPrice = product.price + pomponExtra + optionsExtra + giftWrapExtra;
-  //   const discountedPrice = discount + pomponExtra + optionsExtra + giftWrapExtra;
 
   return (
     <div className={base()}>
@@ -66,9 +64,16 @@ const Aside = ({ product }: Props) => {
       <p className={description()}>{product.description}</p>
 
       <div className={prices()}>
-        {/* <span className={originalPrice()}>{originalPrice.toFixed(2)} €</span> */}
-        {/* <span className={salePrice()}>{discountedPrice.toFixed(2)} €</span> */}
-        <span className={salePrice()}>{product.price.toFixed(2)} €</span>
+        {product.discount > 0 && product.discount < product.price ? (
+          <>
+            <span className={originalPrice()}>{product.price.toFixed(2)} €</span>
+            <span className={salePrice()}>
+              {(product.price - product.discount).toFixed(2)} €
+            </span>
+          </>
+        ) : (
+          <span className={salePrice()}>{product.price.toFixed(2)} €</span>
+        )}
       </div>
 
       {product.variants && (

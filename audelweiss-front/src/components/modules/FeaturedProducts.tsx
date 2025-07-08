@@ -43,6 +43,7 @@ type Props = {
 };
 
 export default function FeaturedProducts({ block, className = "" }: Props) {
+
   return (
     <section className={clsx(section(), className)}>
       <div className={heading()}>
@@ -55,7 +56,7 @@ export default function FeaturedProducts({ block, className = "" }: Props) {
           .map((product) => (
             <CustomLink
               key={product?.documentId}
-              href={product.productSlug ?? "#_"}
+              href={product.productSlug ? `/boutique/${product.productSlug}` : "#_"}
               className={productLink()}
             >
               <div className={productImageWrapper()}>
@@ -92,14 +93,20 @@ export default function FeaturedProducts({ block, className = "" }: Props) {
 
               <div className={productName()}>{product.name}</div>
               <div className={productCaracteristics()}>
-                {product.oldPrice && (
-                  <span className={productOldPrice()}>
-                    {product.oldPrice.toFixed(2)} €
+                {product.discount > 0 && product.discount < product.price ? (
+                  <>
+                    <span className={productOldPrice()}>
+                      {product.price.toFixed(2)} €
+                    </span>
+                    <span className={productCurrentPrice()}>
+                      {(product.price - product.discount).toFixed(2)} €
+                    </span>
+                  </>
+                ) : (
+                  <span className={productCurrentPrice()}>
+                    {product.price.toFixed(2)} €
                   </span>
                 )}
-                <span className={productCurrentPrice()}>
-                  {product.price.toFixed(2)} €
-                </span>
               </div>
             </CustomLink>
           ))}

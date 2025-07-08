@@ -55,12 +55,6 @@ const Page = ({ params }: Props) => {
 
       {!["home", "listing_articles", "listing_creations"].includes(data.type) && <Breadcrumb items={breadcrumbItems} />}
 
-      {data.type === "shop" && (
-        <>
-          <ShoppingList />
-        </>
-      )}
-
       {data.type === "shop" && <ShoppingList />}
 
       {data.type === "listing_articles" && <ListingArticles />}

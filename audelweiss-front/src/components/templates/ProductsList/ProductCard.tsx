@@ -63,9 +63,18 @@ const ProductCard = ({ product, className }: Props) => {
       </div>
       <div className={productName()}>{product.name}</div>
       <div className={productCaracteristics()}>
-        {product.price && <span className={productOldPrice()}>{product.price.toFixed(2)} €</span>}
-        <span className={productCurrentPrice()}>{product.price.toFixed(2)} €</span>
+        {product.discount > 0 && product.discount < product.price ? (
+          <>
+            <span className={productOldPrice()}>{product.price.toFixed(2)} €</span>
+            <span className={productCurrentPrice()}>
+              {(product.price - product.discount).toFixed(2)} €
+            </span>
+          </>
+        ) : (
+          <span className={productCurrentPrice()}>{product.price.toFixed(2)} €</span>
+        )}
       </div>
+
     </CustomLink>
   );
 };

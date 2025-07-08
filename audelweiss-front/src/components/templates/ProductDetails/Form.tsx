@@ -8,7 +8,7 @@ import { CartItem } from "../../providers/CartProvider";
 
 const styles = tv({
   slots: {
-    base: "flex flex-wrap gap-x-[4.5rem] gap-y-[3rem]",
+    base: "flex flex-wrap items-end gap-x-[5.5rem] gap-y-[3rem]",
     stockLeft: "text-[1.5rem] text-secondary font-semibold",
     chosenQuantity: "flex items-center gap-[1.5rem]",
     quantityInput:
@@ -28,7 +28,10 @@ const Form = ({ product, className }: Props) => {
   const [quantity, setQuantity] = useState(0);
   const addToCart = useAddToCart();
 
-  const stock = 5;
+  console.log(product);
+
+  const stock = product.stock ??
+    product.variants?.reduce((acc, variant) => acc + (variant?.stock ?? 0), 0) ?? 0;
 
   // Callback pour mettre à jour la valeur d'une variante
   const onVariantChange = (name: string, value: string) => {
@@ -41,7 +44,6 @@ const Form = ({ product, className }: Props) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("values : ", variantValues);
 
     // if (!validateForm()) return;
 
@@ -71,9 +73,11 @@ const Form = ({ product, className }: Props) => {
       ))}
 
       <div className="mt-[2rem] flex flex-col">
-        <p className={stockLeft()}>
-          {stock} exemplaire{stock > 1 ? "s" : ""} disponible{stock > 1 ? "s" : ""}
-        </p>
+        {stock > 0 && (
+          <p className={stockLeft()}>
+            {stock} exemplaire{stock > 1 ? "s" : ""} disponible{stock > 1 ? "s" : ""}
+          </p>
+        )}
 
         <div className={chosenQuantity()}>
           <label htmlFor="quantity">Combien en désirez-vous ?</label>
@@ -81,15 +85,18 @@ const Form = ({ product, className }: Props) => {
             id="quantity"
             type="number"
             min={1}
-            max={stock}
+            {...(stock > 0 ? { max: stock } : {})}
             value={quantity}
-            onChange={e => setQuantity(Math.min(stock, Math.max(1, Number(e.target.value))))}
+            onChange={e => {
+              const value = Number(e.target.value);
+              setQuantity(stock > 0 ? Math.min(stock, Math.max(1, value)) : Math.max(1, value));
+            }}
             className={quantityInput()}
           />
         </div>
       </div>
 
-      <Button type="submit" className="mt-[1.5rem] w-fit bg-secondary hover:bg-dark-secondary">
+      <Button type="submit" className="mt-[1.5rem] w-fit ">
         Ajouter au panier
       </Button>
     </form>

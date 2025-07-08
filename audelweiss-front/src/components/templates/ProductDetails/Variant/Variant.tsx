@@ -25,13 +25,20 @@ const Variant = ({ variant, onVariantChange, values }: Props) => {
   const error = false;
 
   useEffect(() => {
-    console.log("values : ", values);
-  }, [values]);
+    console.log("Nombre d'options :", variant.variant_options.length);
+  }, []);
 
   return (
-    <div>
+    <div className={variant.format === "input" ? "w-full" : undefined}>
       {error && <span className={errorMessage()}>Message d&apos;erreur</span>}
-      <p className={title()}>{`${variant.name} : ${values[variant.name] ?? ""}`}</p>
+      <p className={title()}>
+        {variant.name}
+        {variant.format === "radio" && values[variant.name] && (
+          <>
+            : <span className="text-primary">{values[variant.name]}</span>
+          </>
+        )}
+      </p>
       {variant.helper_text && <p className={helper()}>{variant.helper_text}</p>}
 
       {variant.format === "radio" && (

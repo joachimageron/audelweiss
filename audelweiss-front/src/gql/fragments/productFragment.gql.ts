@@ -9,7 +9,8 @@ export const productFragment = gql`
     photos {
       ...ImageFields
     }
-    price
+    price,
+    discount
   }
   ${imageFragment}
 `;

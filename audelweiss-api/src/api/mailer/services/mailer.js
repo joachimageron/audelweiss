@@ -7,8 +7,8 @@ export default {
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "6413bbf815ba59",   
-        pass: "ad37504db05bc2"   
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASS,
       }
     });
 
@@ -20,7 +20,8 @@ export default {
       html,
     };
 
-    const info = await transporter.sendMail(mailOptions);
+    console.log('📤 Mail envoyé :', info.messageId);
+
     return info;
   },
 };

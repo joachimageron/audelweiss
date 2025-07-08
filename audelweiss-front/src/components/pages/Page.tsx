@@ -54,29 +54,13 @@ const Page = ({ params }: Props) => {
 
       {!["home", "listing_articles", "listing_creations"].includes(data.type) && <Breadcrumb items={breadcrumbItems} />}
 
-      {data.type === "listing_articles" && (
-        <>
-          <ListingArticles />
-        </>
-      )}
+      {data.type === "listing_articles" && <ListingArticles />}
 
-      {data.type === "listing_creations" && (
-        <>
-          <ListingCreations />
-        </>
-      )}
+      {data.type === "listing_creations" && <ListingCreations />}
 
-      {data.type === "shopping_cart" && (
-        <>
-          <ShoppingCart />
-        </>
-      )}
+      {data.type === "shopping_cart" && <ShoppingCart />}
 
-      {data.type === "shopping_form" && (
-        <>
-          <ShoppingForm />
-        </>
-      )}
+      {data.type === "shopping_form" && <ShoppingForm />}
 
       {data?.content && <PageBlocks blocks={data.content as PageContentDynamicZone[]} />}
     </>

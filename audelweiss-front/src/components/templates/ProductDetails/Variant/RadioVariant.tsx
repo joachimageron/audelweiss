@@ -36,15 +36,17 @@ const { base, item, input, tooltip } = radio();
 type Props = {
   variant: ProductVariant;
   onChange?: (value: string) => void;
+  value?: unknown;
 };
 
-const RadioVariant = ({ variant, onChange }: Props) => {
-  const selected = false;
-
+const RadioVariant = ({ variant, onChange, value }: Props) => {
   return (
     <ul className={base()}>
       {variant.variant_options.map(option => (
-        <li key={`variant-option-${option?.documentId}`} className={item({ selected, image: Boolean(option?.image) })}>
+        <li
+          key={`variant-option-${option?.documentId}`}
+          className={item({ selected: value === option?.label, image: Boolean(option?.image) })}
+        >
           <label>
             <input
               type="radio"

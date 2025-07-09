@@ -43,7 +43,6 @@ type ContactFormValues = {
     message: string;
 };
 
-<<<<<<< HEAD
 type Props = {
   params?: string[];
 };
@@ -97,12 +96,6 @@ function getSubjectFromReason(reason) {
       { label: data?.title || "Contact" },
     ];
 
-=======
-export default function ContactPage() {
-    const router = useRouter();
-    const [showConfirmation, setShowConfirmation] = useState(false);
-
->>>>>>> 019ef93079ef8be55af18db75891274f35ec92c9
     const {
         register,
         handleSubmit,
@@ -110,7 +103,6 @@ export default function ContactPage() {
     } = useForm<ContactFormValues>();
 
     const onSubmit = async (data: ContactFormValues) => {
-<<<<<<< HEAD
         try {
           const response = await fetch("http://localhost:1337/api/contact", {
             method: "POST",
@@ -137,17 +129,6 @@ export default function ContactPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className={formWrapper()}>
 
-=======
-        console.log("Formulaire de contact envoyé:", data);
-        await new Promise((r) => setTimeout(r, 1000));
-        setShowConfirmation(true);
-    };
-
-    return (
-        <>
-        <form onSubmit={handleSubmit(onSubmit)} className={formWrapper()}>
-            <CustomTitle level={1} className="text-3xl font-bold text-center">Contact</CustomTitle>
->>>>>>> 019ef93079ef8be55af18db75891274f35ec92c9
             <p className="text-center">Une question ? Une demande personnalisée ? Ce formulaire est là pour ça.</p>
 
             <InputField label="Nom complet" {...register("name", { required: "Nom requis" })} error={errors.name?.message}/>
@@ -164,11 +145,7 @@ export default function ContactPage() {
                 <label className="block mb-2 font-semibold">Objet de votre demande</label>
                 <select
                     {...register("reason", { required: "Veuillez choisir un objet" })}
-<<<<<<< HEAD
                     className="w-full p-1 border border-gray-300 rounded"
-=======
-                    className="w-full p-3 border border-gray-300 rounded"
->>>>>>> 019ef93079ef8be55af18db75891274f35ec92c9
                 >
                     <option value="">-- Sélectionner --</option>
                     <option value="sav">Service après-vente</option>
@@ -183,11 +160,7 @@ export default function ContactPage() {
                 <label className="block mb-2 font-semibold">Message</label>
                 <textarea
                     {...register("message", { required: "Message requis" })}
-<<<<<<< HEAD
                     className="w-full p-2 border border-gray-300 rounded min-h-[150px]"
-=======
-                    className="w-full p-3 border border-gray-300 rounded min-h-[150px]"
->>>>>>> 019ef93079ef8be55af18db75891274f35ec92c9
                 />
                 {errors.message && <p className="text-red-500 mt-1">{errors.message.message}</p>}
             </div>

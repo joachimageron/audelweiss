@@ -204,7 +204,6 @@ export default function ShoppingCart() {
 
   return (
     <div className={mainWrapper()}>
-      <button onClick={() => onOrderSubmit(cartItems)}>Créer la commande</button>
       <section>
         <CustomTitle level={2} className={sectionTitle()}>
           Contenu du panier

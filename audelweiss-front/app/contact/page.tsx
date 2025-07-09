@@ -40,6 +40,39 @@ type ContactFormValues = {
     message: string;
 };
 
+function getSubjectFromReason(reason) {
+    switch (reason) {
+      case "sav":
+        return "Nouvelle demande SAV via le site";
+      case "personnalisation":
+        return "Nouvelle demande de personnalisation";
+      case "partenariat":
+        return "Proposition de partenariat";
+      default:
+        return "Demande de contact";
+    }
+  }
+  
+  function getTextBody(data) {
+    return (
+      `Nom: ${data.name}\n` +
+      `Email: ${data.email}\n` +
+      `Objet: ${getSubjectFromReason(data.reason)}\n` +
+      `Message:\n${data.message}`
+    );
+  }
+  
+  function getHtmlBody(data) {
+    return `
+      <h3>Demande de contact reçue</h3>
+      <p><strong>Nom :</strong> ${data.name}</p>
+      <p><strong>Email :</strong> ${data.email}</p>
+      <p><strong>Objet :</strong> ${getSubjectFromReason(data.reason)}</p>
+      <p><strong>Message :</strong><br/>${data.message.replace(/\n/g, "<br/>")}</p>
+    `;
+  }
+  
+
 export default function ContactPage() {
     const router = useRouter();
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -51,10 +84,24 @@ export default function ContactPage() {
     } = useForm<ContactFormValues>();
 
     const onSubmit = async (data: ContactFormValues) => {
-        console.log("Formulaire de contact envoyé:", data);
-        await new Promise((r) => setTimeout(r, 1000));
-        setShowConfirmation(true);
-    };
+        try {
+          const response = await fetch("http://localhost:1337/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              to: "contact.audelweiss@gmail.com", // Adresse cible
+              email: data.email, // Adresse de l’expéditeur (utilisateur)
+              subject: getSubjectFromReason(data.reason), // On fait une petite fonction qui adapte le sujet
+              text: getTextBody(data),                  // Idem pour le body en texte brut
+              html: getHtmlBody(data),                  // ...et pour le body HTML
+            }),
+          });
+          if (!response.ok) throw new Error("Erreur lors de l’envoi du mail");
+          setShowConfirmation(true);
+        } catch (e) {
+          alert("Erreur lors de l’envoi du message");
+        }
+      };
 
     return (
         <>

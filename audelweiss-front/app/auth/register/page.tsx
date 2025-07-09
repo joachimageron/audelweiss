@@ -40,6 +40,23 @@ const styles = tv({
 
 const { formWrapper, formErrorMessage, formBottomlinks, bottomLink, modalBase, modalContentArea, modalHeading, modalParagraph, modalCloseButton } = styles();
 
+function getRegisterText(username) {
+  return `Bonjour ${username},\n\nBienvenue sur Audelweiss ! Votre inscription a bien été prise en compte.\n\nVous pouvez dès maintenant vous connecter et profiter de nos services.`;
+}
+
+function getRegisterHtml(username) {
+  return `
+    <h3>Bienvenue sur <span style="color:#67c1b7;">Audelweiss</span> !</h3>
+    <p>Bonjour <strong>${username}</strong>,</p>
+    <p>Votre inscription a bien été prise en compte !</p>
+    <p>Vous pouvez dès maintenant vous connecter à votre espace et découvrir toutes nos créations en crochet personnalisées ou uniques, 
+    nos gravures et nos flocages. <br>
+    Nous sommes ravis de vous compter parmi nos membres. N’hésitez pas à parcourir notre boutique et à nous contacter pour 
+    toute demande de personnalisation.</p>
+    <p>À très vite sur Audelweiss !</p>
+  `;
+}
+
 
 export default function RegisterPage() {
   const { register: registerUser, error } = useUser();
@@ -55,16 +72,30 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterCredentials & { confirmPassword: string }) => {
     if (data.password !== data.confirmPassword) return;
-
+  
     try {
       await registerUser({
         username: data.username,
         email: data.email,
         password: data.password,
       });
+  
+      await fetch("http://localhost:1337/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: data.email,
+          email: "noreply@audelweiss.fr", 
+          subject: "Bienvenue sur Audelweiss ! 🎉",
+          text: getRegisterText(data.username),
+          html: getRegisterHtml(data.username),
+        }),
+      });
+  
       setShowConfirmation(true);
     } catch (err) { }
   };
+  
 
   return (
     <>

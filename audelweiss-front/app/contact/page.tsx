@@ -8,6 +8,9 @@ import InputField from "@/src/components/atoms/CustomInputField";
 import Button from "@/src/components/atoms/Button";
 import CustomTitle from "@/src/components/atoms/CustomTitle";
 import { tv } from "tailwind-variants";
+import Hero from "@/src/components/modules/Hero";
+import { usePage } from "@/src/hooks/usePage";
+import Breadcrumb from "@/src/components/baseElements/Breadcrumb"
 
 const styles = tv({
     slots: {
@@ -38,6 +41,10 @@ type ContactFormValues = {
     email: string;
     reason: string;
     message: string;
+};
+
+type Props = {
+  params?: string[];
 };
 
 function getSubjectFromReason(reason) {
@@ -73,9 +80,21 @@ function getSubjectFromReason(reason) {
   }
   
 
-export default function ContactPage() {
+  export default function ContactPage({ params }: Props) {
     const router = useRouter();
     const [showConfirmation, setShowConfirmation] = useState(false);
+
+    const { data, isLoading, isError } = usePage({ filters: { slug: "contact"}, queryKey: ["page"] });
+
+    const segments = Array.isArray(params) ? params : [];
+    const breadcrumbItems = [
+      { label: "Accueil", href: "/" },
+      ...segments.slice(0, -1).map((segment, index) => ({
+        label: segment.charAt(0).toUpperCase() + segment.slice(1),
+        href: "/" + segments.slice(0, index + 1).join("/"),
+      })),
+      { label: data?.title || "Contact" },
+    ];
 
     const {
         register,
@@ -105,8 +124,11 @@ export default function ContactPage() {
 
     return (
         <>
+        <Hero title={data.title} imageUrl={process.env.NEXT_PUBLIC_API_URL + data.illustrationImage.url} />
+        <Breadcrumb items={breadcrumbItems} />
+
         <form onSubmit={handleSubmit(onSubmit)} className={formWrapper()}>
-            <CustomTitle level={1} className="text-3xl font-bold text-center">Contact</CustomTitle>
+
             <p className="text-center">Une question ? Une demande personnalisée ? Ce formulaire est là pour ça.</p>
 
             <InputField label="Nom complet" {...register("name", { required: "Nom requis" })} error={errors.name?.message}/>

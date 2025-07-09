@@ -5,7 +5,8 @@ import { ordersQuery } from "../gql/order.gql";
 
 type Params = {
   filters?: {
-    id: string;
+    id?: string;
+    userId?: string;
   };
   queryKey: string[];
 };
@@ -13,11 +14,19 @@ type Params = {
 const mapFilters = (filters: Params["filters"]) => {
   if (!filters) return undefined;
 
-  return {
-    filters: {
-      documentId: { eq: filters.id },
-    },
-  };
+  const mappedFilters: any = {};
+
+  if (filters.id) {
+    mappedFilters.documentId = { eq: filters.id };
+  }
+
+  if (filters.userId) {
+    mappedFilters.user = {
+      documentId: { eq: filters.userId },
+    };
+  }
+
+  return Object.keys(mappedFilters).length > 0 ? { filters: mappedFilters } : undefined;
 };
 
 export const useOrders = ({ filters, queryKey }: Params) => {

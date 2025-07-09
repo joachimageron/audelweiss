@@ -117,20 +117,22 @@ export default function SingleCreation({ documentId }: Props) {
                 )}
 
 
-                <CustomTitle level={2} className={galleryTitle()}>Galerie de photos de la création</CustomTitle>
                 {creation.creationGallery?.length > 0 && (
-                    <div className={galleryWrapper()}>
-                        {creation.creationGallery.map((img: any, index: number) => (
-                            <Image
-                                key={index}
-                                src={`${process.env.NEXT_PUBLIC_API_URL}${img.url}`}
-                                alt={img.alternativeText ?? creation.creationName}
-                                width={300}
-                                height={300}
-                                className={thumbnailImage()}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <CustomTitle level={2} className={galleryTitle()}>Galerie de photos de la création</CustomTitle>
+                        <div className={galleryWrapper()}>
+                            {creation.creationGallery.map((img: any, index: number) => (
+                                <Image
+                                    key={index}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}${img.url}`}
+                                    alt={img.alternativeText ?? creation.creationName}
+                                    width={300}
+                                    height={300}
+                                    className={thumbnailImage()}
+                                />
+                            ))}
+                        </div>
+                    </>
                 )}
 
 

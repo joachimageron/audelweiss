@@ -8,14 +8,15 @@ export function useAddToCart() {
     (item: CartItem) => {
       setCartItems((prevCart = []) => {
         const existing = prevCart.find(i => i.id === item.id);
+
         if (existing) {
           // update quantity (considering max stock)
           return prevCart.map(i =>
             i.id === item.id
               ? {
-                  ...i,
-                  quantity: Math.min(i.quantity + item.quantity, i.stock),
-                }
+                ...i,
+                quantity: i.stock ? Math.min(i.quantity + item.quantity, i.stock) : i.quantity + item.quantity,
+              }
               : i,
           );
         }

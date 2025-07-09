@@ -9,7 +9,7 @@ const styles = tv({
         listOrderedStyle: "list-disc list-inside mb-[2.5rem]",
         listUnorderedStyle: "list-decimal list-inside mb-[2.5rem]",
         listItemStyle: "mb-[1rem]",
-        linkStyle: "text-secondary hover:underline",
+        linkStyle: "text-primary as--underline-hover",
         codeStyle: "bg-gray-100 rounded",
         heading1Style: "mb-[2.2rem] text-[5rem] font-dm-sans text-primary",
         heading2Style: "mb-[1.5rem] text-[3rem] font-dm-sans text-primary",

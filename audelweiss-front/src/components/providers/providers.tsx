@@ -24,7 +24,9 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
       <ReactQueryProvider>
         <StorageProvider storage={storage}>
           <CartProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+                {children}
+            </AuthProvider>
           </CartProvider>
         </StorageProvider>
       </ReactQueryProvider>

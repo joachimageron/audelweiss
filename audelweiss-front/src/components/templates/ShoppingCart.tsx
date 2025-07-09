@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Trash2 } from "lucide-react";
 
 import { useCart } from "@/src/components/providers/CartProvider";
@@ -10,7 +10,9 @@ import CustomTitle from "@/src/components/atoms/CustomTitle";
 import Button from "@/src/components/atoms/Button";
 import CustomLink from "@/src/components/atoms/CustomLink";
 import Image from "../atoms/Image";
-import { useOrders } from "@/src/hooks/useOrders";
+import { useCreateOrder } from "@/src/hooks/useCreateOrder";
+import { useCreateOrderItem } from "@/src/hooks/useCreateOrderItem";
+import { useUser } from "@/src/hooks/useUser";
 
 export const styles = tv({
   slots: {
@@ -82,24 +84,41 @@ export const {
   paymentButtonArea,
 } = styles();
 
+// Types pour les variants
+type VariantValue = {
+  label: string;
+  id: string;
+};
+
+type VariantSelection = {
+  variant: {
+    id: string;
+    name: string;
+  };
+  option: VariantValue;
+};
+
 export default function ShoppingCart() {
   const { cartItems, setCartItems, total } = useCart();
   const [promo, setPromo] = useState("");
   const [productToDelete, setProductToDelete] = useState<number | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [quantityErrors, setQuantityErrors] = useState<Record<number, string>>({});
+  const { user } = useUser();
 
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleQuantityChange = (id: number, value: number) => {
     setCartItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, quantity: Math.min(item.stock, Math.max(1, value)) } : item)),
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: item.stock ? Math.min(value, item.stock) : value } : item,
+      ),
     );
 
     const item = cartItems.find(i => i.id === id);
-    if (item && value > item.stock) {
+    if (item && item.stock && value > item.stock) {
       setQuantityErrors(prev => ({ ...prev, [id]: `Il en reste seulement ${item.stock} en stock` }));
-    } else {
+    } else if (item && item.stock) {
       setQuantityErrors(prev => {
         const { [id]: _, ...rest } = prev;
         return rest;
@@ -107,9 +126,81 @@ export default function ShoppingCart() {
     }
   };
 
-  const { data: orders } = useOrders({ queryKey: ["orders"], filters: { id: "g49z2ehk09t7gtvq0l6hmp00" } });
+  // Fonction pour convertir les variants du panier en format backend
+  const convertVariantsToBackendFormat = (variants: Record<string, VariantSelection | undefined>) => {
+    const variantOptions: string[] = [];
 
-  console.log("orders : ", orders);
+    Object.values(variants).forEach(selection => {
+      if (selection) {
+        // Ajouter l'ID de l'option sélectionnée
+        variantOptions.push(selection.option.id);
+      }
+    });
+
+    return variantOptions;
+  };
+
+  const createOrderItems = async (items: typeof cartItems) => {
+    const ids = [];
+    for (const item of items) {
+      // Convertir les variants en format attendu par le backend
+      const variantOptions = convertVariantsToBackendFormat(item.variants || {});
+
+      const orderItem = {
+        quantity: item.quantity,
+        item: {
+          __typename: "ComponentOrderItemProductReference",
+          __component: "order.item-product-reference",
+          product: item.id,
+          product_variant_option: variantOptions,
+          // product_variant_option: variantOptions,
+        },
+      };
+
+      console.log("Creating order item:", orderItem);
+      const res = await createOrderItemMutation(orderItem);
+      console.log("res : ", res);
+      ids.push(res.item[0].id - 1);
+    }
+    return ids;
+  };
+
+  const { mutateAsync: createOrderItemMutation } = useCreateOrderItem();
+  const { mutateAsync: createOrderMutation } = useCreateOrder();
+
+  const onOrderSubmit = async (items: typeof cartItems) => {
+    try {
+      console.log("Submitting order with items:", items);
+      const itemsIds = await createOrderItems(items);
+
+      if (itemsIds) {
+        const orderId = await createOrderMutation({
+          user: user?.documentId,
+          order_items: itemsIds.map(id => Number(id)),
+        });
+        console.log("Order created with ID:", orderId);
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
+
+  // Fonction pour afficher les variants dans le panier
+  const renderVariantInfo = (variants: Record<string, VariantSelection | undefined>) => {
+    const variantList: JSX.Element[] = [];
+
+    Object.values(variants).forEach((selection, index) => {
+      if (selection) {
+        variantList.push(
+          <li key={index}>
+            {selection.variant.name} : {selection.option.label}
+          </li>,
+        );
+      }
+    });
+
+    return variantList;
+  };
 
   return (
     <div className={mainWrapper()}>
@@ -139,30 +230,17 @@ export default function ShoppingCart() {
                 </thead>
                 <tbody>
                   {cartItems.map(item => (
-                    <tr key={item.id} className={cartTableRow()}>
+                    <tr key={item.name} className={cartTableRow()}>
                       <td className={cartTableCell()}>
                         <div className={cartProductInfos()}>
                           <div className={cartProductImage()}>
                             <Image src={item.image} alt={item.name} width={80} height={80} />
                           </div>
                           <div>
-                            {/* <CustomLink className={cartProductLink()} href={item.slug}>
-                              {item.name}
-                            </CustomLink> */}
-                            {item.details && (
-                              <ul className={cartProductCaracteristicsList()}>
-                                {item.details.color && <li>Couleur : {item.details.color}</li>}
-                                {item.details.size && <li>Taille : {item.details.size}</li>}
-                                {item.details.motif && <li>Motif : {item.details.motif}</li>}
-                                {item.details.pompon && <li>Avec pompon : {item.details.pompon}</li>}
-                                {Array.isArray(item.details.options) && item.details.options.length > 0 && (
-                                  <li>Options : {item.details.options.join(", ")}</li>
-                                )}
-                                {item.details.giftWrap && <li>Emballage : {item.details.giftWrap}</li>}
-                                {item.details.personalization && (
-                                  <li>Message personnalisé : {item.details.personalization}</li>
-                                )}
-                              </ul>
+                            <h3>{item.name}</h3>
+                            {/* Affichage des variants */}
+                            {item.variants && Object.keys(item.variants).length > 0 && (
+                              <ul className={cartProductCaracteristicsList()}>{renderVariantInfo(item.variants)}</ul>
                             )}
                           </div>
                         </div>
@@ -245,11 +323,13 @@ export default function ShoppingCart() {
         </div>
       )}
 
-      <div className={paymentButtonArea()}>
-        <CustomLink href="/commande" isButtonLink withIcon>
-          Valider la commande
-        </CustomLink>
-      </div>
+      {cartItems.length > 0 && (
+        <div className={paymentButtonArea()}>
+          <CustomLink href="/commande" isButtonLink withIcon>
+            Valider la commande
+          </CustomLink>
+        </div>
+      )}
     </div>
   );
 }

@@ -11,12 +11,17 @@ export const ordersQuery = gql`
             id
             product {
               documentId
+              name
+              photos {
+                documentId
+                url
+              }
             }
             product_variant_options {
               documentId
               label
               price
-              variant {
+              variants {
                 documentId
                 name
               }

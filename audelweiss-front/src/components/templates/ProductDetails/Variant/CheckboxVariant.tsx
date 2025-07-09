@@ -25,7 +25,7 @@ const CheckboxVariant = ({ variant, onChange }: Props) => {
           <label className={label()}>
             <input
               type="checkbox"
-              value={option?.label}
+              value={option?.documentId}
               onChange={e => {
                 onChange?.(e.target.value);
               }}

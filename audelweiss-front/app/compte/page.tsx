@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useUser } from "@/src/hooks/useUser";
 
 import CustomTitle from "@/src/components/atoms/CustomTitle";
@@ -22,6 +23,7 @@ const styles = tv({
     buttonsRow: "flex justify-end gap-[2rem] mt-[2rem]",
     saveButton: "bg-primary hover:bg-dark-primary",
     logoutButton: "bg-gray-200 hover:bg-gray-300 text-dark-primary",
+    historyLink: "text-primary hover:text-dark-primary underline",
   },
 });
 
@@ -36,6 +38,7 @@ const {
   buttonsRow,
   saveButton,
   logoutButton,
+  historyLink,
 } = styles();
 
 export default function ComptePage() {
@@ -104,15 +107,20 @@ export default function ComptePage() {
         <CustomTitle level={1} className={pageTitle()}>
           Mon compte
         </CustomTitle>
-        <Button
-          className={logoutButton()}
-          onClick={() => {
-            logout();
-            router.push("/auth/login");
-          }}
-        >
-          Se déconnecter
-        </Button>
+        <div className="flex items-center gap-[2rem]">
+          <Link href="/compte/historique" className={historyLink()}>
+            Historique des commandes
+          </Link>
+          <Button
+            className={logoutButton()}
+            onClick={() => {
+              logout();
+              router.push("/auth/login");
+            }}
+          >
+            Se déconnecter
+          </Button>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit}>

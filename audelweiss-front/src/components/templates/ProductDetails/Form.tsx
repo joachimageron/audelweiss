@@ -33,7 +33,6 @@ const Form = ({ product, className }: Props) => {
   const stock = product.stock ??
     product.variants?.reduce((acc, variant) => acc + (variant?.stock ?? 0), 0) ?? 0;
 
-  // Callback pour mettre à jour la valeur d'une variante
   const onVariantChange = (name: string, value: string) => {
     setVariantValues(prev => ({
       ...prev,
@@ -48,7 +47,7 @@ const Form = ({ product, className }: Props) => {
     // if (!validateForm()) return;
 
     const item: CartItem = {
-      id: product.documentId,
+      id: product.id,
       name: product.name,
       image: product.photos[0]?.url,
       variants: variantValues,

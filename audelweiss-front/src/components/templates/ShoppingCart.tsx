@@ -12,6 +12,7 @@ import CustomLink from "@/src/components/atoms/CustomLink";
 import Image from "../atoms/Image";
 import { useCreateOrder } from "@/src/hooks/useCreateOrder";
 import { useCreateOrderItem } from "@/src/hooks/useCreateOrderItem";
+import { useUser } from "@/src/hooks/useUser";
 
 export const styles = tv({
   slots: {
@@ -103,6 +104,7 @@ export default function ShoppingCart() {
   const [productToDelete, setProductToDelete] = useState<number | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [quantityErrors, setQuantityErrors] = useState<Record<number, string>>({});
+  const { user } = useUser();
 
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -171,7 +173,7 @@ export default function ShoppingCart() {
 
       if (itemsIds) {
         const orderId = await createOrderMutation({
-          user: 1,
+          user: user?.documentId,
           order_items: itemsIds.map(id => Number(id)),
         });
         console.log("Order created with ID:", orderId);

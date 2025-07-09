@@ -79,8 +79,10 @@ export default function RegisterPage() {
         email: data.email,
         password: data.password,
       });
+
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
   
-      await fetch("http://localhost:1337/api/contact", {
+      await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

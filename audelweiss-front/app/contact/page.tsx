@@ -85,15 +85,16 @@ export default function ContactPage() {
 
     const onSubmit = async (data: ContactFormValues) => {
         try {
-          const response = await fetch("http://localhost:1337/api/contact", {
+          const API_URL = process.env.NEXT_PUBLIC_API_URL;
+          const response = await fetch(`${API_URL}/api/contact`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              to: "contact.audelweiss@gmail.com", // Adresse cible
-              email: data.email, // Adresse de l’expéditeur (utilisateur)
-              subject: getSubjectFromReason(data.reason), // On fait une petite fonction qui adapte le sujet
-              text: getTextBody(data),                  // Idem pour le body en texte brut
-              html: getHtmlBody(data),                  // ...et pour le body HTML
+              to: "contact.audelweiss@gmail.com",
+              email: data.email, 
+              subject: getSubjectFromReason(data.reason), 
+              text: getTextBody(data),                  
+              html: getHtmlBody(data),                 
             }),
           });
           if (!response.ok) throw new Error("Erreur lors de l’envoi du mail");

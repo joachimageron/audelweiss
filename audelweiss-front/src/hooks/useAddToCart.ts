@@ -7,11 +7,15 @@ export function useAddToCart() {
   const addToCart = useCallback(
     (item: CartItem) => {
       setCartItems((prevCart = []) => {
-        const existing = prevCart.find(i => i.id === item.id);
+        console.log("previous cart : ", prevCart);
+        const existing = prevCart.find(i => i.id === item.documentId);
+
+        console.log("existing : ", existing);
+
         if (existing) {
           // update quantity (considering max stock)
           return prevCart.map(i =>
-            i.id === item.id
+            i.id === item.documentId
               ? {
                   ...i,
                   quantity: Math.min(i.quantity + item.quantity, i.stock),

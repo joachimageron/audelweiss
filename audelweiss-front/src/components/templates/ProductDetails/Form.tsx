@@ -64,7 +64,7 @@ const Form = ({ product, className }: Props) => {
     // if (!validateForm()) return;
 
     const item: CartItem = {
-      id: product.id,
+      id: product.documentId,
       name: product.name,
       image: product.photos[0]?.url,
       variants: variantValues,

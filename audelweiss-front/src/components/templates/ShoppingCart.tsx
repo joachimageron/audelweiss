@@ -227,7 +227,7 @@ export default function ShoppingCart() {
                 </thead>
                 <tbody>
                   {cartItems.map(item => (
-                    <tr key={item.id} className={cartTableRow()}>
+                    <tr key={item.name} className={cartTableRow()}>
                       <td className={cartTableCell()}>
                         <div className={cartProductInfos()}>
                           <div className={cartProductImage()}>

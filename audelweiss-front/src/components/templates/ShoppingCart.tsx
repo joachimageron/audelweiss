@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Trash2 } from "lucide-react";
 
 import { useCart } from "@/src/components/providers/CartProvider";
@@ -11,6 +11,8 @@ import Button from "@/src/components/atoms/Button";
 import CustomLink from "@/src/components/atoms/CustomLink";
 import Image from "../atoms/Image";
 import { useOrders } from "@/src/hooks/useOrders";
+import { useCreateOrder } from "@/src/hooks/useCreateOrder";
+import { useCreateOrderItem } from "@/src/hooks/useCreateOrderItem";
 
 export const styles = tv({
   slots: {
@@ -107,12 +109,49 @@ export default function ShoppingCart() {
     }
   };
 
-  const { data: orders } = useOrders({ queryKey: ["orders"], filters: { id: "g49z2ehk09t7gtvq0l6hmp00" } });
+  // const { data: orders } = useOrders({ queryKey: ["orders"], filters: { id: "g49z2ehk09t7gtvq0l6hmp00" } });
 
-  console.log("orders : ", orders);
+  const createOrderItems = async (items: unknown[]) => {
+    const ids = [];
+    for (const item of items) {
+      const res = await createOrderItemMutation(item);
+      console.log("res : ", res);
+      ids.push(res.item[0].id - 1);
+    }
+    return ids;
+  };
+
+  const { mutateAsync: createOrderItemMutation } = useCreateOrderItem();
+  const { mutateAsync: createOrderMutation } = useCreateOrder();
+
+  const items = [
+    {
+      quantity: 10,
+      item: {
+        __typename: "ComponentOrderItemProductReference",
+        __component: "order.item-product-reference",
+        product: 1,
+        // product_variant_options: [12],
+        product_variant_option: ["wyu0xmpjn7s1hnmns1e288kb"],
+      },
+    },
+  ];
+
+  const onOrderSubmit = async (items: unknown[]) => {
+    const itemsIds = await createOrderItems(items);
+
+    if (itemsIds) {
+      const orderId = await createOrderMutation({
+        user: 1,
+        order_items: itemsIds.map(id => Number(id)),
+      });
+      console.log(" order id : ", orderId);
+    }
+  };
 
   return (
     <div className={mainWrapper()}>
+      <button onClick={() => onOrderSubmit(cartItems)}>coucou</button>
       <section>
         <CustomTitle level={2} className={sectionTitle()}>
           Contenu du panier

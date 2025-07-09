@@ -16,7 +16,7 @@ export const ordersQuery = gql`
               documentId
               label
               price
-              variant {
+              variants {
                 documentId
                 name
               }

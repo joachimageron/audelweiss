@@ -110,7 +110,9 @@ export default function ShoppingCart() {
 
   const handleQuantityChange = (id: number, value: number) => {
     setCartItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, quantity: Math.min(item.stock, Math.max(1, value)) } : item)),
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: item.stock ? Math.min(value, item.stock) : value } : item,
+      ),
     );
 
     const item = cartItems.find(i => i.id === id);

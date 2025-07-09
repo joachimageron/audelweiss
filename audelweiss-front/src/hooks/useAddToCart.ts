@@ -14,9 +14,9 @@ export function useAddToCart() {
           return prevCart.map(i =>
             i.id === item.id
               ? {
-                  ...i,
-                  quantity: i.stock ? Math.min(i.quantity + item.quantity, i.stock) : i.quantity + item.quantity,
-                }
+                ...i,
+                quantity: i.stock ? Math.min(i.quantity + item.quantity, i.stock) : i.quantity + item.quantity,
+              }
               : i,
           );
         }

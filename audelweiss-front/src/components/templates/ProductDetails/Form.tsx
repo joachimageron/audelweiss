@@ -13,7 +13,7 @@ const styles = tv({
     stockLeft: "text-[1.5rem] text-secondary font-semibold",
     chosenQuantity: "flex items-center gap-[1.5rem]",
     quantityInput:
-      "w-[6rem] border border-gray-300 rounded-[.4rem] px-[.6rem] py-[.4rem] text-center text-[1.5rem] text-dark-primary",
+      "w-[6rem] h-[3.5rem] border border-gray-300 rounded-[.4rem] px-[.6rem] py-[.4rem] text-center text-[1.5rem] text-dark-primary",
   },
 });
 
@@ -128,7 +128,7 @@ const Form = ({ product, className }: Props) => {
             <p className="text-[1.6rem] mb-[2rem]">Le produit a bien été ajouté au panier !</p>
             <div className="flex justify-center gap-[2rem]">
               <Button onClick={() => setShowConfirmation(false)}>Continuer mes achats</Button>
-              <CustomLink href="/panier" isButtonLink className="bg-gray-200 hover:bg-gray-300">
+              <CustomLink href="/panier" isButtonLink>
                 Voir mon panier
               </CustomLink>
             </div>

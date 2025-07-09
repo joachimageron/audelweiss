@@ -58,16 +58,6 @@ const {
   orderStatusPublished,
   orderStatusDraft,
   orderItems,
-  orderItem,
-  itemImage,
-  itemDetails,
-  itemName,
-  itemVariants,
-  itemQuantityPrice,
-  itemQuantity,
-  itemPrice,
-  orderTotal,
-  orderTotalAmount,
   loadingMessage,
   errorMessage,
 } = styles();
@@ -81,8 +71,8 @@ export default function HistoriquePage() {
     isLoading,
     error,
   } = useOrders({
-    filters: user?.documentId ? { user: user.documentId } : undefined,
-    queryKey: ["orders", user?.documentId || ""],
+    filters: user?.documentId ? { userId: user.documentId } : undefined,
+    queryKey: ["orders"],
   });
 
   useEffect(() => {

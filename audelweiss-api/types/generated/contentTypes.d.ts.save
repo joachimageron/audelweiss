@@ -718,7 +718,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-<<<<<<< HEAD
     type: Schema.Attribute.Enumeration<
       [
         'home',
@@ -731,9 +730,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'contact',
       ]
     > &
-=======
-    type: Schema.Attribute.Enumeration<['home', 'edito', 'shop', 'account']> &
->>>>>>> 7b1a7cc03c712237c3d8a46efc46165352cfc9e9
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

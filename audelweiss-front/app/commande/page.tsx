@@ -117,7 +117,7 @@ export default function CommandePage() {
   
         if (itemsIds) {
           const orderId = await createOrderMutation({
-            user: 1,
+            user: user?.documentId,
             order_items: itemsIds.map(id => Number(id)),
           });
           console.log("Order created with ID:", orderId);

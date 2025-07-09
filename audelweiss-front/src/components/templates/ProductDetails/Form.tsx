@@ -18,31 +18,48 @@ const styles = tv({
 
 const { base, stockLeft, chosenQuantity, quantityInput } = styles();
 
+type VariantValue = {
+  label: string;
+  id: string;
+};
+
+type VariantSelection = {
+  variant: {
+    id: string;
+    name: string;
+  };
+  option: VariantValue;
+};
+
 type Props = {
   product: Product;
   className?: string;
 };
 
 const Form = ({ product, className }: Props) => {
-  const [variantValues, setVariantValues] = useState<Record<string, unknown>>({});
+  const [variantValues, setVariantValues] = useState<Record<string, VariantSelection | undefined>>({});
   const [quantity, setQuantity] = useState(0);
   const addToCart = useAddToCart();
 
   console.log(product);
 
-  const stock = product.stock ??
-    product.variants?.reduce((acc, variant) => acc + (variant?.stock ?? 0), 0) ?? 0;
+  const stock = product.stock ?? product.variants?.reduce((acc, variant) => acc + (variant?.stock ?? 0), 0) ?? 0;
 
-  const onVariantChange = (name: string, value: string) => {
+  const onVariantChange = (variantName: string, variantId: string, optionValue: VariantValue) => {
     setVariantValues(prev => ({
       ...prev,
-      [name]: value,
+      [variantName]: {
+        variant: {
+          id: variantId,
+          name: variantName,
+        },
+        option: optionValue,
+      },
     }));
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
 
     // if (!validateForm()) return;
 
@@ -66,7 +83,9 @@ const Form = ({ product, className }: Props) => {
         <Variant
           key={`variant-${variant?.documentId}`}
           variant={variant as ProductVariant}
-          onVariantChange={onVariantChange}
+          onVariantChange={(variantName, optionValue) =>
+            onVariantChange(variantName, variant?.documentId || "", optionValue)
+          }
           values={variantValues}
         />
       ))}

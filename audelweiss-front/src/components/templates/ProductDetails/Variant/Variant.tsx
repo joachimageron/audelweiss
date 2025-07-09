@@ -3,7 +3,6 @@ import { tv } from "tailwind-variants";
 import RadioVariant from "./RadioVariant";
 import InputVariant from "./InputVariant";
 import CheckboxVariant from "./CheckboxVariant";
-import { useEffect } from "react";
 
 const styles = tv({
   slots: {
@@ -15,38 +14,45 @@ const styles = tv({
 });
 const { title, helper, errorMessage } = styles();
 
+type VariantValue = {
+  label: string;
+  id: string;
+};
+
+type VariantSelection = {
+  variant: {
+    id: string;
+    name: string;
+  };
+  option: VariantValue;
+};
+
 type Props = {
   variant: ProductVariant;
-  onVariantChange: (name: string, value: string) => void;
-  values: Record<string, unknown>;
+  onVariantChange: (variantName: string, optionValue: VariantValue) => void;
+  values: Record<string, VariantSelection | undefined>;
 };
 
 const Variant = ({ variant, onVariantChange, values }: Props) => {
   const error = false;
-
-  useEffect(() => {
-    console.log("Nombre d'options :", variant.variant_options.length);
-  }, []);
+  const currentSelection = values[variant.name];
+  const currentValue = currentSelection?.option;
 
   return (
     <div className={variant.format === "input" ? "w-full" : undefined}>
       {error && <span className={errorMessage()}>Message d&apos;erreur</span>}
       <p className={title()}>
         {variant.name}
-        {variant.format === "radio" && values[variant.name] && (
+        {variant.format === "radio" && currentValue?.label && (
           <>
-            : <span className="text-primary">{values[variant.name]}</span>
+            : <span className="text-primary">{currentValue.label}</span>
           </>
         )}
       </p>
       {variant.helper_text && <p className={helper()}>{variant.helper_text}</p>}
 
       {variant.format === "radio" && (
-        <RadioVariant
-          variant={variant}
-          onChange={value => onVariantChange(variant.name, value)}
-          value={values[variant.name] ? values[variant.name] : undefined}
-        />
+        <RadioVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} value={currentValue} />
       )}
       {variant.format === "input" && (
         <InputVariant variant={variant} onChange={value => onVariantChange(variant.name, value)} />

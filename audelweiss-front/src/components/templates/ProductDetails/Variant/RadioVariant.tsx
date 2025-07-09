@@ -33,39 +33,61 @@ const radio = tv({
 });
 const { base, item, input, tooltip } = radio();
 
+type VariantValue = {
+  label: string;
+  id: string;
+};
+
 type Props = {
   variant: ProductVariant;
-  onChange?: (value: string) => void;
-  value?: unknown;
+  onChange?: (value: VariantValue) => void;
+  value?: VariantValue;
 };
 
 const RadioVariant = ({ variant, onChange, value }: Props) => {
   return (
     <ul className={base()}>
-      {variant.variant_options.map(option => (
-        <li
-          key={`variant-option-${option?.documentId}`}
-          className={item({ selected: value === option?.label, image: Boolean(option?.image) })}
-        >
-          <label className={`block cursor-pointer ${option?.image ? '' : 'px-[1.6rem] py-[.8rem]'}`}>
-            <input
-              type="radio"
-              name={variant.name}
-              value={option?.label}
-              onChange={e => {
-                onChange?.(e.target.value);
-              }}
-              className={input({ image: Boolean(option?.image) })}
-            />
-            {option?.image ? (
-              <Image src={option.image.url} alt={option.image.alternativeText || option.label} width={40} height={40} />
-            ) : (
-              <>{option?.label}</>
-            )}
-            {option?.image && <div className={tooltip()}>{option.label}</div>}
-          </label>
-        </li>
-      ))}
+      {variant.variant_options.map(option => {
+        // Créer l'objet valeur
+        const optionValue: VariantValue = {
+          label: option?.label || "",
+          id: option?.documentId || "",
+        };
+
+        // Comparer les objets par leurs propriétés
+        const isSelected = value?.label === optionValue.label && value?.id === optionValue.id;
+
+        return (
+          <li
+            key={`variant-option-${option?.documentId}`}
+            className={item({ selected: isSelected, image: Boolean(option?.image) })}
+          >
+            <label className={`block cursor-pointer ${option?.image ? "" : "px-[1.6rem] py-[.8rem]"}`}>
+              <input
+                type="radio"
+                name={variant.name}
+                value={JSON.stringify(optionValue)} // Pour l'attribut HTML
+                checked={isSelected}
+                onChange={() => {
+                  onChange?.(optionValue);
+                }}
+                className={input({ image: Boolean(option?.image) })}
+              />
+              {option?.image ? (
+                <Image
+                  src={option.image.url}
+                  alt={option.image.alternativeText || option.label}
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <>{option?.label}</>
+              )}
+              {option?.image && <div className={tooltip()}>{option.label}</div>}
+            </label>
+          </li>
+        );
+      })}
     </ul>
   );
 };

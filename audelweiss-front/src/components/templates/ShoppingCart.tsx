@@ -10,7 +10,6 @@ import CustomTitle from "@/src/components/atoms/CustomTitle";
 import Button from "@/src/components/atoms/Button";
 import CustomLink from "@/src/components/atoms/CustomLink";
 import Image from "../atoms/Image";
-import { useOrders } from "@/src/hooks/useOrders";
 import { useCreateOrder } from "@/src/hooks/useCreateOrder";
 import { useCreateOrderItem } from "@/src/hooks/useCreateOrderItem";
 
@@ -84,6 +83,20 @@ export const {
   paymentButtonArea,
 } = styles();
 
+// Types pour les variants
+type VariantValue = {
+  label: string;
+  id: string;
+};
+
+type VariantSelection = {
+  variant: {
+    id: string;
+    name: string;
+  };
+  option: VariantValue;
+};
+
 export default function ShoppingCart() {
   const { cartItems, setCartItems, total } = useCart();
   const [promo, setPromo] = useState("");
@@ -109,12 +122,39 @@ export default function ShoppingCart() {
     }
   };
 
-  // const { data: orders } = useOrders({ queryKey: ["orders"], filters: { id: "g49z2ehk09t7gtvq0l6hmp00" } });
+  // Fonction pour convertir les variants du panier en format backend
+  const convertVariantsToBackendFormat = (variants: Record<string, VariantSelection | undefined>) => {
+    const variantOptions: string[] = [];
 
-  const createOrderItems = async (items: unknown[]) => {
+    Object.values(variants).forEach(selection => {
+      if (selection) {
+        // Ajouter l'ID de l'option sélectionnée
+        variantOptions.push(selection.option.id);
+      }
+    });
+
+    return variantOptions;
+  };
+
+  const createOrderItems = async (items: typeof cartItems) => {
     const ids = [];
     for (const item of items) {
-      const res = await createOrderItemMutation(item);
+      // Convertir les variants en format attendu par le backend
+      const variantOptions = convertVariantsToBackendFormat(item.variants || {});
+
+      const orderItem = {
+        quantity: item.quantity,
+        item: {
+          __typename: "ComponentOrderItemProductReference",
+          __component: "order.item-product-reference",
+          product: item.id,
+          product_variant_option: variantOptions,
+          // product_variant_option: variantOptions,
+        },
+      };
+
+      console.log("Creating order item:", orderItem);
+      const res = await createOrderItemMutation(orderItem);
       console.log("res : ", res);
       ids.push(res.item[0].id - 1);
     }
@@ -124,34 +164,43 @@ export default function ShoppingCart() {
   const { mutateAsync: createOrderItemMutation } = useCreateOrderItem();
   const { mutateAsync: createOrderMutation } = useCreateOrder();
 
-  const items = [
-    {
-      quantity: 10,
-      item: {
-        __typename: "ComponentOrderItemProductReference",
-        __component: "order.item-product-reference",
-        product: 1,
-        // product_variant_options: [12],
-        product_variant_option: ["wyu0xmpjn7s1hnmns1e288kb"],
-      },
-    },
-  ];
+  const onOrderSubmit = async (items: typeof cartItems) => {
+    try {
+      console.log("Submitting order with items:", items);
+      const itemsIds = await createOrderItems(items);
 
-  const onOrderSubmit = async (items: unknown[]) => {
-    const itemsIds = await createOrderItems(items);
-
-    if (itemsIds) {
-      const orderId = await createOrderMutation({
-        user: 1,
-        order_items: itemsIds.map(id => Number(id)),
-      });
-      console.log(" order id : ", orderId);
+      if (itemsIds) {
+        const orderId = await createOrderMutation({
+          user: 1,
+          order_items: itemsIds.map(id => Number(id)),
+        });
+        console.log("Order created with ID:", orderId);
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
     }
+  };
+
+  // Fonction pour afficher les variants dans le panier
+  const renderVariantInfo = (variants: Record<string, VariantSelection | undefined>) => {
+    const variantList: JSX.Element[] = [];
+
+    Object.values(variants).forEach((selection, index) => {
+      if (selection) {
+        variantList.push(
+          <li key={index}>
+            {selection.variant.name} : {selection.option.label}
+          </li>,
+        );
+      }
+    });
+
+    return variantList;
   };
 
   return (
     <div className={mainWrapper()}>
-      <button onClick={() => onOrderSubmit(cartItems)}>coucou</button>
+      <button onClick={() => onOrderSubmit(cartItems)}>Créer la commande</button>
       <section>
         <CustomTitle level={2} className={sectionTitle()}>
           Contenu du panier
@@ -185,23 +234,10 @@ export default function ShoppingCart() {
                             <Image src={item.image} alt={item.name} width={80} height={80} />
                           </div>
                           <div>
-                            {/* <CustomLink className={cartProductLink()} href={item.slug}>
-                              {item.name}
-                            </CustomLink> */}
-                            {item.details && (
-                              <ul className={cartProductCaracteristicsList()}>
-                                {item.details.color && <li>Couleur : {item.details.color}</li>}
-                                {item.details.size && <li>Taille : {item.details.size}</li>}
-                                {item.details.motif && <li>Motif : {item.details.motif}</li>}
-                                {item.details.pompon && <li>Avec pompon : {item.details.pompon}</li>}
-                                {Array.isArray(item.details.options) && item.details.options.length > 0 && (
-                                  <li>Options : {item.details.options.join(", ")}</li>
-                                )}
-                                {item.details.giftWrap && <li>Emballage : {item.details.giftWrap}</li>}
-                                {item.details.personalization && (
-                                  <li>Message personnalisé : {item.details.personalization}</li>
-                                )}
-                              </ul>
+                            <h3>{item.name}</h3>
+                            {/* Affichage des variants */}
+                            {item.variants && Object.keys(item.variants).length > 0 && (
+                              <ul className={cartProductCaracteristicsList()}>{renderVariantInfo(item.variants)}</ul>
                             )}
                           </div>
                         </div>
@@ -284,11 +320,13 @@ export default function ShoppingCart() {
         </div>
       )}
 
-      {cartItems.length > 0 && <div className={paymentButtonArea()}>
-        <CustomLink href="/commande" isButtonLink withIcon>
-          Valider la commande
-        </CustomLink>
-      </div>}
+      {cartItems.length > 0 && (
+        <div className={paymentButtonArea()}>
+          <CustomLink href="/commande" isButtonLink withIcon>
+            Valider la commande
+          </CustomLink>
+        </div>
+      )}
     </div>
   );
 }

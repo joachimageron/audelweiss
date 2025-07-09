@@ -12,7 +12,7 @@ export const createOrderItem = gql`
           }
           product_variant_options {
             documentId
-            variants {
+            variant {
               documentId
             }
           }

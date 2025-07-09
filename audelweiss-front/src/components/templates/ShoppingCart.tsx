@@ -110,13 +110,15 @@ export default function ShoppingCart() {
 
   const handleQuantityChange = (id: number, value: number) => {
     setCartItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, quantity: Math.min(item.stock, Math.max(1, value)) } : item)),
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: item.stock ? Math.min(value, item.stock) : value } : item,
+      ),
     );
 
     const item = cartItems.find(i => i.id === id);
-    if (item && value > item.stock) {
+    if (item && item.stock && value > item.stock) {
       setQuantityErrors(prev => ({ ...prev, [id]: `Il en reste seulement ${item.stock} en stock` }));
-    } else {
+    } else if (item && item.stock) {
       setQuantityErrors(prev => {
         const { [id]: _, ...rest } = prev;
         return rest;

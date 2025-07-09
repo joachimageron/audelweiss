@@ -85,8 +85,6 @@ export default function HistoriquePage() {
     queryKey: ["orders", user?.documentId || ""],
   });
 
-  console.log("Orders data:", orders);
-
   useEffect(() => {
     if (!userLoading && !isAuthenticated) {
       router.replace("/auth/login");
@@ -151,8 +149,7 @@ export default function HistoriquePage() {
       ) : (
         <div className={ordersList()}>
           {orders.map(order => {
-            console.log("Order data:", order);
-            const status = getOrderStatus(order);
+                const status = getOrderStatus(order);
 
             return (
               <div key={order.documentId} className={orderCard()}>

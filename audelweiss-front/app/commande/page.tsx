@@ -10,10 +10,15 @@ import CustomInputField from "@/src/components/atoms/CustomInputField";
 import Button from "@/src/components/atoms/Button";
 
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useCreateOrderItem } from "@/src/hooks/useCreateOrderItem";
+import { useCreateOrder } from "@/src/hooks/useCreateOrder";
 
-// const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.83.97.44:1337";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://51.83.97.44:1337";
 
 export default function CommandePage() {
+  const { mutateAsync: createOrderItemMutation } = useCreateOrderItem();
+  const { mutateAsync: createOrderMutation } = useCreateOrder();
+
   const router = useRouter();
   const { isAuthenticated, loading, user } = useUser();
   const { cartItems, total } = useCart();
@@ -50,8 +55,6 @@ export default function CommandePage() {
     }
   }, [user]);
 
-  console.log("cartItems", cartItems);
-
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       router.replace("/auth/login");
@@ -67,6 +70,63 @@ export default function CommandePage() {
     setShippingData(prev => ({ ...prev, [name]: value }));
   };
 
+  
+    // Fonction pour convertir les variants du panier en format backend
+    const convertVariantsToBackendFormat = (variants: Record<string, VariantSelection | undefined>) => {
+      const variantOptions: string[] = [];
+  
+      Object.values(variants).forEach(selection => {
+        if (selection) {
+          // Ajouter l'ID de l'option sélectionnée
+          variantOptions.push(selection.option.id);
+        }
+      });
+  
+      return variantOptions;
+    };
+  
+    const createOrderItems = async (items: typeof cartItems) => {
+      const ids = [];
+      for (const item of items) {
+        // Convertir les variants en format attendu par le backend
+        const variantOptions = convertVariantsToBackendFormat(item.variants || {});
+  
+        const orderItem = {
+          quantity: item.quantity,
+          item: {
+            __typename: "ComponentOrderItemProductReference",
+            __component: "order.item-product-reference",
+            product: item.id,
+            product_variant_option: variantOptions,
+            // product_variant_option: variantOptions,
+          },
+        };
+  
+        console.log("Creating order item:", orderItem);
+        const res = await createOrderItemMutation(orderItem);
+        console.log("res : ", res);
+        ids.push(res.item[0].id - 1);
+      }
+      return ids;
+    };
+  
+    const onOrderSubmit = async (items: typeof cartItems) => {
+      try {
+        console.log("Submitting order with items:", items);
+        const itemsIds = await createOrderItems(items);
+  
+        if (itemsIds) {
+          const orderId = await createOrderMutation({
+            user: 1,
+            order_items: itemsIds.map(id => Number(id)),
+          });
+          console.log("Order created with ID:", orderId);
+        }
+      } catch (error) {
+        throw new Error("Failed to create order: " + error);
+      }
+    };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -80,6 +140,16 @@ export default function CommandePage() {
       return;
     }
     setIsLoading(true);
+
+    try {
+    await onOrderSubmit(cartItems);
+
+    } catch (error) {
+      console.error("Error creating order:", error);
+      setMessage("An error occurred while processing your order. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -102,9 +172,8 @@ export default function CommandePage() {
       router.push("/success");
     }
     console.log("Payment result:", error);
-
-
   };
+
 
   return (
     <div className="inner-wrap py-[3rem]">
@@ -122,12 +191,12 @@ export default function CommandePage() {
 
             <div className="space-y-[2rem] mb-[3rem]">
               {cartItems.map(item => (
-                <div key={item.id} className="border border-gray-200 rounded-lg p-[2rem] bg-white">
+                <div key={item.name} className="border border-gray-200 rounded-lg p-[2rem] bg-white">
                   <div className="flex items-start gap-[2rem]">
                     {item.image && (
                       <div className="w-[8rem] aspect-square rounded overflow-hidden flex-shrink-0">
                         <Image
-                          src={item.image}
+                          src={API_URL + item.image}
                           alt={item.name}
                           width={80}
                           height={80}
@@ -141,14 +210,14 @@ export default function CommandePage() {
 
                       {item.variants && (
                         <ul className="text-[1.3rem] text-gray-600 space-y-[.2rem] mb-[1rem]">
-                          {Object.entries(item.variants).map(([variantsName, variantsValue]) => (
-                            <li className="" key={variantsName}>
-                              {variantsValue ? (
+                          {Object.entries(item.variants).map(([varientName, variantValue]) => (
+                            <li className="" key={variantValue.variant.id}>
+                              {variantValue ? (
                                 <>
-                                  {variantsName} : {variantsValue}
+                                  {variantValue.variant.name} : {variantValue.option.label}
                                 </>
                               ) : (
-                                <>{variantsName}</>
+                                <>{variantValue.variant.name}</>
                               )}
                             </li>
                           ))}
@@ -267,7 +336,7 @@ export default function CommandePage() {
             <Button type="submit" withIcon className="mt-[2rem]">
               {isLoading ? "Chargement..." : `Valider la commande - ${total.toFixed(2)}€`}
             </Button>
-                  {message && <div id="payment-message">{message}</div>}
+            {message && <div id="payment-message">{message}</div>}
           </div>
         </form>
       ) : (

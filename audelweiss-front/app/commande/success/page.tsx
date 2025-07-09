@@ -32,6 +32,21 @@ export default function SuccessPage() {
       //   return;
       // }
 
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+      await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: user.email, // destinataire = l'acheteur
+          email: 'noreply@audelweiss.fr',
+          subject: 'Confirmation de votre commande',
+          text: getOrderText(user, cartItems),
+          html: getOrderHtml(user, cartItems),
+        }),
+      });
+
       setCartItems([]); // Clear the cart after successful order creation
 
     };
@@ -45,4 +60,26 @@ export default function SuccessPage() {
       <p className="text-xl mb-6">Merci pour votre achat.</p>
     </div>
   );
+}
+
+function getOrderText(user, cartItems) {
+  return `Bonjour ${user.username},
+
+Merci pour votre commande sur Audelweiss !
+
+Récapitulatif de votre panier :
+${cartItems.map(item => `- ${item.name} x${item.quantity}`).join('\n')}
+
+À bientôt !`;
+}
+
+function getOrderHtml(user, cartItems) {
+  return `
+    <h3>Merci pour votre commande, ${user.username} !</h3>
+    <p>Voici le récapitulatif de vos achats :</p>
+    <ul>
+      ${cartItems.map(item => `<li>${item.name} x${item.quantity}</li>`).join('')}
+    </ul>
+    <p>À bientôt sur Audelweiss !</p>
+  `;
 }

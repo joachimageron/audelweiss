@@ -114,9 +114,9 @@ export default function ShoppingCart() {
     );
 
     const item = cartItems.find(i => i.id === id);
-    if (item && value > item.stock) {
+    if (item && item.stock && value > item.stock) {
       setQuantityErrors(prev => ({ ...prev, [id]: `Il en reste seulement ${item.stock} en stock` }));
-    } else {
+    } else if (item && item.stock) {
       setQuantityErrors(prev => {
         const { [id]: _, ...rest } = prev;
         return rest;

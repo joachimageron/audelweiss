@@ -70,6 +70,7 @@ const Form = ({ product, className }: Props) => {
       variants: variantValues,
       quantity,
       price: product.price, // TODO: add variants price
+      stock: product.stock,
     };
 
     addToCart(item);

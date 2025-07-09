@@ -11,7 +11,7 @@ export type CartItem = {
   image?: string;
   price: number;
   quantity: number;
-  //   stock: number;
+  stock: number;
   variants?: Record<string, unknown>;
 };
 
